@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class ApplicationControllerTest {
 
     @Value("http://localhost:${server.port}/v1/app")
