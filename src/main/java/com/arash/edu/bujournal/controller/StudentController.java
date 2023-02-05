@@ -23,4 +23,9 @@ public class StudentController {
     public Student postStudent(@RequestBody Student student) {
         return studentService.postStudent(student);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "/students/{id}")
+    public void deleteStudent(@PathVariable UUID id) {
+        studentService.deleteStudent(id);
+    }
 }

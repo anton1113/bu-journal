@@ -27,4 +27,9 @@ public class StudentService {
         log.info("Post student {}", student);
         return studentRepository.save(student);
     }
+
+    public void deleteStudent(@NonNull UUID id) {
+        log.info("Delete student {}", id);
+        studentRepository.deleteById(id);
+    }
 }

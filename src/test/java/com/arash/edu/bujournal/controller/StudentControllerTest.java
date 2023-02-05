@@ -69,4 +69,22 @@ public class StudentControllerTest extends BaseIntegrationTest {
                 .findStudentByFirstNameAndLastName(student.getFirstName(), student.getLastName());
         assertTrue(dbStudent.isPresent());
     }
+
+    @Test
+    void testDeleteStudent() {
+        Student student = studentRepository.save(createStudent());
+
+        //@formatter:off
+        given()
+                .headers(HttpHeaders.CONTENT_TYPE, ContentType.JSON.toString())
+        .when()
+                .delete(baseUrl + "/" + student.getId()).prettyPeek()
+        .then()
+                .statusCode(HttpStatus.OK.value());
+        //@formatter:on
+
+        Optional<Student> dbStudent = studentRepository
+                .findStudentByFirstNameAndLastName(student.getFirstName(), student.getLastName());
+        assertTrue(dbStudent.isEmpty());
+    }
 }
