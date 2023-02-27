@@ -21,8 +21,6 @@ public class Group {
 
     private String name;
 
-    @ElementCollection
-    private List<UUID> studentIds;
-
+    @Type(type = "uuid-char")
     private UUID curatorId;
 }
