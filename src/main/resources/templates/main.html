@@ -1,0 +1,30 @@
+<style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: white;
+        color: blue;
+        text-align: left;
+        margin-left: 25px;
+    }
+</style>
+
+<html>
+
+<body>
+
+<h1 th:text="${appName}"></h1>
+
+<div>
+    <a th:href="@{/studentsmng}">Students management</a>
+</div>
+
+<div class="footer">
+    <p th:text="${appVersion}">Version: </p>
+</div>
+
+</body>
+
+</html>
