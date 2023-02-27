@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(schema = "bu", name = "group")
+@Table(schema = "bu", name = "bu_group")
 @Entity
 public class Group {
 
@@ -21,8 +21,6 @@ public class Group {
 
     private String name;
 
-    @ElementCollection
-    private List<UUID> studentIds;
-
+    @Type(type = "uuid-char")
     private UUID curatorId;
 }

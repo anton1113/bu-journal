@@ -1,4 +1,4 @@
-package com.arash.edu.bujournal.controller;
+package com.arash.edu.bujournal.controller.rest;
 
 import com.arash.edu.bujournal.domain.Teacher;
 import com.arash.edu.bujournal.service.TeacherService;
