@@ -21,7 +21,9 @@ public class Teacher {
     @Type(type = "uuid-char")
     private UUID id;
 
+    private String lastName;
+
     private String firstName;
 
-    private String lastName;
+    private String patronymic;
 }

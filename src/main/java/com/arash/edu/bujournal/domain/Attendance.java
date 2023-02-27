@@ -11,9 +11,9 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Data
-@Table(schema = "bu", name = "bu_student")
+@Table(schema = "bu", name = "bu_attendance")
 @Entity
-public class Student {
+public class Attendance {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -21,12 +21,13 @@ public class Student {
     @Type(type = "uuid-char")
     private UUID id;
 
-    private String lastName;
-
-    private String firstName;
-
-    private String patronymic;
+    @Type(type = "uuid-char")
+    private UUID studentId;
 
     @Type(type = "uuid-char")
-    private UUID groupId;
+    private UUID lessonId;
+
+    private Integer mark;
+
+    private Boolean wasPresent;
 }
