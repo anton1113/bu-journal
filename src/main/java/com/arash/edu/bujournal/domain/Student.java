@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Data
-@Table(schema = "bu", name = "student")
+@Table(schema = "bu", name = "bu_student")
 @Entity
 public class Student {
 

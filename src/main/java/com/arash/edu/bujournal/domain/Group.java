@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(schema = "bu", name = "group")
+@Table(schema = "bu", name = "bu_group")
 @Entity
 public class Group {
 
