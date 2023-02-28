@@ -1,4 +1,4 @@
-package com.arash.edu.bujournal.controller.thymeleaf;
+package com.arash.edu.bujournal.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

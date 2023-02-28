@@ -1,4 +1,4 @@
-package com.arash.edu.bujournal.controller.thymeleaf;
+package com.arash.edu.bujournal.controller;
 
 import com.arash.edu.bujournal.domain.Group;
 import com.arash.edu.bujournal.service.GroupService;
