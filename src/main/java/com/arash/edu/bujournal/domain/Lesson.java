@@ -14,16 +14,15 @@ import java.util.UUID;
 public class Lesson {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-char")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(nullable = false)
     private LocalDate date;
 
-    @Type(type = "uuid-char")
-    private UUID disciplineId;
+    @Column(nullable = false)
+    private Long disciplineId;
 
-    @Type(type = "uuid-char")
-    private UUID groupId;
+    @Column(nullable = false)
+    private Long groupId;
 }

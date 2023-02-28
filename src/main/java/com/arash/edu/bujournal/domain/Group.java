@@ -14,13 +14,11 @@ import java.util.UUID;
 public class Group {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-char")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(nullable = false)
     private String name;
 
-    @Type(type = "uuid-char")
-    private UUID curatorId;
+    private Long curatorId;
 }

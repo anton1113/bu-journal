@@ -4,10 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Data
@@ -16,16 +13,14 @@ import java.util.UUID;
 public class Attendance {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-char")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Type(type = "uuid-char")
-    private UUID studentId;
+    @Column(nullable = false)
+    private Long studentId;
 
-    @Type(type = "uuid-char")
-    private UUID lessonId;
+    @Column(nullable = false)
+    private Long lessonId;
 
     private Integer mark;
 
