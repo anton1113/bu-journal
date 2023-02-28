@@ -26,7 +26,7 @@
                 <a th:text="#{nav.groups}" class="nav-link" href="/groups">Home</a>
             </li>
             <li class="nav-item">
-                <a th:text="#{nav.disciplines}" class="nav-link" href="/disciplines">Home</a>
+                <a th:text="#{nav.disciplines}" class="nav-link" href="/subjects">Home</a>
             </li>
         </ul>
     </div>
@@ -38,7 +38,7 @@
 
 <footer class="footer bg-dark">
     <span class="text-light">
-        <p th:text="|${@environment.getProperty('app.name')} ${@environment.getProperty('app.version')}">App info</p>
+        <p th:text="|${@environment.getProperty('app.name')} ${@environment.getProperty('app.version')}|">App info</p>
     </span>
 </footer>
 

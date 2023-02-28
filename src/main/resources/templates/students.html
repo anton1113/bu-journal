@@ -35,15 +35,15 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th th:text="#{group.name}">Group name</th>
-        <th th:text="#{group.curator}">Curator</th>
+        <th th:text="#{student.name}">Student name</th>
+        <th th:text="#{student.group}">Group</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="group : ${groups}" th:with="curator=${@teacherService.findById(group.curatorId)}">
-        <td th:text="${group.id}">ID</td>
-        <td th:text="${group.name}">Name</td>
-        <td th:text="|${curator.lastName} ${curator.firstName} ${curator.patronymic}|">Last name</td>
+    <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
+        <td th:text="${student.id}">ID</td>
+        <td th:text="|${student.lastName} ${student.firstName} ${student.patronymic}|">Full name</td>
+        <td th:text="${group.name}">Group name</td>
     </tr>
     </tbody>
 </table>
