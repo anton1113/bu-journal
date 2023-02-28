@@ -27,4 +27,9 @@ public class TeacherService {
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Teacher not found by id " + id));
     }
+
+    public Teacher addTeacher(Teacher teacher) {
+        log.info("Adding teacher {}", teacher);
+        return teacherRepository.save(teacher);
+    }
 }

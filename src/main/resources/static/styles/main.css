@@ -14,3 +14,8 @@ div.centered-image {
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
+
+div.insert-form {
+    margin-left: 20px;
+    margin-top: 20px;
+}

@@ -11,20 +11,58 @@
 
 <nav th:replace="fragments/general::navbar"></nav>
 
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th th:text="#{teacher.name}">Teacher name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="teacher : ${teachers}">
-        <td th:text="${teacher.id}">ID</td>
-        <td th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Full name</td>
-    </tr>
-    </tbody>
-</table>
+<div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th th:text="#{teacher.name}">Teacher name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacher : ${teachers}">
+            <td th:text="${teacher.id}">ID</td>
+            <td th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Full name</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="insert-form">
+    <form action="#" th:action="@{/teachers}" th:object="${draftTeacher}" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
+                </th>
+                <th>
+                    <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
+                </th>
+                <th>
+                    <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>
+                    <input id="lastName" th:field="*{lastName}" type="text" name="lastName">
+                </th>
+                <th>
+                    <input id="firstName" th:field="*{firstName}" type="text" name="firstName">
+                </th>
+                <th>
+                    <input id="patronymic" th:field="*{patronymic}" type="text" name="patronymic">
+                </th>
+                <th>
+                    <button id="addTeacher" type="submit" th:text="#{label.button.add}">Add teacher</button>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 
 <footer th:replace="fragments/general::footer"></footer>
 
