@@ -13,8 +13,8 @@ insert into bu_student (id, first_name, group_id, last_name, patronymic)
 values (1, 'Антон', 1, 'Расщектаєв', 'Володимирович');
 
 -- discipline test data
-insert into bu_discipline (id, name, teacher_id)
-values (1, 'Основи програмування', 1);
+insert into bu_subject (id, name, teacher_id, group_id)
+values (1, 'Основи програмування', 1 ,1);
 
 -- lesson test data
 insert into bu_lesson (id, date, discipline_id, group_id)

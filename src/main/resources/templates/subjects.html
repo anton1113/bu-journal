@@ -35,13 +35,17 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th th:text="#{teacher.name}">Teacher name</th>
+        <th th:text="#{subject.name}">Subject name</th>
+        <th th:text="#{subject.teacher.name}">Subject teacher name</th>
+        <th th:text="#{subject.group.name}">Subject group name</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="teacher : ${teachers}">
-        <td th:text="${teacher.id}">ID</td>
-        <td th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Full name</td>
+    <tr th:each="subject : ${subjects}" th:with="teacher=${@teacherService.findById(subject.teacherId)}, group=${@groupService.findById(subject.groupId)}">
+        <td th:text="${subject.id}">ID</td>
+        <td th:text="${subject.name}">Subject name</td>
+        <td th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Teacher full name</td>
+        <td th:text="${group.name}">Group name</td>
     </tr>
     </tbody>
 </table>
