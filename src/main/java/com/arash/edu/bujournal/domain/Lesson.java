@@ -5,20 +5,24 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@Table(schema = "bu", name = "bu_group")
+@Table(schema = "bu", name = "bu_lesson")
 @Entity
-public class Group {
+public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private LocalDate date;
 
-    private Long curatorId;
+    @Column(nullable = false)
+    private Long disciplineId;
+
+    @Column(nullable = false)
+    private Long groupId;
 }
