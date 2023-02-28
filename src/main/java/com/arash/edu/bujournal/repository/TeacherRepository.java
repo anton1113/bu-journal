@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     Optional<Teacher> findTeacherByFirstNameAndLastName(String firstName, String lastName);
 }
