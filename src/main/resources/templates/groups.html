@@ -28,11 +28,7 @@
     </tbody>
 </table>
 
-<footer class="footer bg-dark">
-    <span class="text-light">
-        <p th:text="|${@environment.getProperty('app.name')} ${@environment.getProperty('app.version')}|">App info</p>
-    </span>
-</footer>
+<footer th:replace="fragments/general::footer"></footer>
 
 </body>
 </html>
