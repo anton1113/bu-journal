@@ -2,34 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bu groups</title>
+    <title>Bu students</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a th:text="#{nav.home}" class="nav-link" href="./">Home</a>
-            </li>
-            <li class="nav-item">
-                <a th:text="#{nav.students}" class="nav-link" href="/students">Home</a>
-            </li>
-            <li class="nav-item">
-                <a th:text="#{nav.teachers}" class="nav-link" href="/teachers">Home</a>
-            </li>
-            <li class="nav-item">
-                <a th:text="#{nav.groups}" class="nav-link" href="/groups">Home</a>
-            </li>
-            <li class="nav-item">
-                <a th:text="#{nav.disciplines}" class="nav-link" href="/subjects">Home</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<nav th:replace="fragments/general::navbar"></nav>
 
 <table class="table table-hover">
     <thead>
@@ -48,11 +28,7 @@
     </tbody>
 </table>
 
-<footer class="footer bg-dark">
-    <span class="text-light">
-        <p th:text="|${@environment.getProperty('app.name')} ${@environment.getProperty('app.version')}|">App info</p>
-    </span>
-</footer>
+<footer th:replace="fragments/general::footer"></footer>
 
 </body>
 </html>
