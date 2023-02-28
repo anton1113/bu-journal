@@ -1,13 +1,12 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bu journal</title>
+    <title>Bu groups</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,9 +31,22 @@
     </div>
 </nav>
 
-<div class="centered-image">
-    <img th:src="@{/images/Under-Construction.jpeg}" />
-</div>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th th:text="#{student.name}">Student name</th>
+        <th th:text="#{student.group}">Group</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
+        <td th:text="${student.id}">ID</td>
+        <td th:text="|${student.lastName} ${student.firstName} ${student.patronymic}|">Full name</td>
+        <td th:text="${group.name}">Group name</td>
+    </tr>
+    </tbody>
+</table>
 
 <footer class="footer bg-dark">
     <span class="text-light">
@@ -43,5 +55,4 @@
 </footer>
 
 </body>
-
 </html>

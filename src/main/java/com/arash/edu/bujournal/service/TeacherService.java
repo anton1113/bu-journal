@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -17,19 +17,14 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
 
-    public Teacher getTeacher(@NonNull Long id) {
+    public List<Teacher> findAll() {
+        log.info("Find all teachers");
+        return teacherRepository.findAll();
+    }
+
+    public Teacher findById(@NonNull Long id) {
         log.info("Get teacher by id [{}]", id);
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Teacher not found by id " + id));
-    }
-
-    public Teacher postTeacher(@NonNull Teacher teacher) {
-        log.info("Post teacher {}", teacher);
-        return teacherRepository.save(teacher);
-    }
-
-    public void deleteTeacher(@NonNull Long id) {
-        log.info("Delete teacher {}", id);
-        teacherRepository.deleteById(id);
     }
 }
