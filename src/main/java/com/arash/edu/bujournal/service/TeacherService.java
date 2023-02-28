@@ -17,7 +17,7 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
 
-    public Teacher getTeacher(@NonNull UUID id) {
+    public Teacher getTeacher(@NonNull Long id) {
         log.info("Get teacher by id [{}]", id);
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Teacher not found by id " + id));
@@ -28,7 +28,7 @@ public class TeacherService {
         return teacherRepository.save(teacher);
     }
 
-    public void deleteTeacher(@NonNull UUID id) {
+    public void deleteTeacher(@NonNull Long id) {
         log.info("Delete teacher {}", id);
         teacherRepository.deleteById(id);
     }

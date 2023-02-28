@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student getStudent(@NonNull UUID id) {
+    public Student getStudent(@NonNull Long id) {
         log.info("Get student by id [{}]", id);
         return studentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Student not found by id " + id));
@@ -34,7 +33,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public void deleteStudent(@NonNull UUID id) {
+    public void deleteStudent(@NonNull Long id) {
         log.info("Delete student {}", id);
         studentRepository.deleteById(id);
     }

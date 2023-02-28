@@ -2,7 +2,7 @@ ALTER DATABASE bu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- test teacher data
 insert into bu_teacher (id, first_name, last_name, patronymic)
-values (1, 'Ольга', 'Іванівна', 'Артеменко');
+values (1, 'Ольга', 'Артеменко', 'Іванівна');
 
 -- group test data
 insert into bu_group (id, curator_id, name)

@@ -15,7 +15,7 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/teachers/{id}")
-    public Teacher getTeacher(@PathVariable UUID id) {
+    public Teacher getTeacher(@PathVariable Long id) {
         return teacherService.getTeacher(id);
     }
 
@@ -25,7 +25,7 @@ public class TeacherController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/teachers/{id}")
-    public void deleteTeacher(@PathVariable UUID id) {
+    public void deleteTeacher(@PathVariable Long id) {
         teacherService.deleteTeacher(id);
     }
 }

@@ -5,8 +5,6 @@ import com.arash.edu.bujournal.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @RequestMapping({"", "/v1"})
 @RestController
@@ -15,7 +13,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/students/{id}")
-    public Student getStudent(@PathVariable UUID id) {
+    public Student getStudent(@PathVariable Long id) {
         return studentService.getStudent(id);
     }
 
@@ -25,7 +23,7 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/students/{id}")
-    public void deleteStudent(@PathVariable UUID id) {
+    public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
     }
 }
