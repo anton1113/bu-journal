@@ -5,9 +5,7 @@ import com.arash.edu.bujournal.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,10 +22,15 @@ public class TeachersController {
     }
 
     @PostMapping("/teachers")
-    public String addTeacher(@ModelAttribute Teacher teacher, Model model) {
+    public String addTeacher(@ModelAttribute Teacher teacher) {
         teacherService.addTeacher(teacher);
-        populateAllTeachers(model);
-        return "teachers";
+        return "redirect:/teachers";
+    }
+
+    @GetMapping("/teachers/delete/{id}")
+    public String deleteTeacher(@PathVariable Long id) {
+        teacherService.deleteTeacher(id);
+        return "redirect:/teachers";
     }
 
     private void populateAllTeachers(Model model) {

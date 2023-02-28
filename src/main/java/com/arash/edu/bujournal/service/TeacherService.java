@@ -28,8 +28,13 @@ public class TeacherService {
                 .orElseThrow(() -> new NotFoundException("Teacher not found by id " + id));
     }
 
-    public Teacher addTeacher(Teacher teacher) {
+    public Teacher addTeacher(@NonNull Teacher teacher) {
         log.info("Adding teacher {}", teacher);
         return teacherRepository.save(teacher);
+    }
+
+    public void deleteTeacher(@NonNull Long id) {
+        log.info("Delete teacher by id [{}]", id);
+        teacherRepository.deleteById(id);
     }
 }
