@@ -19,7 +19,4 @@ public class Lesson {
 
     @Column(nullable = false)
     private Long subjectId;
-
-    @Column(nullable = false)
-    private Long groupId;
 }

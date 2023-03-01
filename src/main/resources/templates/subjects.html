@@ -20,6 +20,7 @@
         <th th:text="#{subject.name}">Subject name</th>
         <th th:text="#{subject.teacher.name}">Subject teacher name</th>
         <th th:text="#{subject.group.name}">Subject group name</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,9 @@
         <td th:text="${subject.name}">Subject name</td>
         <td th:text="${teacher} == null ? #{text.teacher.empty} : |${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Teacher full name</td>
         <td th:text="${group} == null ? #{text.group.empty} : ${group.name}">Group name</td>
+        <td>
+            <a th:text="#{label.href.subject.lessons}" th:href="@{subjects/__${subject.id}__}">Lessons schedule</a>
+        </td>
     </tr>
     </tbody>
     <tfoot>
@@ -35,6 +39,7 @@
         <td>
             <button th:text="#{label.button.add}" class="btn btn-secondary" id="addSubjectButton">Add group</button>
         </td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -47,7 +52,7 @@
         <form action="#" th:action="@{/subjects}" th:object="${draftSubject}" method="post">
             <span class="close">&times;</span>
             <div class="form-group">
-                <label th:for="subjectName" th:text="#{label.input.group.name}">Group name</label>
+                <label th:for="subjectName" th:text="#{label.input.subject.name}">Subject name</label>
                 <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text" name="subjectName">
             </div>
             <div class="form-group">
