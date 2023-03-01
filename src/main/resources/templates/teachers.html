@@ -25,7 +25,7 @@
             <td th:text="${teacher.id}">ID</td>
             <td th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Full name</td>
             <td>
-                <a th:text="#{label.href.delete}" th:href="@{teachers/delete/__${teacher.id}__}">Delete</a>
+                <a th:text="#{label.href.delete}" th:href="@{teachers/__${teacher.id}__/delete}">Delete</a>
             </td>
         </tr>
         </tbody>

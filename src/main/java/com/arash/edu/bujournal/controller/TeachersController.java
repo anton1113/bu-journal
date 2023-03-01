@@ -27,7 +27,7 @@ public class TeachersController {
         return "redirect:/teachers";
     }
 
-    @GetMapping("/teachers/delete/{id}")
+    @GetMapping("/teachers/{id}/delete")
     public String deleteTeacher(@PathVariable Long id) {
         teacherService.deleteTeacher(id);
         return "redirect:/teachers";

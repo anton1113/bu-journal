@@ -18,21 +18,71 @@
         <th th:text="#{group.name}">Group name</th>
         <th th:text="#{group.curator}">Curator</th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="group : ${groups}" th:with="curator=${@teacherService.findById(group.curatorId)}">
+    <tr th:each="group : ${groups}" th:with="curator=${@teacherService.findByNullableId(group.curatorId)}">
         <td th:text="${group.id}">ID</td>
         <td th:text="${group.name}">Name</td>
-        <td th:text="|${curator.lastName} ${curator.firstName} ${curator.patronymic}|">Last name</td>
+        <td th:text="${curator} == null ? #{text.curator.empty} : |${curator.lastName} ${curator.firstName} ${curator.patronymic}|">Last name</td>
         <td>
             <a th:text="#{label.href.students.list}" th:href="@{groups/__${group.id}__}">Details</a>
         </td>
+        <td>
+            <a th:text="#{label.href.delete}" th:href="@{groups/__${group.id}__/delete}">Delete</a>
+        </td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+        <td>
+            <button th:text="#{label.button.add}" class="btn btn-secondary" id="addGroupButton">Add group</button>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tfoot>
 </table>
 
+<div id="addGroupModal" class="modal">
+    <div class="modal-content">
+        <form action="#" th:action="@{/groups}" th:object="${draftGroup}" method="post">
+            <span class="close">&times;</span>
+            <div class="form-group">
+                <label th:for="groupName" th:text="#{label.input.group.name}">Group name</label>
+                <input id="groupName" class="form-control" th:field="*{name}" type="text" name="groupName">
+            </div>
+            <div class="form-group">
+                <label th:for="curator" th:text="#{label.select.curator}">Curator</label><br>
+                <select class="custom-select" id="curator" th:field="*{curatorId}">
+                    <option th:text="#{text.curator.empty}" th:value="null"></option>
+                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|"></option>
+                </select>
+            </div>
+            <button class="btn btn-secondary" type="submit" th:text="#{label.button.add}">Add teacher</button>
+        </form>
+    </div>
+</div>
+
 <footer th:replace="fragments/general::footer"></footer>
+
+<script>
+    var modal = document.getElementById("addGroupModal");
+    var button = document.getElementById("addGroupButton");
+    var span = document.getElementsByClassName("close")[0];
+
+    button.onclick = function() {   modal.style.display = "block"; }
+    span.onclick = function() {   modal.style.display = "none"; }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        } }
+</script>
 
 </body>
 </html>
