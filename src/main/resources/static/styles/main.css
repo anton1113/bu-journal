@@ -15,7 +15,6 @@ div.centered-image {
     transform: translate(-50%, -50%)
 }
 
-/* The Modal (background) */
 .modal {
     display: none;
     /* Hidden by default */
@@ -37,7 +36,20 @@ div.centered-image {
     /* Black w/ opacity */
 }
 
-/* Modal Content */
+.error-modal {
+    position:absolute;
+    z-index: 1;
+
+    top:0;
+    right:0;
+
+    min-height: 10%;
+    min-width: 10%;
+
+    background-color: rgb(217, 86, 86);
+    background-color: rgba(220, 69, 69, 0.4);
+}
+
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -46,7 +58,11 @@ div.centered-image {
     width: 50%;
 }
 
-/* The Close Button */
+.error-modal-content {
+    margin: 20px;
+    padding: 20px;
+}
+
 .close {
     color: #aaaaaa;
     float: right;
@@ -54,7 +70,27 @@ div.centered-image {
     font-weight: bold;
 }
 
+.close-error-modal {
+    color: #6b6b6b;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.error-message {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.close-error-modal:hover, .close-error-modal:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
