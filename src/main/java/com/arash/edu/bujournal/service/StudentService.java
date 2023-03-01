@@ -1,7 +1,6 @@
 package com.arash.edu.bujournal.service;
 
 import com.arash.edu.bujournal.domain.Student;
-import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.repository.StudentRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +21,18 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student getStudent(@NonNull Long id) {
-        log.info("Get student by id [{}]", id);
-        return studentRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Student not found by id " + id));
+    public List<Student> findAllByGroupId(@NonNull Long groupId) {
+        log.info("Find students by group id [{}]", groupId);
+        return studentRepository.findAllByGroupId(groupId);
     }
 
-    public Student postStudent(@NonNull Student student) {
-        log.info("Post student {}", student);
+    public Student addStudent(@NonNull Student student) {
+        log.info("Adding student {}", student);
         return studentRepository.save(student);
     }
 
-    public void deleteStudent(@NonNull Long id) {
-        log.info("Delete student {}", id);
+    public void deleteById(@NonNull Long id) {
+        log.info("Deleting student by id {}", id);
         studentRepository.deleteById(id);
     }
 }

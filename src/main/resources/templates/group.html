@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bu teachers</title>
+    <title th:text="${group.name}">Group name</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -11,39 +11,36 @@
 
 <nav th:replace="fragments/general::navbar"></nav>
 
-<div>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th th:text="#{teacher.name}">Teacher name</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="teacher : ${teachers}">
-            <td th:text="${teacher.id}">ID</td>
-            <td th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Full name</td>
-            <td>
-                <a th:text="#{label.href.delete}" th:href="@{teachers/__${teacher.id}__/delete}">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td>
-                <button th:text="#{label.button.add}" class="btn btn-secondary" id="addTeacherButton">Add teacher</button>
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tfoot>
-    </table>
-</div>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th th:text="#{student.name}">Student name</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
+        <td th:text="${student.id}">ID</td>
+        <td th:text="|${student.lastName} ${student.firstName} ${student.patronymic}|">Full name</td>
+        <td>
+            <a th:text="#{label.href.delete}" th:href="@{__${group.id}__/students/__${student.id}__/delete}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>
+            <button th:text="#{label.button.add}" class="btn btn-secondary" id="addStudentButton">Add student</button>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
 
-<div id="addTeacherModal" class="modal">
+<div id="addStudentModal" class="modal">
     <div class="modal-content">
-        <form action="#" th:action="@{/teachers}" th:object="${draftTeacher}" method="post">
+        <form action="#" th:action="@{/groups/__${group.id}__/students}" th:object="${draftStudent}" method="post">
             <span class="close">&times;</span>
             <div class="form-group">
                 <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
@@ -57,7 +54,7 @@
                 <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
                 <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
             </div>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.add}">Add teacher</button>
+            <button class="btn btn-secondary" type="submit" th:text="#{label.button.add}">Add student</button>
         </form>
     </div>
 </div>
@@ -65,8 +62,8 @@
 <footer th:replace="fragments/general::footer"></footer>
 
 <script>
-    var modal = document.getElementById("addTeacherModal");
-    var button = document.getElementById("addTeacherButton");
+    var modal = document.getElementById("addStudentModal");
+    var button = document.getElementById("addStudentButton");
     var span = document.getElementsByClassName("close")[0];
 
     button.onclick = function() {   modal.style.display = "block"; }
