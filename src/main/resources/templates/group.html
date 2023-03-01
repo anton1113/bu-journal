@@ -11,6 +11,8 @@
 
 <nav th:replace="fragments/general::navbar"></nav>
 
+<div th:replace="fragments/general::#errorModal"></div>
+
 <table class="table table-hover">
     <thead>
     <tr>
@@ -44,11 +46,11 @@
             <span class="close">&times;</span>
             <div class="form-group">
                 <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                <input id="lastName" class="form-control" th:field="*{lastName}" type="text" name="lastName">
+                <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text" name="lastName">
             </div>
             <div class="form-group">
                 <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                <input id="firstName" class="form-control" th:field="*{firstName}" type="text" name="firstName">
+                <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}" type="text" name="firstName">
             </div>
             <div class="form-group">
                 <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>

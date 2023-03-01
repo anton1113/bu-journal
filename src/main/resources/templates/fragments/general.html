@@ -37,5 +37,18 @@
     </span>
 </footer>
 
+<div th:if="${errorMessage}" id="errorModal" class="error-modal">
+    <span id="closeSpan" class="close-error-modal">&times;</span>
+    <div class="error-modal-content">
+        <p class="error-message" th:text="${errorMessage}"></p>
+    </div>
+    <script>
+        var modal = document.getElementById("errorModal");
+        var span = document.getElementById("closeSpan");
+
+        span.onclick = function() {   modal.style.display = "none"; }
+    </script>
+</div>
+
 </body>
 </html>
