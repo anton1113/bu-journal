@@ -33,6 +33,15 @@ public class GroupService {
                 .orElseThrow(() -> new NotFoundException("Group not found by id " + id));
     }
 
+    public Group findByNullableId(Long id) {
+        log.info("Find group by nullable id [{}]", id);
+        if (id == null) {
+            return null;
+        }
+        return groupRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Group not found by id " + id));
+    }
+
     public void deleteById(@NonNull Long groupId) {
         log.info("Delete group by id [{}]", groupId);
         groupRepository.deleteById(groupId);
