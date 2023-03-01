@@ -17,6 +17,7 @@
         <th>ID</th>
         <th th:text="#{group.name}">Group name</th>
         <th th:text="#{group.curator}">Curator</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -24,6 +25,9 @@
         <td th:text="${group.id}">ID</td>
         <td th:text="${group.name}">Name</td>
         <td th:text="|${curator.lastName} ${curator.firstName} ${curator.patronymic}|">Last name</td>
+        <td>
+            <a th:text="#{label.href.students.list}" th:href="@{groups/__${group.id}__}">Details</a>
+        </td>
     </tr>
     </tbody>
 </table>
