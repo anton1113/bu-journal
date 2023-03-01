@@ -17,8 +17,8 @@ insert into bu_subject (id, name, teacher_id, group_id)
 values (1, 'Основи програмування', 1 ,1);
 
 -- lesson test data
-insert into bu_lesson (id, date, subject_id, group_id)
-values (1, '2023-03-01', 1, 1);
+insert into bu_lesson (id, date, subject_id)
+values (1, '2023-03-01', 1);
 
 -- attendance test data
 insert into bu_attendance (id, lesson_id, mark, student_id, was_present)
