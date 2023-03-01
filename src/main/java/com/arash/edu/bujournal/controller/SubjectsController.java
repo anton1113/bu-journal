@@ -1,6 +1,9 @@
 package com.arash.edu.bujournal.controller;
 
-import com.arash.edu.bujournal.domain.*;
+import com.arash.edu.bujournal.domain.Group;
+import com.arash.edu.bujournal.domain.Lesson;
+import com.arash.edu.bujournal.domain.Subject;
+import com.arash.edu.bujournal.domain.Teacher;
 import com.arash.edu.bujournal.service.GroupService;
 import com.arash.edu.bujournal.service.LessonService;
 import com.arash.edu.bujournal.service.SubjectService;
@@ -42,7 +45,15 @@ public class SubjectsController {
         List<Lesson> lessons = lessonService.findAllBySubjectId(id);
         model.addAttribute("subject", subject);
         model.addAttribute("lessons", lessons);
+        model.addAttribute("draftLesson", new Lesson());
         return "subject";
+    }
+
+    @PostMapping("/subjects/{subjectId}/lessons")
+    public String showSubject(@PathVariable Long subjectId, @ModelAttribute Lesson lesson) {
+        lesson.setSubjectId(subjectId);
+        lessonService.add(lesson);
+        return "redirect:/subjects/" + subjectId;
     }
 
     @PostMapping("/subjects")

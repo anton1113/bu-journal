@@ -20,4 +20,9 @@ public class LessonService {
         log.info("Find all lessons by subjectId [{}]", subjectId);
         return lessonRepository.findAllBySubjectId(subjectId);
     }
+
+    public Lesson add(@NonNull Lesson lesson) {
+        log.info("Add lesson {}", lesson);
+        return lessonRepository.save(lesson);
+    }
 }
