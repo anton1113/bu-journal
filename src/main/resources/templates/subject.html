@@ -41,10 +41,13 @@
             <span class="close" id="closeInsertSpan">&times;</span>
             <div class="form-group">
                 <label th:for="lessonDate" th:text="#{label.input.lesson.date}">Lesson date</label>
-                <input id="lessonDate" required=true type="date" class="form-control" th:field="*{date}" name="lessonDate">
+                <input id="lessonDate" required=true type="date" class="form-control" th:field="*{date}"
+                       name="lessonDate">
             </div>
             <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add lesson</button>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">Cancel</button>
+            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">
+                Cancel
+            </button>
         </form>
     </div>
 </div>

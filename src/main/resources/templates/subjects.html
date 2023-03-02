@@ -24,7 +24,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="subject : ${subjects}" th:with="teacher=${@teacherService.findByNullableId(subject.teacherId)}, group=${@groupService.findByNullableId(subject.groupId)}">
+    <tr th:each="subject : ${subjects}"
+        th:with="teacher=${@teacherService.findByNullableId(subject.teacherId)}, group=${@groupService.findByNullableId(subject.groupId)}">
         <td th:text="${subject.id}">ID</td>
         <td th:text="${subject.name}">Subject name</td>
         <td th:text="${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()}">Teacher full name</td>
@@ -53,13 +54,15 @@
             <span class="close" id="closeInsertSpan">&times;</span>
             <div class="form-group">
                 <label th:for="subjectName" th:text="#{label.input.subject.name}">Subject name</label>
-                <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text" name="subjectName">
+                <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text"
+                       name="subjectName">
             </div>
             <div class="form-group">
                 <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}">Teacher</label><br>
                 <select class="custom-select" id="subjectTeacher" th:field="*{teacherId}">
                     <option th:text="#{text.teacher.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="${teacher.getFullName()}"></option>
+                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                            th:text="${teacher.getFullName()}"></option>
                 </select>
             </div>
             <div class="form-group">
@@ -70,7 +73,9 @@
                 </select>
             </div>
             <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add subject</button>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">Cancel</button>
+            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">
+                Cancel
+            </button>
         </form>
     </div>
 </div>

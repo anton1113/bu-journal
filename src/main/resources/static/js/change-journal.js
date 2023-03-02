@@ -4,7 +4,7 @@ function onChangeHandler(id, val) {
 
     const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'text/plain' },
+        headers: {'Content-Type': 'text/plain'},
         body: val
     };
     fetch(window.location.origin + '/attendances/' + id, requestOptions)

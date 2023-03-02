@@ -36,7 +36,8 @@
 
 <footer class="footer bg-dark" th:fragment="footer">
     <span class="text-light">
-        <p style="margin-left: 25px" th:text="|${@environment.getProperty('app.name')} ${@environment.getProperty('app.version')}|">App info</p>
+        <p style="margin-left: 25px"
+           th:text="|${@environment.getProperty('app.name')} ${@environment.getProperty('app.version')}|">App info</p>
     </span>
 </footer>
 
@@ -49,7 +50,9 @@
         var modal = document.getElementById("errorModal");
         var span = document.getElementById("closeSpan");
 
-        span.onclick = function() {   modal.style.display = "none"; }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
     </script>
 </div>
 
