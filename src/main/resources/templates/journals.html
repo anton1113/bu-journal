@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bu journals</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav th:replace="fragments/general::navbar"></nav>
+
+<div th:replace="fragments/general::#errorModal"></div>
+
+<div id="accordion">
+    <div th:each="group: ${groups}" class="card">
+        <div class="card-header" th:id="${'heading' + group.id}">
+            <h5 class="mb-0">
+                <button th:text="${group.name}" class="btn btn-link" data-toggle="collapse" th:attr="data-target='#' + ${'collapse' + group.id}, aria-controls=${'collapse' + group.id}" aria-expanded="true">
+                    Group button label
+                </button>
+            </h5>
+        </div>
+
+        <div th:id="${'collapse' + group.id}" class="collapse show" th:attr="aria-labeled-by=${'heading' + group.id}" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th th:text="#{subject.name}">Subject name</th>
+                        <th th:text="#{teacher.name}">Teacher full name</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="subject : ${@subjectService.findAllByGroupId(group.id)}" th:with="teacher=${@teacherService.findByNullableId(subject.teacherId)}">
+                        <td th:text="${subject.id}">ID</td>
+                        <td th:text="${subject.name}">Subject name</td>
+                        <td th:text="${teacher} == null ? #{text.teacher.empty} : |${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Teacher full name</td>
+                        <td>
+                            <a th:text="#{label.href.journal}" th:href="@{journals/subjects/__${subject.id}__/}" target="_blank">Journal</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/general::footer"></footer>
+
+</body>
+</html>

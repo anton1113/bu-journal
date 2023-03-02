@@ -41,7 +41,7 @@ public class SubjectsController {
 
     @GetMapping("/subjects/{id}")
     public String showSubject(@PathVariable Long id, Model model) {
-        Subject subject = subjectService.findByid(id);
+        Subject subject = subjectService.findById(id);
         List<Lesson> lessons = lessonService.findAllBySubjectId(id);
         model.addAttribute("subject", subject);
         model.addAttribute("lessons", lessons);

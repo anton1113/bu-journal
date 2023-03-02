@@ -1,6 +1,8 @@
 package com.arash.edu.bujournal.domain;
 
+import com.arash.edu.bujournal.util.DateFormatUtil;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -21,4 +23,11 @@ public class Lesson {
 
     @Column(nullable = false)
     private Long subjectId;
+
+    public String getFormattedDate() {
+        if (date == null) {
+            return StringUtils.EMPTY;
+        }
+        return DateFormatUtil.ddMM(date);
+    }
 }
