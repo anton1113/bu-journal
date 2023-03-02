@@ -22,7 +22,12 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
-    public Subject findByid(@NonNull Long id) {
+    public List<Subject> findAllByGroupId(@NonNull Long groupId) {
+        log.info("Find all subjects by group id [{}]", groupId);
+        return subjectRepository.findAllByGroupId(groupId);
+    }
+
+    public Subject findById(@NonNull Long id) {
         log.info("Find subject by id [{}]", id);
         return subjectRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Subject not found by id"));

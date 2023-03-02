@@ -2,11 +2,15 @@ ALTER DATABASE bu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- test teacher data
 insert into bu_teacher (id, first_name, last_name, patronymic)
-values (1, 'Ольга', 'Артеменко', 'Іванівна');
+values (1, 'Ольга', 'Артеменко', 'Іванівна'),
+       (2, 'Тетяна', 'Штерма', 'Василівна'),
+       (3, 'Валерій', 'Євдокименко', 'Кирилович');
 
 -- group test data
 insert into bu_group (id, curator_id, name)
-values (1, 1, 'KM-501');
+values (1, 1, 'KM-501'),
+       (2, 2, 'ФМ-501'),
+       (3, 3, 'АМ-501');
 
 -- student dest data
 insert into bu_student (id, first_name, group_id, last_name, patronymic)
@@ -14,7 +18,11 @@ values (1, 'Антон', 1, 'Расщектаєв', 'Володимирович'
 
 -- subject test data
 insert into bu_subject (id, name, teacher_id, group_id)
-values (1, 'Основи програмування', 1 ,1);
+values (1, 'Основи програмування', 1 ,1),
+       (2, 'Менеджмент знань', 2 ,1),
+       (3, 'Методологія наукових досліждень', 3 ,1),
+       (4, 'Педагогіка та методика вищої школи', 2 ,1),
+       (5, 'Нечіткі моделі та методи обчислювального інтелекту', 1 ,1);
 
 -- lesson test data
 insert into bu_lesson (id, date, subject_id)
