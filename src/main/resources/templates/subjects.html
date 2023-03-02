@@ -27,7 +27,7 @@
     <tr th:each="subject : ${subjects}" th:with="teacher=${@teacherService.findByNullableId(subject.teacherId)}, group=${@groupService.findByNullableId(subject.groupId)}">
         <td th:text="${subject.id}">ID</td>
         <td th:text="${subject.name}">Subject name</td>
-        <td th:text="${teacher} == null ? #{text.teacher.empty} : |${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Teacher full name</td>
+        <td th:text="${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()}">Teacher full name</td>
         <td th:text="${group} == null ? #{text.group.empty} : ${group.name}">Group name</td>
         <td>
             <a th:text="#{label.href.subject.lessons}" th:href="@{subjects/__${subject.id}__}">Lessons schedule</a>
@@ -59,7 +59,7 @@
                 <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}">Teacher</label><br>
                 <select class="custom-select" id="subjectTeacher" th:field="*{teacherId}">
                     <option th:text="#{text.teacher.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|"></option>
+                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="${teacher.getFullName()}"></option>
                 </select>
             </div>
             <div class="form-group">

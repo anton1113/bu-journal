@@ -61,7 +61,7 @@
                 <label th:for="curator" th:text="#{label.select.group.curator}">Curator</label><br>
                 <select class="custom-select" id="curator" th:field="*{curatorId}">
                     <option th:text="#{text.curator.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|"></option>
+                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="${teacher.getFullName()}"></option>
                 </select>
             </div>
             <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add group</button>

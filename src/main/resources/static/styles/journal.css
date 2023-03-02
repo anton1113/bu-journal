@@ -1,0 +1,23 @@
+h5.centered-text {
+    text-align: center;
+}
+
+h6.centered-text {
+    text-align: center;
+}
+
+input.editable-cell {
+    border: none;
+    horiz-align: center;
+}
+
+table.journal {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th.lesson-date {
+    font-size:14px;
+    font-weight: normal;
+    text-align: center
+}
