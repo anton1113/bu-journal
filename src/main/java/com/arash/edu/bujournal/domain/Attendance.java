@@ -1,12 +1,11 @@
 package com.arash.edu.bujournal.domain;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.UUID;
 
+@NoArgsConstructor
 @Data
 @Table(schema = "bu", name = "bu_attendance")
 @Entity
@@ -24,5 +23,10 @@ public class Attendance {
 
     private Integer mark;
 
-    private Boolean wasPresent;
+    private Boolean isAbsent;
+
+    public Attendance(Long studentId, Long lessonId) {
+        this.studentId = studentId;
+        this.lessonId = lessonId;
+    }
 }

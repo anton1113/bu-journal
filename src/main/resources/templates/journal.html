@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${group.name} + ' ' + ${subject.name}">Group name</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<div th:replace="fragments/general::#errorModal"></div>
+
+<h5 style="text-align: center" th:text="#{text.journal.subject.name} + ': ' + ${subject.name}"></h5>
+<h5 style="text-align: center" th:text="#{text.journal.teacher.name} + ': ' + ${teacher} == null ? #{text.teacher.empty} : |${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|"></h5>
+<h5 style="text-align: center" th:text="#{text.journal.group.name} + ': ' + ${group.name}"></h5>
+<br>
+<h6 style="text-align: center" th:text="#{text.journal.table.head}"></h6>
+
+<table class="table-bordered" style="margin-left: auto; margin-right: auto;">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th th:text="#{student.name}">Student full name</th>
+        <th th:each="lesson: ${lessons}" th:text="${lesson.getFormattedDate()}" style="font-size:14px; font-weight: normal; text-align: center">Lesson date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.id}">ID</td>
+        <td th:text="|${student.lastName} ${student.firstName} ${student.patronymic}|">Full name</td>
+        <td th:each="lesson: ${lessons}" th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">
+            <input type="text" size="4" style="border: none; horiz-align: center" th:attr="id=${attendance.id}, value=${attendance.mark}">
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

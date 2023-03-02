@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bu students</title>
+    <title>Bu journals</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -43,7 +43,7 @@
                         <td th:text="${subject.name}">Subject name</td>
                         <td th:text="${teacher} == null ? #{text.teacher.empty} : |${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Teacher full name</td>
                         <td>
-                            <a th:text="#{label.href.journal}" th:href="@{journals/subjects/__${subject.id}__/}">Journal</a>
+                            <a th:text="#{label.href.journal}" th:href="@{journals/subjects/__${subject.id}__/}" target="_blank">Journal</a>
                         </td>
                     </tr>
                     </tbody>
