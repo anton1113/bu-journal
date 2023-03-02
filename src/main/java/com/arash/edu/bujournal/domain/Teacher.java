@@ -1,6 +1,7 @@
 package com.arash.edu.bujournal.domain;
 
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
@@ -20,4 +21,12 @@ public class Teacher {
     private String firstName;
 
     private String patronymic;
+
+    public String getFullName() {
+        return String.join(" ",
+                lastName == null ? StringUtils.EMPTY : lastName,
+                firstName == null ? StringUtils.EMPTY : firstName,
+                patronymic == null ? StringUtils.EMPTY : patronymic
+        );
+    }
 }

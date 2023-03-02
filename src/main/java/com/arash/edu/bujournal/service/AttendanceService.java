@@ -7,15 +7,16 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
+
+import static com.arash.edu.bujournal.constance.AttendanceConstants.ABSENT_CODE;
+import static org.apache.commons.lang3.math.NumberUtils.createNumber;
+import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class AttendanceService {
-
-    private static final String ABSENT_CODE = "Н";
 
     private final AttendanceRepository attendanceRepository;
 
@@ -30,18 +31,33 @@ public class AttendanceService {
         Attendance attendance = attendanceRepository.findById(attendanceId)
                         .orElseThrow(() -> new NotFoundException("Attendance not found by id " + attendanceId));
         if (StringUtils.isEmpty(mark)) {
-            attendance.setMark(null);
-            return attendanceRepository.save(attendance);
+            return clear(attendance);
         }
-        if (NumberUtils.isCreatable(mark)) {
-            int intMark = NumberUtils.createNumber(mark).intValue();
-            attendance.setMark(intMark);
-            return attendanceRepository.save(attendance);
+        if (isCreatable(mark)) {
+            return setMark(attendance, createNumber(mark).intValue());
         } else if (ABSENT_CODE.equalsIgnoreCase(mark)) {
-            attendance.setIsAbsent(true);
-            return attendanceRepository.save(attendance);
+            return setAbsent(attendance, true);
         } else {
             throw new IllegalArgumentException("Unable to parse mark " + mark + " for attendance " + attendanceId);
         }
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private Attendance setAbsent(Attendance attendance, boolean absent) {
+        attendance.setIsAbsent(absent);
+        attendance.setMark(null);
+        return attendanceRepository.save(attendance);
+    }
+
+    private Attendance setMark(Attendance attendance, int mark) {
+        attendance.setIsAbsent(false);
+        attendance.setMark(mark);
+        return attendanceRepository.save(attendance);
+    }
+
+    private Attendance clear(Attendance attendance) {
+        attendance.setMark(null);
+        attendance.setIsAbsent(null);
+        return attendanceRepository.save(attendance);
     }
 }

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.arash.edu</groupId>
     <artifactId>bu-journal</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <name>bu-journal</name>
     <description>bu-journal</description>
     <properties>

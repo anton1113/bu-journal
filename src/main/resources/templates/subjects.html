@@ -24,10 +24,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="subject : ${subjects}" th:with="teacher=${@teacherService.findByNullableId(subject.teacherId)}, group=${@groupService.findByNullableId(subject.groupId)}">
+    <tr th:each="subject : ${subjects}"
+        th:with="teacher=${@teacherService.findByNullableId(subject.teacherId)}, group=${@groupService.findByNullableId(subject.groupId)}">
         <td th:text="${subject.id}">ID</td>
         <td th:text="${subject.name}">Subject name</td>
-        <td th:text="${teacher} == null ? #{text.teacher.empty} : |${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|">Teacher full name</td>
+        <td th:text="${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()}">Teacher full name</td>
         <td th:text="${group} == null ? #{text.group.empty} : ${group.name}">Group name</td>
         <td>
             <a th:text="#{label.href.subject.lessons}" th:href="@{subjects/__${subject.id}__}">Lessons schedule</a>
@@ -37,7 +38,7 @@
     <tfoot>
     <tr>
         <td>
-            <button th:text="#{label.button.add}" class="btn btn-secondary" id="addSubjectButton">Add group</button>
+            <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add subject</button>
         </td>
         <td></td>
         <td></td>
@@ -47,19 +48,21 @@
     </tfoot>
 </table>
 
-<div id="addSubjectModal" class="modal">
+<div id="insertModal" class="modal">
     <div class="modal-content">
         <form action="#" th:action="@{/subjects}" th:object="${draftSubject}" method="post">
-            <span class="close">&times;</span>
+            <span class="close" id="closeInsertSpan">&times;</span>
             <div class="form-group">
                 <label th:for="subjectName" th:text="#{label.input.subject.name}">Subject name</label>
-                <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text" name="subjectName">
+                <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text"
+                       name="subjectName">
             </div>
             <div class="form-group">
                 <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}">Teacher</label><br>
                 <select class="custom-select" id="subjectTeacher" th:field="*{teacherId}">
                     <option th:text="#{text.teacher.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="|${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}|"></option>
+                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                            th:text="${teacher.getFullName()}"></option>
                 </select>
             </div>
             <div class="form-group">
@@ -69,27 +72,17 @@
                     <option th:each="group: ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
                 </select>
             </div>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.add}">Add subject</button>
+            <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add subject</button>
+            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">
+                Cancel
+            </button>
         </form>
     </div>
 </div>
 
 <footer th:replace="fragments/general::footer"></footer>
 
-<script>
-    var modal = document.getElementById("addSubjectModal");
-    var button = document.getElementById("addSubjectButton");
-    var span = document.getElementsByClassName("close")[0];
-
-    button.onclick = function() {   modal.style.display = "block"; }
-    span.onclick = function() {   modal.style.display = "none"; }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        } }
-</script>
+<script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
 
 </body>
 </html>

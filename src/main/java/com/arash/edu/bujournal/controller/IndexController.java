@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class MainController {
+public class IndexController {
 
     @Value("${app.name}")
     private String appName;
@@ -15,9 +15,9 @@ public class MainController {
     private String appVersion;
 
     @GetMapping("/")
-    public String showMainPage(Model model) {
+    public String showIndexPage(Model model) {
         model.addAttribute("appName", appName);
         model.addAttribute("appVersion", appVersion);
-        return "main";
+        return "index";
     }
 }
