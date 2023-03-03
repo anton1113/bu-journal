@@ -19,7 +19,7 @@
          }
          stage('Run new image') {
              steps {
-                  sh 'docker run -e BU_JOURNAL_DB_URL=${BU_JOURNAL_DB_URL} -e BU_JOURNAL_DB_USER=${BU_JOURNAL_DB_USER} -e BU_JOURNAL_DB_PASSWORD=${BU_JOURNAL_DB_PASSWORD} --restart=always ${runEnv} --name=bu-journal --net=host anton1113/bu-journal'
+                  sh 'docker run --env-file=/etc/environment --restart=always ${runEnv} --name=bu-journal --net=host anton1113/bu-journal'
              }
          }
      }
