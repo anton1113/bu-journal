@@ -2,20 +2,24 @@
      agent any
 
      stages {
-         stage('Build') {
+         stage('Mvn clean install') {
              steps {
-                 echo 'Building..'
                  sh '/opt/apache-maven-3.6.3/bin/mvn clean install'
              }
          }
-         stage('Test') {
+         stage('Build docker image') {
              steps {
-                 echo 'Testing..'
+                 sh 'docker build -t anton1113/bu-journal -f Dockerfile target'
              }
          }
-         stage('Deploy') {
+         stage('Stop running container') {
              steps {
-                 echo 'Deploying....'
+                 sh 'docker rm -f bu-journal'
+             }
+         }
+         stage('Run new image') {
+             steps {
+                  sh 'docker run -d --name=bu-journal --net=host anton1113/bu-journal'
              }
          }
      }
