@@ -19,7 +19,7 @@
          }
          stage('Run new image') {
              steps {
-                  sh 'docker run --env-file /var/lib/jenkins/env/bu-journal.env --restart=always ${runEnv} --name=bu-journal --net=host anton1113/bu-journal'
+                  sh 'docker run -d --env-file /var/lib/jenkins/env/bu-journal.env --restart=always ${runEnv} --name=bu-journal --net=host anton1113/bu-journal'
              }
          }
      }
