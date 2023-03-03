@@ -2,15 +2,10 @@
      agent any
 
      stages {
-         stage('Echo ls') {
-             steps {
-                 sh 'mvn -version'
-             }
-         }
          stage('Build') {
              steps {
                  echo 'Building..'
-                 sh 'mvn clean'
+                 sh '/opt/apache-maven-3.6.3/bin/mvn clean install'
              }
          }
          stage('Test') {
