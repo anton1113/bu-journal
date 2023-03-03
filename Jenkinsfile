@@ -2,6 +2,11 @@
      agent any
 
      stages {
+         stage('Echo ls') {
+             steps {
+                 sh 'ls'
+             }
+         }
          stage('Build') {
              steps {
                  echo 'Building..'
