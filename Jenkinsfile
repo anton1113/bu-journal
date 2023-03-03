@@ -4,13 +4,13 @@
      stages {
          stage('Echo ls') {
              steps {
-                 sh 'ls'
+                 sh 'mvn -version'
              }
          }
          stage('Build') {
              steps {
                  echo 'Building..'
-                 sh 'mvn clean install'
+                 sh 'mvn clean'
              }
          }
          stage('Test') {
