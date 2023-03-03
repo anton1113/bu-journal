@@ -2,11 +2,6 @@
      agent any
 
      stages {
-              stage('Who am I?') {
-                  steps {
-                      sh 'whoami'
-                  }
-              }
          stage('Mvn clean install') {
              steps {
                  sh '/opt/apache-maven-3.6.3/bin/mvn clean install'
