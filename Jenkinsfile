@@ -24,7 +24,8 @@
          }
          stage('Run new image') {
              steps {
-                  sh 'docker run --restart=always --name=bu-journal --net=host anton1113/bu-journal'
+                  String runEnv = "-e BU_JOURNAL_DB_URL=${BU_JOURNAL_DB_URL} -e BU_JOURNAL_DB_USER=${BU_JOURNAL_DB_USER} -e BU_JOURNAL_DB_PASSWORD=${BU_JOURNAL_DB_PASSWORD}"
+                  sh 'docker run --restart=always ${runEnv} --name=bu-journal --net=host anton1113/bu-journal'
              }
          }
      }
