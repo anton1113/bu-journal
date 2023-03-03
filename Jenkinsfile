@@ -24,7 +24,7 @@
          }
          stage('Run new image') {
              steps {
-                  sh 'docker run -d --name=bu-journal --net=host anton1113/bu-journal'
+                  sh 'docker run --restart=always --name=bu-journal --net=host anton1113/bu-journal'
              }
          }
      }
