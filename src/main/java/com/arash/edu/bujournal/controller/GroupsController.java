@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -41,13 +42,13 @@ public class GroupsController {
     }
 
     @GetMapping("/groups/{groupId}/delete")
-    public String deleteGroup(@PathVariable Long groupId) {
+    public String deleteGroup(@PathVariable UUID groupId) {
         groupService.deleteById(groupId);
         return "redirect:/groups";
     }
 
     @GetMapping("/groups/{id}")
-    public String showGroup(@PathVariable Long id, Model model) {
+    public String showGroup(@PathVariable UUID id, Model model) {
         Group group = groupService.findById(id);
         List<Student> students = studentService.findAllByGroupId(group.getId());
         model.addAttribute("group", group);
@@ -59,13 +60,13 @@ public class GroupsController {
     }
 
     @GetMapping("/groups/{groupId}/students/{studentId}/delete")
-    public String deleteStudentOfGroup(@PathVariable Long groupId, @PathVariable Long studentId) {
+    public String deleteStudentOfGroup(@PathVariable UUID groupId, @PathVariable UUID studentId) {
         studentService.deleteById(studentId);
         return "redirect:/groups/" + groupId;
     }
 
     @PostMapping("/groups/{groupId}/students")
-    public String addStudentToGroup(@PathVariable Long groupId, @ModelAttribute Student student) {
+    public String addStudentToGroup(@PathVariable UUID groupId, @ModelAttribute Student student) {
         student.setGroupId(groupId);
         studentService.addStudent(student);
         return "redirect:/groups/" + groupId;

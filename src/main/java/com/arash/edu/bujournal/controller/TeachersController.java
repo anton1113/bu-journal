@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -28,7 +29,7 @@ public class TeachersController {
     }
 
     @GetMapping("/teachers/{id}/delete")
-    public String deleteTeacher(@PathVariable Long id) {
+    public String deleteTeacher(@PathVariable UUID id) {
         teacherService.deleteTeacher(id);
         return "redirect:/teachers";
     }

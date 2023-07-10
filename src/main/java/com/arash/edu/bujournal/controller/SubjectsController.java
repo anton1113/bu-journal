@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -40,7 +41,7 @@ public class SubjectsController {
     }
 
     @GetMapping("/subjects/{id}")
-    public String showSubject(@PathVariable Long id, Model model) {
+    public String showSubject(@PathVariable UUID id, Model model) {
         Subject subject = subjectService.findById(id);
         List<Lesson> lessons = lessonService.findAllBySubjectId(id);
         model.addAttribute("subject", subject);
@@ -50,7 +51,7 @@ public class SubjectsController {
     }
 
     @PostMapping("/subjects/{subjectId}/lessons")
-    public String showSubject(@PathVariable Long subjectId, @ModelAttribute Lesson lesson) {
+    public String showSubject(@PathVariable UUID subjectId, @ModelAttribute Lesson lesson) {
         lesson.setSubjectId(subjectId);
         lessonService.add(lesson);
         return "redirect:/subjects/" + subjectId;

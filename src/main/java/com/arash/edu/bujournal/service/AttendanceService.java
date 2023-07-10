@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 import static com.arash.edu.bujournal.constance.AttendanceConstants.ABSENT_CODE;
 import static org.apache.commons.lang3.math.NumberUtils.createNumber;
 import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
@@ -20,13 +22,13 @@ public class AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
 
-    public Attendance findOrCreateByStudentIdAndLessonId(@NonNull Long studentId, @NonNull Long lessonId) {
+    public Attendance findOrCreateByStudentIdAndLessonId(@NonNull UUID studentId, @NonNull UUID lessonId) {
         log.debug("Find or create attendance by studentId [{}] and lessonId [{}]", studentId, lessonId);
         return attendanceRepository.findByStudentIdAndLessonId(studentId, lessonId)
                 .orElseGet(() -> attendanceRepository.save(new Attendance(studentId, lessonId)));
     }
 
-    public Attendance putMark(@NonNull Long attendanceId, String mark) {
+    public Attendance putMark(@NonNull UUID attendanceId, String mark) {
         log.info("Put mark [{}] for attendance [{}]", mark, attendanceId);
         Attendance attendance = attendanceRepository.findById(attendanceId)
                         .orElseThrow(() -> new NotFoundException("Attendance not found by id " + attendanceId));

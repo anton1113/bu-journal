@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class SubjectService {
         return subjectRepository.findAllByGroupId(groupId);
     }
 
-    public Subject findById(@NonNull Long id) {
+    public Subject findById(@NonNull UUID id) {
         log.info("Find subject by id [{}]", id);
         return subjectRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Subject not found by id"));
@@ -35,6 +36,9 @@ public class SubjectService {
 
     public Subject add(@NonNull Subject subject) {
         log.info("Add subject {}", subject);
+        if (subject.getId() == null) {
+            subject.setId(UUID.randomUUID());
+        }
         return subjectRepository.save(subject);
     }
 }

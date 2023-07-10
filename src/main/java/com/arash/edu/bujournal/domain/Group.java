@@ -1,24 +1,19 @@
 package com.arash.edu.bujournal.domain;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(schema = "bu", name = "bu_group")
-@Entity
+@Document(collection = "bu_group")
 public class Group {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
-    @Column(nullable = false)
     private String name;
 
-    private Long curatorId;
+    private UUID curatorId;
 }
