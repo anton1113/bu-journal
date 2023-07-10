@@ -1,13 +1,14 @@
 package com.arash.edu.bujournal.repository;
 
 import com.arash.edu.bujournal.domain.Attendance;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
+public interface AttendanceRepository extends MongoRepository<Attendance, UUID> {
 
-    Optional<Attendance> findByStudentIdAndLessonId(Long studentId, Long lessonId);
+    Optional<Attendance> findByStudentIdAndLessonId(UUID studentId, UUID lessonId);
 }

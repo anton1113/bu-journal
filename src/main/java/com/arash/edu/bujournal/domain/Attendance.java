@@ -4,30 +4,29 @@ import com.arash.edu.bujournal.constance.AttendanceConstants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Data
-@Table(schema = "bu", name = "bu_attendance")
-@Entity
+@Document(collection = "bu_attendance")
 public class Attendance {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
-    @Column(nullable = false)
-    private Long studentId;
+    private UUID studentId;
 
-    @Column(nullable = false)
-    private Long lessonId;
+    private UUID lessonId;
 
     private Integer mark;
 
     private Boolean isAbsent;
 
-    public Attendance(Long studentId, Long lessonId) {
+    public Attendance(UUID id, UUID studentId, UUID lessonId) {
+        this.id = UUID.randomUUID();
         this.studentId = studentId;
         this.lessonId = lessonId;
     }

@@ -1,23 +1,25 @@
 package com.arash.edu.bujournal.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Table(schema = "bu", name = "bu_teacher")
-@Entity
+@Document(collection = "bu_teacher")
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
-    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
     private String firstName;
 
     private String patronymic;

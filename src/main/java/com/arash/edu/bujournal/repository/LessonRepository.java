@@ -1,13 +1,14 @@
 package com.arash.edu.bujournal.repository;
 
 import com.arash.edu.bujournal.domain.Lesson;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface LessonRepository extends JpaRepository<Lesson, Long> {
+public interface LessonRepository extends MongoRepository<Lesson, UUID> {
 
-    List<Lesson> findAllBySubjectId(Long subjectId);
+    List<Lesson> findAllBySubjectId(UUID subjectId);
 }

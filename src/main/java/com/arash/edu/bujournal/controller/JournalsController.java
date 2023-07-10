@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -19,7 +20,6 @@ public class JournalsController {
     private final StudentService studentService;
     private final LessonService lessonService;
     private final TeacherService teacherService;
-    private final AttendanceService attendanceService;
 
     @GetMapping("/journals")
     public String showJournals(Model model) {
@@ -29,7 +29,7 @@ public class JournalsController {
     }
 
     @GetMapping("/journals/subjects/{subjectId}")
-    public String showSubjectJournal(@PathVariable Long subjectId, Model model) {
+    public String showSubjectJournal(@PathVariable UUID subjectId, Model model) {
         Subject subject = subjectService.findById(subjectId);
         Teacher teacher = teacherService.findById(subject.getTeacherId());
         Group group = groupService.findById(subject.getGroupId());

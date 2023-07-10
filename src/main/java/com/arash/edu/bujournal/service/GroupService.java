@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,16 +25,19 @@ public class GroupService {
 
     public Group add(@NonNull Group group) {
         log.info("Add group {}", group);
+        if (group.getId() == null) {
+            group.setId(UUID.randomUUID());
+        }
         return groupRepository.save(group);
     }
 
-    public Group findById(@NonNull Long id) {
+    public Group findById(@NonNull UUID id) {
         log.info("Find group by id [{}]", id);
         return groupRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Group not found by id " + id));
     }
 
-    public Group findByNullableId(Long id) {
+    public Group findByNullableId(UUID id) {
         log.info("Find group by nullable id [{}]", id);
         if (id == null) {
             return null;
@@ -42,7 +46,7 @@ public class GroupService {
                 .orElseThrow(() -> new NotFoundException("Group not found by id " + id));
     }
 
-    public void deleteById(@NonNull Long groupId) {
+    public void deleteById(@NonNull UUID groupId) {
         log.info("Delete group by id [{}]", groupId);
         groupRepository.deleteById(groupId);
     }

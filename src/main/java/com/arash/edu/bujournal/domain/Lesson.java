@@ -1,28 +1,30 @@
 package com.arash.edu.bujournal.domain;
 
 import com.arash.edu.bujournal.util.DateFormatUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Table(schema = "bu", name = "bu_lesson")
-@Entity
+@Document(collection = "bu_lesson")
 public class Lesson {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false)
-    private Long subjectId;
+    private UUID subjectId;
 
     public String getFormattedDate() {
         if (date == null) {
