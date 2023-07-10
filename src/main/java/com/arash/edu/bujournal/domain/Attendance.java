@@ -25,7 +25,8 @@ public class Attendance {
 
     private Boolean isAbsent;
 
-    public Attendance(UUID studentId, UUID lessonId) {
+    public Attendance(UUID id, UUID studentId, UUID lessonId) {
+        this.id = UUID.randomUUID();
         this.studentId = studentId;
         this.lessonId = lessonId;
     }

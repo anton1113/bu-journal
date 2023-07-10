@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface SubjectRepository extends MongoRepository<Subject, UUID> {
 
-    List<Subject> findAllByGroupId(Long groupId);
+    List<Subject> findAllByGroupId(UUID groupId);
 }

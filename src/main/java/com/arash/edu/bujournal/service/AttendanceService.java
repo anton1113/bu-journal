@@ -25,7 +25,7 @@ public class AttendanceService {
     public Attendance findOrCreateByStudentIdAndLessonId(@NonNull UUID studentId, @NonNull UUID lessonId) {
         log.debug("Find or create attendance by studentId [{}] and lessonId [{}]", studentId, lessonId);
         return attendanceRepository.findByStudentIdAndLessonId(studentId, lessonId)
-                .orElseGet(() -> attendanceRepository.save(new Attendance(studentId, lessonId)));
+                .orElseGet(() -> attendanceRepository.save(new Attendance(UUID.randomUUID(), studentId, lessonId)));
     }
 
     public Attendance putMark(@NonNull UUID attendanceId, String mark) {

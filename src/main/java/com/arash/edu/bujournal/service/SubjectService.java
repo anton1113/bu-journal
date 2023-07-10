@@ -23,7 +23,7 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
-    public List<Subject> findAllByGroupId(@NonNull Long groupId) {
+    public List<Subject> findAllByGroupId(@NonNull UUID groupId) {
         log.info("Find all subjects by group id [{}]", groupId);
         return subjectRepository.findAllByGroupId(groupId);
     }

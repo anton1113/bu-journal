@@ -1,7 +1,9 @@
 package com.arash.edu.bujournal.domain;
 
 import com.arash.edu.bujournal.util.DateFormatUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Document(collection = "bu_lesson")
 public class Lesson {
