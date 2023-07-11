@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +42,12 @@ public class GroupsController {
         return "redirect:/groups";
     }
 
+    @PostMapping("/groups/{id}")
+    public String editGroup(@PathVariable UUID id, @ModelAttribute Group group) {
+        groupService.editGroup(id, group);
+        return "redirect:/groups";
+    }
+
     @GetMapping("/groups/{groupId}/delete")
     public String deleteGroup(@PathVariable UUID groupId) {
         groupService.deleteById(groupId);
@@ -57,6 +64,13 @@ public class GroupsController {
         draftStudent.setGroupId(group.getId());
         model.addAttribute("draftStudent", draftStudent);
         return "group";
+    }
+
+    @GetMapping("/groups/{id}/draft")
+    public String getTeacherDraft(@PathVariable UUID id, RedirectAttributes redirectAttrs) {
+        Group group = groupService.findById(id);
+        redirectAttrs.addFlashAttribute("editGroupDraft", group);
+        return "redirect:/groups";
     }
 
     @GetMapping("/groups/{groupId}/students/{studentId}/delete")

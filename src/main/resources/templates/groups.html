@@ -20,6 +20,7 @@
         <th th:text="#{group.curator}">Curator</th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -30,6 +31,9 @@
         </td>
         <td>
             <a th:text="#{label.href.students.list}" th:href="@{groups/__${group.id}__}">Details</a>
+        </td>
+        <td>
+            <a th:text="#{label.href.edit}" th:href="@{groups/__${group.id}__/draft}">Edit</a>
         </td>
         <td>
             <a th:text="#{label.href.delete}" th:href="@{groups/__${group.id}__/delete}">Delete</a>
@@ -67,9 +71,30 @@
                 </select>
             </div>
             <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add group</button>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">
-                Cancel
-            </button>
+            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeInsertButton">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<div th:if="${editGroupDraft}" id="editModal" class="modal" style="display: block">
+    <div class="modal-content">
+        <form action="#" th:action="@{/groups/__${editGroupDraft.id}__}" th:object="${editGroupDraft}" method="post">
+            <span class="close" id="closeInsertSpan">&times;</span>
+            <div class="form-group">
+                <label th:for="groupName" th:text="#{label.input.group.name}">Group name</label>
+                <input id="groupName" required=true class="form-control" th:field="*{name}" type="text"
+                       name="groupName">
+            </div>
+            <div class="form-group">
+                <label th:for="curator" th:text="#{label.select.group.curator}">Curator</label><br>
+                <select class="custom-select" id="curator" th:field="*{curatorId}">
+                    <option th:text="#{text.curator.empty}" th:value="null"></option>
+                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                            th:text="${teacher.getFullName()}"></option>
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
+            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeEditButton">Cancel</button>
         </form>
     </div>
 </div>
@@ -77,6 +102,7 @@
 <footer th:replace="fragments/general::footer"></footer>
 
 <script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
+<script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
 
 </body>
 </html>
