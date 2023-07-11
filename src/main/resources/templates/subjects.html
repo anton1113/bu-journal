@@ -16,7 +16,6 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>ID</th>
         <th th:text="#{subject.name}">Subject name</th>
         <th th:text="#{subject.teacher.name}">Subject teacher name</th>
         <th th:text="#{subject.group.name}">Subject group name</th>
@@ -26,7 +25,6 @@
     <tbody>
     <tr th:each="subject : ${subjects}"
         th:with="teacher=${@teacherService.findByNullableId(subject.teacherId)}, group=${@groupService.findByNullableId(subject.groupId)}">
-        <td th:text="${subject.id}">ID</td>
         <td th:text="${subject.name}">Subject name</td>
         <td th:text="${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()}">Teacher full name</td>
         <td th:text="${group} == null ? #{text.group.empty} : ${group.name}">Group name</td>

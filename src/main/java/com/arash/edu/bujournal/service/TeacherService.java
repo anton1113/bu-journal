@@ -46,6 +46,15 @@ public class TeacherService {
         return teacherRepository.save(teacher);
     }
 
+    public Teacher editTeacher(@NonNull UUID id, @NonNull Teacher teacher) {
+        log.info("Editing teacher with {}, {}", id, teacher);
+        if (!teacherRepository.existsById(id)) {
+            throw new NotFoundException("Teacher with id " + id + "not found, unable to edit");
+        }
+        teacher.setId(id);
+        return teacherRepository.save(teacher);
+    }
+
     public void deleteTeacher(@NonNull UUID id) {
         log.info("Delete teacher by id [{}]", id);
         teacherRepository.deleteById(id);

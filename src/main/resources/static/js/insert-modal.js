@@ -1,15 +1,22 @@
-var modal = document.getElementById("insertModal");
-var button = document.getElementById("insertButton");
-var closeSpan = document.getElementById("closeInsertSpan");
-var closeButton = document.getElementById("closeInsertButton");
+var insertModal = document.getElementById("insertModal");
+var insertButton = document.getElementById("insertButton");
+var closeInsertModalSpan = document.getElementById("closeInsertSpan");
+var closeInsertModalButton = document.getElementById("closeInsertButton");
 
-button.onclick = function () {
-    modal.style.display = "block";
-}
-closeSpan.onclick = function () {
-    modal.style.display = "none";
+if (insertButton != null) {
+    insertButton.onclick = function () {
+        insertModal.style.display = "block";
+    }
 }
 
-closeButton.onclick = function () {
-    modal.style.display = "none";
+if (closeInsertModalSpan != null) {
+    closeInsertModalSpan.onclick = function () {
+        insertModal.style.display = "none";
+    }
+}
+
+if (closeInsertModalButton != null) {
+    closeInsertModalButton.onclick = function () {
+        insertModal.style.display = "none";
+    }
 }
