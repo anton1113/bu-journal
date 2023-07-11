@@ -41,4 +41,18 @@ public class SubjectService {
         }
         return subjectRepository.save(subject);
     }
+
+    public void deleteSubject(@NonNull UUID id) {
+        log.info("Delete subject by id [{}]", id);
+        subjectRepository.deleteById(id);
+    }
+
+    public Subject editSubject(@NonNull UUID id, @NonNull Subject subject) {
+        log.info("Editing subject with {}, {}", id, subject);
+        if (!subjectRepository.existsById(id)) {
+            throw new NotFoundException("Subject with id " + id + "not found, unable to edit");
+        }
+        subject.setId(id);
+        return subjectRepository.save(subject);
+    }
 }

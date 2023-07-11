@@ -60,9 +60,9 @@ public class GroupsController {
         List<Student> students = studentService.findAllByGroupId(group.getId());
         model.addAttribute("group", group);
         model.addAttribute("students", students);
-        Student draftStudent = new Student();
-        draftStudent.setGroupId(group.getId());
-        model.addAttribute("addStudentDraft", draftStudent);
+        Student addStudentDraft = new Student();
+        addStudentDraft.setGroupId(group.getId());
+        model.addAttribute("addStudentDraft", addStudentDraft);
         return "group";
     }
 
