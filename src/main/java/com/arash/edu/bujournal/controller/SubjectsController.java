@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +37,7 @@ public class SubjectsController {
         model.addAttribute("subjects", subjects);
         model.addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);
-        model.addAttribute("draftSubject", new Subject());
+        model.addAttribute("addSubjectDraft", new Subject());
         return "subjects";
     }
 
@@ -60,6 +61,25 @@ public class SubjectsController {
     @PostMapping("/subjects")
     public String addSubject(@ModelAttribute Subject subject) {
         subjectService.add(subject);
+        return "redirect:/subjects";
+    }
+
+    @GetMapping("/subjects/{id}/delete")
+    public String deleteSubject(@PathVariable UUID id) {
+        subjectService.deleteSubject(id);
+        return "redirect:/subjects";
+    }
+
+    @GetMapping("/subjects/{id}/draft")
+    public String getSubjectDraft(@PathVariable UUID id, RedirectAttributes redirectAttrs) {
+        Subject subject = subjectService.findById(id);
+        redirectAttrs.addFlashAttribute("editSubjectDraft", subject);
+        return "redirect:/subjects";
+    }
+
+    @PostMapping("/subjects/{id}")
+    public String editSubject(@PathVariable UUID id, @ModelAttribute Subject subject) {
+        subjectService.editSubject(id, subject);
         return "redirect:/subjects";
     }
 }
