@@ -31,6 +31,15 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
+    public Group editGroup(@NonNull UUID id, @NonNull Group group) {
+        log.info("Editing group with {}, {}", id, group);
+        if (!groupRepository.existsById(id)) {
+            throw new NotFoundException("Group with id " + id + "not found, unable to edit");
+        }
+        group.setId(id);
+        return groupRepository.save(group);
+    }
+
     public Group findById(@NonNull UUID id) {
         log.info("Find group by id [{}]", id);
         return groupRepository.findById(id)
