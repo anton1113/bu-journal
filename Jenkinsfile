@@ -9,13 +9,13 @@
          }
          stage('Stop running container') {
              steps {
-                 sh 'docker stop bu-journal'
-                 sh 'docker rm -f bu-journal'
+                 sh 'docker ps -a -q --filter name=bu-journal | xargs -r docker stop'
+                 sh 'docker ps -a -q --filter name=bu-journal | xargs -r docker rm -f'
              }
          }
          stage('Rm old docker image') {
              steps {
-                 sh 'docker image rm anton1113/bu-journal'
+                 sh 'docker images -q bu-journal | xargs -r docker image rm'
              }
          }
          stage('Build docker image') {
