@@ -26,10 +26,10 @@
         <tr th:each="teacher : ${teachers}">
             <td th:text="${teacher.getFullName()}">Full name</td>
             <td>
-                <a th:text="#{label.href.edit}" th:href="@{teachers/__${teacher.id}__/draft}" id="editButton">Edit</a>
+                <a th:alt="#{label.href.edit}" th:href="@{teachers/__${teacher.id}__/draft}" id="editButton">✏️</a>
             </td>
             <td>
-                <a th:text="#{label.href.delete}" th:href="@{teachers/__${teacher.id}__/delete}">Delete</a>
+                <a th:alt="#{label.href.delete}" th:href="@{teachers/__${teacher.id}__/delete}">❌</a>
             </td>
         </tr>
         </tbody>

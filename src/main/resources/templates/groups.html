@@ -33,10 +33,10 @@
             <a th:text="#{label.href.students.list}" th:href="@{groups/__${group.id}__}">Details</a>
         </td>
         <td>
-            <a th:text="#{label.href.edit}" th:href="@{groups/__${group.id}__/draft}">Edit</a>
+            <a th:alt="#{label.href.edit}" th:href="@{groups/__${group.id}__/draft}">✏️</a>
         </td>
         <td>
-            <a th:text="#{label.href.delete}" th:href="@{groups/__${group.id}__/delete}">Delete</a>
+            <a th:alt="#{label.href.delete}" th:href="@{groups/__${group.id}__/delete}">❌</a>
         </td>
     </tr>
     </tbody>
