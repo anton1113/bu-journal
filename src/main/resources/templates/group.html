@@ -16,14 +16,12 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>ID</th>
         <th th:text="#{student.name}">Student name</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
-        <td th:text="${student.id}">ID</td>
         <td th:text="${student.getFullName()}">Full name</td>
         <td>
             <a th:text="#{label.href.delete}" th:href="@{__${group.id}__/students/__${student.id}__/delete}">Delete</a>

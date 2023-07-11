@@ -22,14 +22,12 @@
     <table class="table-bordered journal">
         <thead>
         <tr>
-            <th>ID</th>
             <th th:text="#{student.name}">Student full name</th>
             <th th:each="lesson: ${lessons}" th:text="${lesson.getFormattedDate()}" class="lesson-date">Lesson date</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="student : ${students}">
-            <td th:text="${student.id}">ID</td>
             <td th:text="${student.getFullName()}">Full name</td>
             <td th:each="lesson: ${lessons}"
                 th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">
