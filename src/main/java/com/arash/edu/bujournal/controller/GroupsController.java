@@ -32,7 +32,7 @@ public class GroupsController {
         List<Teacher> teachers = teacherService.findAll();
         model.addAttribute("groups", groups);
         model.addAttribute("teachers", teachers);
-        model.addAttribute("draftGroup", new Group());
+        model.addAttribute("addGroupDraft", new Group());
         return "groups";
     }
 
@@ -62,12 +62,12 @@ public class GroupsController {
         model.addAttribute("students", students);
         Student draftStudent = new Student();
         draftStudent.setGroupId(group.getId());
-        model.addAttribute("draftStudent", draftStudent);
+        model.addAttribute("addStudentDraft", draftStudent);
         return "group";
     }
 
     @GetMapping("/groups/{id}/draft")
-    public String getTeacherDraft(@PathVariable UUID id, RedirectAttributes redirectAttrs) {
+    public String getGroupDraft(@PathVariable UUID id, RedirectAttributes redirectAttrs) {
         Group group = groupService.findById(id);
         redirectAttrs.addFlashAttribute("editGroupDraft", group);
         return "redirect:/groups";
@@ -76,6 +76,22 @@ public class GroupsController {
     @GetMapping("/groups/{groupId}/students/{studentId}/delete")
     public String deleteStudentOfGroup(@PathVariable UUID groupId, @PathVariable UUID studentId) {
         studentService.deleteById(studentId);
+        return "redirect:/groups/" + groupId;
+    }
+
+    @GetMapping("/groups/{groupId}/students/{studentId}/draft")
+    public String getStudentOfGroupDraft(@PathVariable UUID groupId, @PathVariable UUID studentId, RedirectAttributes redirectAttrs) {
+        Student student = studentService.findById(studentId);
+        if (student.getGroupId() == null || !student.getGroupId().equals(groupId)) {
+            throw new IllegalStateException("Student " + studentId + " is not in group " + groupId);
+        }
+        redirectAttrs.addFlashAttribute("editStudentDraft", student);
+        return "redirect:/groups/" + groupId;
+    }
+
+    @PostMapping("/groups/{groupId}/students/{studentId}")
+    public String editStudentOfGroupDraft(@PathVariable UUID groupId, @PathVariable UUID studentId, @ModelAttribute Student student) {
+        studentService.editStudent(studentId, student);
         return "redirect:/groups/" + groupId;
     }
 
