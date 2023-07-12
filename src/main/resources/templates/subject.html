@@ -17,11 +17,15 @@
     <thead>
     <tr>
         <th th:text="#{lesson.date}">Lesson date</th>
+        <th th:text="#{lesson.name}">Lesson name</th>
+        <th th:text="#{lesson.type}">Lesson type</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="lesson : ${lessons}">
         <td th:text="${lesson.date}">Lesson date</td>
+        <td th:text="${lesson.name}">Lesson name</td>
+        <td th:text="${lesson.type.getUaValue()}">Lesson type</td>
     </tr>
     </tbody>
     <tfoot>
