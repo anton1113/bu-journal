@@ -1,6 +1,7 @@
 package com.arash.edu.bujournal.service;
 
 import com.arash.edu.bujournal.domain.Lesson;
+import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.repository.LessonRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,15 @@ public class LessonService {
             lesson.setId(UUID.randomUUID());
         }
         return lessonRepository.save(lesson);
+    }
+
+    public void deleteLessonFromSubject(@NonNull UUID subjectId, @NonNull UUID lessonId) {
+        log.info("Delete lesson [{}] from subject [{}]", lessonId, subjectId);
+        lessonRepository.findByIdAndSubjectId(lessonId, subjectId).ifPresentOrElse(
+                lessonRepository::delete,
+                () -> {
+                    throw new NotFoundException("Lesson not found by id " + lessonId + " and subjectId " + subjectId);
+                }
+        );
     }
 }

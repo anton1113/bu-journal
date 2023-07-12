@@ -19,6 +19,7 @@
         <th th:text="#{lesson.date}">Lesson date</th>
         <th th:text="#{lesson.name}">Lesson name</th>
         <th th:text="#{lesson.type}">Lesson type</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,9 @@
         <td th:text="${lesson.date}">Lesson date</td>
         <td th:text="${lesson.name}">Lesson name</td>
         <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
+        <td>
+            <a th:alt="#{label.href.delete}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">❌</a>
+        </td>
     </tr>
     </tbody>
     <tfoot>

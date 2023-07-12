@@ -58,6 +58,12 @@ public class SubjectsController {
         return "redirect:/subjects/" + subjectId;
     }
 
+    @GetMapping("/subjects/{subjectId}/lessons/{lessonId}/delete")
+    public String deleteLessonFromSubject(@PathVariable UUID subjectId, @PathVariable UUID lessonId, @ModelAttribute Lesson lesson) {
+        lessonService.deleteLessonFromSubject(subjectId, lessonId);
+        return "redirect:/subjects/" + subjectId;
+    }
+
     @PostMapping("/subjects")
     public String addSubject(@ModelAttribute Subject subject) {
         subjectService.add(subject);
