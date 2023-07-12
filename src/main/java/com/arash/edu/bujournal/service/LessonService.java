@@ -18,6 +18,12 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
 
+    public Lesson findById(@NonNull UUID id) {
+        log.info("Find lesson by id [{}]", id);
+        return lessonRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Lesson not found by id"));
+    }
+
     public List<Lesson> findAllBySubjectId(@NonNull UUID subjectId) {
         log.info("Find all lessons by subjectId [{}]", subjectId);
         return lessonRepository.findAllBySubjectId(subjectId);
@@ -39,5 +45,14 @@ public class LessonService {
                     throw new NotFoundException("Lesson not found by id " + lessonId + " and subjectId " + subjectId);
                 }
         );
+    }
+
+    public Lesson editLesson(@NonNull UUID id, @NonNull Lesson lesson) {
+        log.info("Editing lesson with {}, {}", id, lesson);
+        if (!lessonRepository.existsById(id)) {
+            throw new NotFoundException("Lesson with id " + id + "not found, unable to edit");
+        }
+        lesson.setId(id);
+        return lessonRepository.save(lesson);
     }
 }

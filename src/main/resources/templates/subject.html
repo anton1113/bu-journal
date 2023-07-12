@@ -20,6 +20,7 @@
         <th th:text="#{lesson.name}">Lesson name</th>
         <th th:text="#{lesson.type}">Lesson type</th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +28,9 @@
         <td th:text="${lesson.date}">Lesson date</td>
         <td th:text="${lesson.name}">Lesson name</td>
         <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
+        <td>
+            <a th:alt="#{label.href.edit}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" id="editButton">✏️</a>
+        </td>
         <td>
             <a th:alt="#{label.href.delete}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">❌</a>
         </td>
@@ -40,6 +44,35 @@
         <td></td>
     </tr>
 </table>
+
+<div th:if="${editLessonDraft}" id="editModal" class="modal" style="display: block">
+    <div class="modal-content">
+        <form action="#" th:action="@{/subjects/__${subject.id}__/lessons/__${editLessonDraft.id}__}" th:object="${editLessonDraft}" method="post">
+            <span class="close" id="closeEditSpan">&times;</span>
+            <div class="form-group">
+                <label th:for="lessonDate" th:text="#{label.input.lesson.date}">Lesson date</label>
+                <input id="lessonDate" required=true type="date" class="form-control" th:field="*{date}"
+                       name="lessonDate">
+            </div>
+            <div class="form-group">
+                <label th:for="lessonName" th:text="#{label.input.lesson.name}">Lesson name</label>
+                <input id="lessonName" required=true class="form-control" th:field="*{name}"
+                       name="lessonDate">
+            </div>
+            <div class="form-group">
+                <label th:for="lessonType" th:text="#{label.input.lesson.type}">Lesson type</label>
+                <select class="custom-select" id="lessonType" th:field="*{type}">
+                    <option th:text="#{text.lesson.type.empty}" th:value="null"></option>
+                    <option th:each="type: ${T(com.arash.edu.bujournal.domain.enums.LessonType).uaValues()}"
+                            th:value="${T(com.arash.edu.bujournal.domain.enums.LessonType).fromUaValue(type)}"
+                            th:text="${type}"></option>
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
+            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeEditButton">Cancel</button>
+        </form>
+    </div>
+</div>
 
 <div id="insertModal" class="modal">
     <div class="modal-content">
@@ -65,7 +98,7 @@
                 </select>
             </div>
             <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add lesson</button>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">
+            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeInsertButton">
                 Cancel
             </button>
         </form>
@@ -75,6 +108,7 @@
 <footer th:replace="fragments/general::footer"></footer>
 
 <script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
+<script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
 
 </body>
 </html>

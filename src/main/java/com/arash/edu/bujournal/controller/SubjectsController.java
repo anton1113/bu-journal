@@ -64,6 +64,22 @@ public class SubjectsController {
         return "redirect:/subjects/" + subjectId;
     }
 
+    @GetMapping("/subjects/{subjectId}/lessons/{lessonId}/draft")
+    public String getLessonOfSubjectDraft(@PathVariable UUID subjectId, @PathVariable UUID lessonId, RedirectAttributes redirectAttrs) {
+        Lesson lesson = lessonService.findById(lessonId);
+        if (lesson.getSubjectId() == null || !lesson.getSubjectId().equals(subjectId)) {
+            throw new IllegalStateException("Lesson " + lesson + " is not in subject " + subjectId);
+        }
+        redirectAttrs.addFlashAttribute("editLessonDraft", lesson);
+        return "redirect:/subjects/" + subjectId;
+    }
+
+    @PostMapping("/subjects/{subjectId}/lessons/{lessonId}")
+    public String editLessonOfSubject(@PathVariable UUID subjectId, @PathVariable UUID lessonId, @ModelAttribute Lesson lesson) {
+        lessonService.editLesson(lessonId, lesson);
+        return "redirect:/subjects/" + subjectId;
+    }
+
     @PostMapping("/subjects")
     public String addSubject(@ModelAttribute Subject subject) {
         subjectService.add(subject);
