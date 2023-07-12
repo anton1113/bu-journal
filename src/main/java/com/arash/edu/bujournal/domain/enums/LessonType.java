@@ -1,9 +1,11 @@
 package com.arash.edu.bujournal.domain.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @AllArgsConstructor
 public enum LessonType {
@@ -11,24 +13,24 @@ public enum LessonType {
     LECTURE("Lecture", "Лекція"),
     SEMINAR("Seminar", "Семінар");
 
-    @Getter(onMethod = @__(@JsonValue))
+    @Getter
     private final String value;
 
     @Getter
     private final String uaValue;
 
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static LessonType fromValue(final String value) {
+    public static LessonType fromUaValue(final String uaValue) {
         for (LessonType suggestionType : LessonType.values()) {
-            if (suggestionType.value.equals(value)) {
+            if (suggestionType.uaValue.equals(uaValue)) {
                 return suggestionType;
             }
         }
-        throw new IllegalArgumentException("Unexpected value '" + value + "'");
+        throw new IllegalArgumentException("Unexpected uaValue '" + uaValue + "'");
+    }
+
+    public static List<String> uaValues() {
+        return Stream.of(values())
+                .map(LessonType::getUaValue)
+                .collect(Collectors.toList());
     }
 }

@@ -47,12 +47,12 @@ public class SubjectsController {
         List<Lesson> lessons = lessonService.findAllBySubjectId(id);
         model.addAttribute("subject", subject);
         model.addAttribute("lessons", lessons);
-        model.addAttribute("draftLesson", new Lesson());
+        model.addAttribute("addLessonDraft", new Lesson());
         return "subject";
     }
 
     @PostMapping("/subjects/{subjectId}/lessons")
-    public String showSubject(@PathVariable UUID subjectId, @ModelAttribute Lesson lesson) {
+    public String allLessonToSubject(@PathVariable UUID subjectId, @ModelAttribute Lesson lesson) {
         lesson.setSubjectId(subjectId);
         lessonService.add(lesson);
         return "redirect:/subjects/" + subjectId;
