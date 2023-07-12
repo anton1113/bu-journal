@@ -75,11 +75,11 @@ public class InitMongoDbData {
         Lesson lesson3 = new Lesson(UUID.randomUUID(), "Масиви", LessonType.LECTURE, LocalDate.of(2023, 3, 15), subject1.getId());
         Lesson lesson4 = new Lesson(UUID.randomUUID(), "Вступ до ООП, Об'єкти і класи", LessonType.LECTURE, LocalDate.of(2023, 3, 22), subject1.getId());
         Lesson lesson5 = new Lesson(UUID.randomUUID(), "Основні принципи ООП", LessonType.LECTURE, LocalDate.of(2023, 3, 29), subject1.getId());
-        Lesson lesson6 = new Lesson(UUID.randomUUID(), "Встановлення середовища розробки Java. Hello world!", LessonType.LECTURE, LocalDate.of(2023, 4, 4), subject1.getId());
-        Lesson lesson7 = new Lesson(UUID.randomUUID(), "Робота з примітивними типами. Калькулятор.", LessonType.LECTURE, LocalDate.of(2023, 4, 11), subject1.getId());
-        Lesson lesson8 = new Lesson(UUID.randomUUID(), "Робота з масивами. Операції над матрицями.", LessonType.LECTURE, LocalDate.of(2023, 4, 18), subject1.getId());
-        Lesson lesson9 = new Lesson(UUID.randomUUID(), "Робота з класами. Модулювання уявних чисел.", LessonType.LECTURE, LocalDate.of(2023, 4, 25), subject1.getId());
-        Lesson lesson10 = new Lesson(UUID.randomUUID(), "Реалізація поліморфізму. Шаблон 'Абстрактна фабрика'", LessonType.LECTURE, LocalDate.of(2023, 5, 2), subject1.getId());
+        Lesson lesson6 = new Lesson(UUID.randomUUID(), "Встановлення середовища розробки Java. Hello world!", LessonType.SEMINAR, LocalDate.of(2023, 4, 4), subject1.getId());
+        Lesson lesson7 = new Lesson(UUID.randomUUID(), "Робота з примітивними типами. Калькулятор.", LessonType.SEMINAR, LocalDate.of(2023, 4, 11), subject1.getId());
+        Lesson lesson8 = new Lesson(UUID.randomUUID(), "Робота з масивами. Операції над матрицями.", LessonType.SEMINAR, LocalDate.of(2023, 4, 18), subject1.getId());
+        Lesson lesson9 = new Lesson(UUID.randomUUID(), "Робота з класами. Модулювання уявних чисел.", LessonType.SEMINAR, LocalDate.of(2023, 4, 25), subject1.getId());
+        Lesson lesson10 = new Lesson(UUID.randomUUID(), "Реалізація поліморфізму. Шаблон 'Абстрактна фабрика'", LessonType.SEMINAR, LocalDate.of(2023, 5, 2), subject1.getId());
         Lesson lesson11 = new Lesson(UUID.randomUUID(), "Підсумкова контрольна робота", null, LocalDate.of(2023, 5, 9), subject1.getId());
         lessonRepository.saveAll(List.of(lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11));
     }

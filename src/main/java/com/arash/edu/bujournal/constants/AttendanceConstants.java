@@ -1,4 +1,4 @@
-package com.arash.edu.bujournal.constance;
+package com.arash.edu.bujournal.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

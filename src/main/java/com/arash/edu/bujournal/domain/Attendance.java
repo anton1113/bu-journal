@@ -1,6 +1,6 @@
 package com.arash.edu.bujournal.domain;
 
-import com.arash.edu.bujournal.constance.AttendanceConstants;
+import com.arash.edu.bujournal.constants.AttendanceConstants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

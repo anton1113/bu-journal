@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.arash.edu.bujournal.constance.AttendanceConstants.ABSENT_CODE;
+import static com.arash.edu.bujournal.constants.AttendanceConstants.ABSENT_CODE;
 import static org.apache.commons.lang3.math.NumberUtils.createNumber;
 import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
 
