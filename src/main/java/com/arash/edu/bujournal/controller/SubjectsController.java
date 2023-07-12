@@ -47,14 +47,36 @@ public class SubjectsController {
         List<Lesson> lessons = lessonService.findAllBySubjectId(id);
         model.addAttribute("subject", subject);
         model.addAttribute("lessons", lessons);
-        model.addAttribute("draftLesson", new Lesson());
+        model.addAttribute("addLessonDraft", new Lesson());
         return "subject";
     }
 
     @PostMapping("/subjects/{subjectId}/lessons")
-    public String showSubject(@PathVariable UUID subjectId, @ModelAttribute Lesson lesson) {
+    public String allLessonToSubject(@PathVariable UUID subjectId, @ModelAttribute Lesson lesson) {
         lesson.setSubjectId(subjectId);
         lessonService.add(lesson);
+        return "redirect:/subjects/" + subjectId;
+    }
+
+    @GetMapping("/subjects/{subjectId}/lessons/{lessonId}/delete")
+    public String deleteLessonFromSubject(@PathVariable UUID subjectId, @PathVariable UUID lessonId, @ModelAttribute Lesson lesson) {
+        lessonService.deleteLessonFromSubject(subjectId, lessonId);
+        return "redirect:/subjects/" + subjectId;
+    }
+
+    @GetMapping("/subjects/{subjectId}/lessons/{lessonId}/draft")
+    public String getLessonOfSubjectDraft(@PathVariable UUID subjectId, @PathVariable UUID lessonId, RedirectAttributes redirectAttrs) {
+        Lesson lesson = lessonService.findById(lessonId);
+        if (lesson.getSubjectId() == null || !lesson.getSubjectId().equals(subjectId)) {
+            throw new IllegalStateException("Lesson " + lesson + " is not in subject " + subjectId);
+        }
+        redirectAttrs.addFlashAttribute("editLessonDraft", lesson);
+        return "redirect:/subjects/" + subjectId;
+    }
+
+    @PostMapping("/subjects/{subjectId}/lessons/{lessonId}")
+    public String editLessonOfSubject(@PathVariable UUID subjectId, @PathVariable UUID lessonId, @ModelAttribute Lesson lesson) {
+        lessonService.editLesson(lessonId, lesson);
         return "redirect:/subjects/" + subjectId;
     }
 

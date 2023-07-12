@@ -1,5 +1,6 @@
 package com.arash.edu.bujournal.domain;
 
+import com.arash.edu.bujournal.domain.enums.LessonType;
 import com.arash.edu.bujournal.util.DateFormatUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,10 @@ public class Lesson {
 
     @Id
     private UUID id;
+
+    private String name;
+
+    private LessonType type;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
