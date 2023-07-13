@@ -3,6 +3,7 @@ package com.arash.edu.bujournal.service;
 import com.arash.edu.bujournal.domain.Student;
 import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.repository.StudentRepository;
+import com.arash.edu.bujournal.service.listener.StudentEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final StudentEventListener studentEventListener;
 
     public List<Student> findAll() {
         log.info("Find all students");
@@ -54,5 +56,6 @@ public class StudentService {
     public void deleteById(@NonNull UUID id) {
         log.info("Deleting student by id {}", id);
         studentRepository.deleteById(id);
+        studentEventListener.onStudentDeleted(id);
     }
 }
