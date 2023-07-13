@@ -36,7 +36,14 @@ public class TeachersController {
     }
 
     @GetMapping("/teachers/{id}/delete")
-    public String deleteTeacher(@PathVariable UUID id) {
+    public String deleteTeacher(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
+        Teacher teacher = teacherService.findById(id);
+        redirectAttributes.addFlashAttribute("teacherDeleteCandidate", teacher);
+        return "redirect:/teachers";
+    }
+
+    @GetMapping("/teachers/{id}/delete/confirm")
+    public String confirmDeleteTeacher(@PathVariable UUID id) {
         teacherService.deleteTeacher(id);
         return "redirect:/teachers";
     }

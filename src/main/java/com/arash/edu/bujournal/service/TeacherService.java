@@ -3,6 +3,7 @@ package com.arash.edu.bujournal.service;
 import com.arash.edu.bujournal.domain.Teacher;
 import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.repository.TeacherRepository;
+import com.arash.edu.bujournal.service.listener.TeacherEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
+    private final TeacherEventListener teacherEventListener;
 
     public List<Teacher> findAll() {
         log.info("Find all teachers");
@@ -58,5 +60,6 @@ public class TeacherService {
     public void deleteTeacher(@NonNull UUID id) {
         log.info("Delete teacher by id [{}]", id);
         teacherRepository.deleteById(id);
+        teacherEventListener.onTeacherDeleted(id);
     }
 }

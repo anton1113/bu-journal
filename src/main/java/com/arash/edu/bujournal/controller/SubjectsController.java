@@ -110,7 +110,6 @@ public class SubjectsController {
     @GetMapping("/subjects/{subjectId}/delete/confirm")
     public String confirmDeleteSubject(@PathVariable UUID subjectId) {
         subjectService.deleteSubject(subjectId);
-        lessonService.deleteAllLessonsOfSubject(subjectId);
         return "redirect:/subjects";
     }
 

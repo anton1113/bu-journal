@@ -47,11 +47,6 @@ public class LessonService {
         );
     }
 
-    public void deleteAllLessonsOfSubject(@NonNull UUID subjectId) {
-        log.info("Delete all lessons of subject [{}]", subjectId);
-        lessonRepository.deleteAllBySubjectId(subjectId);
-    }
-
     public Lesson editLesson(@NonNull UUID id, @NonNull Lesson lesson) {
         log.info("Editing lesson with {}, {}", id, lesson);
         if (!lessonRepository.existsById(id)) {
