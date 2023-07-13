@@ -12,4 +12,5 @@ public interface AttendanceRepository extends MongoRepository<Attendance, UUID> 
 
     Optional<Attendance> findByStudentIdAndLessonId(UUID studentId, UUID lessonId);
     void deleteAllByLessonId(UUID lessonId);
+    void deleteAllByStudentId(UUID studentId);
 }

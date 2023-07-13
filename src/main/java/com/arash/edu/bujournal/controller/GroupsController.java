@@ -67,14 +67,25 @@ public class GroupsController {
     }
 
     @GetMapping("/groups/{id}/draft")
-    public String getGroupDraft(@PathVariable UUID id, RedirectAttributes redirectAttrs) {
+    public String getGroupDraft(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         Group group = groupService.findById(id);
-        redirectAttrs.addFlashAttribute("editGroupDraft", group);
+        redirectAttributes.addFlashAttribute("editGroupDraft", group);
         return "redirect:/groups";
     }
 
     @GetMapping("/groups/{groupId}/students/{studentId}/delete")
-    public String deleteStudentOfGroup(@PathVariable UUID groupId, @PathVariable UUID studentId) {
+    public String deleteStudentOfGroup(@PathVariable UUID groupId, @PathVariable UUID studentId, RedirectAttributes redirectAttributes) {
+        Student student = studentService.findById(studentId);
+        if (student.getGroupId() == null || !student.getGroupId().equals(groupId)) {
+            throw new IllegalStateException("Student " + studentId + " is not in group " + groupId);
+        }
+        redirectAttributes.addFlashAttribute("studentDeleteCandidate", student);
+        return "redirect:/groups/" + groupId;
+    }
+
+
+    @GetMapping("/groups/{groupId}/students/{studentId}/delete/confirm")
+    public String confirmDeleteStudentOfGroup(@PathVariable UUID groupId, @PathVariable UUID studentId) {
         studentService.deleteById(studentId);
         return "redirect:/groups/" + groupId;
     }
