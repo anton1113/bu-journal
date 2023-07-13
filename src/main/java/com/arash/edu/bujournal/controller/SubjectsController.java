@@ -59,7 +59,17 @@ public class SubjectsController {
     }
 
     @GetMapping("/subjects/{subjectId}/lessons/{lessonId}/delete")
-    public String deleteLessonFromSubject(@PathVariable UUID subjectId, @PathVariable UUID lessonId, @ModelAttribute Lesson lesson) {
+    public String deleteLessonFromSubject(@PathVariable UUID subjectId, @PathVariable UUID lessonId, RedirectAttributes redirectAttrs) {
+        Lesson lesson = lessonService.findById(lessonId);
+        if (lesson.getSubjectId() == null || !lesson.getSubjectId().equals(subjectId)) {
+            throw new IllegalStateException("Lesson " + lesson + " is not in subject " + subjectId);
+        }
+        redirectAttrs.addFlashAttribute("lessonDeleteCandidate", lesson);
+        return "redirect:/subjects/" + subjectId;
+    }
+
+    @GetMapping("/subjects/{subjectId}/lessons/{lessonId}/delete/confirm")
+    public String confirmDeleteLessonFromSubject(@PathVariable UUID subjectId, @PathVariable UUID lessonId) {
         lessonService.deleteLessonFromSubject(subjectId, lessonId);
         return "redirect:/subjects/" + subjectId;
     }
