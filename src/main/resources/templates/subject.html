@@ -111,10 +111,9 @@
 
 <div th:if="${lessonDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
     <div class="modal-content">
-        <p class="font-weight-bold" th:text="#{text.delete.confirmation.lesson}">Are you sure want to delete lesson?</p>
         <form action="#" th:action="@{/subjects/__${subject.id}__/lessons/__${lessonDeleteCandidate.id}__/delete/confirm}" th:object="${lessonDeleteCandidate}" method="get">
             <span class="close" id="closeDeleteSpan">&times;</span>
-
+            <p class="font-weight-bold" th:text="#{text.delete.confirmation.lesson}">Are you sure want to delete lesson?</p>
             <div class="form-group">
                 <label th:for="lessonDate" th:text="#{label.input.lesson.date}">Lesson date</label>
                 <input id="lessonDate" required=true type="date" class="form-control" th:field="*{date}"
