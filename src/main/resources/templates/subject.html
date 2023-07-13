@@ -42,6 +42,9 @@
             <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add lesson</button>
         </td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
 </table>
 
@@ -108,6 +111,7 @@
 
 <div th:if="${lessonDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
     <div class="modal-content">
+        <p class="font-weight-bold" th:text="#{text.delete.confirmation.lesson}">Are you sure want to delete lesson?</p>
         <form action="#" th:action="@{/subjects/__${subject.id}__/lessons/__${lessonDeleteCandidate.id}__/delete/confirm}" th:object="${lessonDeleteCandidate}" method="get">
             <span class="close" id="closeDeleteSpan">&times;</span>
 
