@@ -31,7 +31,7 @@ public class JournalsController {
     @GetMapping("/journals/subjects/{subjectId}")
     public String showSubjectJournal(@PathVariable UUID subjectId, Model model) {
         Subject subject = subjectService.findById(subjectId);
-        Teacher teacher = teacherService.findById(subject.getTeacherId());
+        Teacher teacher = teacherService.findByNullableId(subject.getTeacherId());
         Group group = groupService.findById(subject.getGroupId());
         List<Student> students = studentService.findAllByGroupId(group.getId());
         List<Lesson> lessons = lessonService.findAllBySubjectId(subject.getId());

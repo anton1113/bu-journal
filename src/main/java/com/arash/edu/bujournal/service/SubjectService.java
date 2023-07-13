@@ -3,6 +3,7 @@ package com.arash.edu.bujournal.service;
 import com.arash.edu.bujournal.domain.Subject;
 import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.repository.SubjectRepository;
+import com.arash.edu.bujournal.service.listener.SubjectEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class SubjectService {
 
     private final SubjectRepository subjectRepository;
+    private final SubjectEventListener subjectEventListener;
 
     public List<Subject> findAll() {
         log.info("Find all subjects");
@@ -45,6 +47,7 @@ public class SubjectService {
     public void deleteSubject(@NonNull UUID id) {
         log.info("Delete subject by id [{}]", id);
         subjectRepository.deleteById(id);
+        subjectEventListener.onSubjectDeleted(id);
     }
 
     public Subject editSubject(@NonNull UUID id, @NonNull Subject subject) {
