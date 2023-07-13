@@ -97,8 +97,20 @@ public class SubjectsController {
     }
 
     @GetMapping("/subjects/{id}/delete")
-    public String deleteSubject(@PathVariable UUID id) {
-        subjectService.deleteSubject(id);
+    public String deleteSubject(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
+        Subject subject = subjectService.findById(id);
+        Teacher teacher = teacherService.findByNullableId(subject.getTeacherId());
+        Group group = groupService.findByNullableId(subject.getGroupId());
+        redirectAttributes.addFlashAttribute("subjectDeleteCandidate", subject);
+        redirectAttributes.addFlashAttribute("subjectDeleteCandidateTeacher", teacher);
+        redirectAttributes.addFlashAttribute("subjectDeleteCandidateGroup", group);
+        return "redirect:/subjects";
+    }
+
+    @GetMapping("/subjects/{subjectId}/delete/confirm")
+    public String confirmDeleteSubject(@PathVariable UUID subjectId) {
+        subjectService.deleteSubject(subjectId);
+        lessonService.deleteAllLessonsOfSubject(subjectId);
         return "redirect:/subjects";
     }
 
