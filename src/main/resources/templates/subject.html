@@ -24,7 +24,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="lesson : ${lessons}">
+    <tr th:each="lesson : ${lessons}" th:attr="onclick=|redirect('/lessons/${lesson.id}')|" >
         <td th:text="${lesson.date}">Lesson date</td>
         <td th:text="${lesson.name}">Lesson name</td>
         <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
@@ -140,6 +140,7 @@
 <script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
 <script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
 <script type="text/javascript" th:src="@{/js/delete-modal.js}"></script>
+<script type="text/javascript" th:src="@{/js/commons.js}"></script>
 
 </body>
 </html>

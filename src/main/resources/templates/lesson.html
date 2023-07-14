@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${lesson.name} + ' (' + ${lesson.type} + ')'">Group name</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <link th:href="@{/styles/journal.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<nav th:replace="fragments/general::navbar"></nav>
+
+<div th:replace="fragments/general::#errorModal"></div>
+
+<div id="lessonContainer" style="padding-left: 50px; padding-right: 50px; padding-top: 20px">
+    <h5 th:text="(${lesson.date} == null ? '': ${lesson.date} + '. ') + ${lesson.name} + (${lesson.type} == null ? '': ' (' + ${lesson.type.getUaValue()} + ')')"></h5>
+    <br>
+    <h6 th:text="${subject.name} + ' (' + ${group.name} + ')'"></h6>
+    <h6 th:text="#{text.lesson.teacher.name} + ': ' + (${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()})"></h6>
+    <br>
+    <h5 th:text="#{label.table.lesson.sources}"></h5>
+    <div id="sourcesTableContainer">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th th:text="#{lable.table.column.lesson.sources.name}">Source name</th>
+                <th th:text="#{lable.table.column.lesson.sources.link}">Preview link</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="source : ${sources}">
+                <td th:text="${source.name}">Source name</td>
+                <td>
+                    <a th:href="${source.link}" th:text="${source.link}"></a>
+                </td>
+                <td>
+                    <a th:alt="#{label.href.edit}" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}" id="editButton">✏️</a>
+                </td>
+                <td>
+                    <a th:alt="#{label.href.delete}" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/delete}">❌</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>
+                    <button th:text="#{label.button.add}" class="btn btn-primary" id="insertSourceButton">Add lesson</button>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${editSourceDraft}" id="editSourceModal" class="modal" style="display: block">
+    <div class="modal-content">
+        <form action="#" th:action="@{/lessons/__${lesson.id}__/sources/__${editSourceDraft.id}__}" th:object="${editSourceDraft}" method="post">
+            <span class="close" id="closeEditSourceSpan">&times;</span>
+            <div class="form-group">
+                <label th:for="sourceName" th:text="#{label.input.source.name}">Source name</label>
+                <input id="sourceName" required=true class="form-control" th:field="*{name}" type="text"
+                       name="sourceName">
+            </div>
+            <div class="form-group">
+                <label th:for="sourceLink" th:text="#{label.input.source.link}">Source link</label>
+                <input id="sourceLink" required=true class="form-control" th:field="*{link}" type="text"
+                       name="sourceLink">
+            </div>
+            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
+            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeEditSourceButton">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<div id="insertSourceModal" class="modal">
+    <div class="modal-content">
+        <form action="#" th:action="@{/lessons/__${lesson.id}__/sources}" th:object="${addSourceDraft}" method="post">
+            <span class="close" id="closeInsertSourceSpan">&times;</span>
+            <div class="form-group">
+                <label th:for="sourceName" th:text="#{label.input.source.name}">Source name</label>
+                <input id="sourceName" required=true class="form-control" th:field="*{name}" type="text"
+                       name="sourceName">
+            </div>
+            <div class="form-group">
+                <label th:for="sourceLink" th:text="#{label.input.source.link}">Source link</label>
+                <input id="sourceLink" required=true class="form-control" th:field="*{link}" type="text"
+                       name="sourceLink">
+            </div>
+            <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add source</button>
+            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeInsertSourceButton">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<div th:if="${sourceDeleteCandidate}" id="deleteSourceModal" class="modal" style="display: block">
+    <div class="modal-content">
+        <form action="#" th:action="@{/lessons/__${lesson.id}__/sources/__${sourceDeleteCandidate.id}__/delete/confirm}" th:object="${sourceDeleteCandidate}" method="get">
+            <span class="close" id="closeDeleteSourceSpan">&times;</span>
+            <p class="font-weight-bold" th:text="#{text.delete.confirmation.source}">Are you sure want to delete source?</p>
+            <div class="form-group">
+                <label th:for="sourceName" th:text="#{label.input.source.name}">Source name</label>
+                <input id="sourceName" required=true class="form-control" th:field="*{name}" type="text"
+                       name="sourceName">
+            </div>
+            <div class="form-group">
+                <label th:for="sourceLink" th:text="#{label.input.source.link}">Source link</label>
+                <input id="sourceLink" required=true class="form-control" th:field="*{link}" type="text"
+                       name="sourceLink">
+            </div>
+            <button class="btn btn-danger" type="submit" th:text="#{label.button.delete}">Delete</button>
+            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeDeleteSourceButton">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var insertSourceModal = document.getElementById("insertSourceModal");
+    var insertSourceButton = document.getElementById("insertSourceButton");
+    var closeInsertSourceModalSpan = document.getElementById("closeInsertSourceSpan");
+    var closeInsertSourceModalButton = document.getElementById("closeInsertSourceButton");
+
+    if (insertSourceButton != null) {
+        insertSourceButton.onclick = function () {
+            insertSourceModal.style.display = "block";
+        }
+    }
+
+    if (closeInsertSourceModalSpan != null) {
+        closeInsertSourceModalSpan.onclick = function () {
+            insertSourceModal.style.display = "none";
+        }
+    }
+
+    if (closeInsertSourceModalButton != null) {
+        closeInsertSourceModalButton.onclick = function () {
+            insertSourceModal.style.display = "none";
+        }
+    }
+
+    var editSourceModal = document.getElementById("editSourceModal");
+    var closeEditSourceModalSpan = document.getElementById("closeEditSourceSpan");
+    var closeEditSourceModalButton = document.getElementById("closeEditSourceButton");
+
+    if (closeEditSourceModalSpan != null) {
+        closeEditSourceModalSpan.onclick = function () {
+            editSourceModal.style.display = "none";
+        }
+    }
+
+    if (closeEditSourceModalButton != null) {
+        closeEditSourceModalButton.onclick = function () {
+            editSourceModal.style.display = "none";
+        }
+    }
+
+    var deleteSourceModal = document.getElementById("deleteSourceModal");
+    var closeDeleteSourceModalSpan = document.getElementById("closeDeleteSourceSpan");
+    var closeDeleteSourceModalButton = document.getElementById("closeDeleteSourceButton");
+
+    if (closeDeleteSourceModalSpan != null) {
+        closeDeleteSourceModalSpan.onclick = function () {
+            deleteSourceModal.style.display = "none";
+        }
+    }
+
+    if (closeDeleteSourceModalButton != null) {
+        closeDeleteSourceModalButton.onclick = function () {
+            deleteSourceModal.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
