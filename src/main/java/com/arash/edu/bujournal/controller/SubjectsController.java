@@ -52,7 +52,7 @@ public class SubjectsController {
     }
 
     @PostMapping("/subjects/{subjectId}/lessons")
-    public String allLessonToSubject(@PathVariable UUID subjectId, @ModelAttribute Lesson lesson) {
+    public String addLessonToSubject(@PathVariable UUID subjectId, @ModelAttribute Lesson lesson) {
         lesson.setSubjectId(subjectId);
         lessonService.add(lesson);
         return "redirect:/subjects/" + subjectId;
