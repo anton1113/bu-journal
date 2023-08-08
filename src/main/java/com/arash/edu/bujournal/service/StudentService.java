@@ -41,7 +41,9 @@ public class StudentService {
         if (student.getId() == null) {
             student.setId(UUID.randomUUID());
         }
-        return studentRepository.save(student);
+        Student created = studentRepository.save(student);
+        studentEventListener.onStudentCreated(created);
+        return created;
     }
 
     public Student editStudent(@NonNull UUID id, @NonNull Student student) {

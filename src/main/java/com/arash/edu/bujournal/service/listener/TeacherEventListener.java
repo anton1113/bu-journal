@@ -2,8 +2,10 @@ package com.arash.edu.bujournal.service.listener;
 
 import com.arash.edu.bujournal.domain.Group;
 import com.arash.edu.bujournal.domain.Subject;
+import com.arash.edu.bujournal.domain.Teacher;
 import com.arash.edu.bujournal.repository.GroupRepository;
 import com.arash.edu.bujournal.repository.SubjectRepository;
+import com.arash.edu.bujournal.service.auth.BuUserRegisterService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ public class TeacherEventListener {
 
     private final GroupRepository groupRepository;
     private final SubjectRepository subjectRepository;
+    private final BuUserRegisterService buUserRegisterService;
 
     public void onTeacherDeleted(@NonNull UUID teacherId) {
         log.info("Received teacher_deleted event, teacherId={}", teacherId);
@@ -38,5 +41,10 @@ public class TeacherEventListener {
             subjectRepository.saveAll(teacherSubjects);;
         }
 
+    }
+
+    public void onTeacherCreated(@NonNull Teacher teacher) {
+        log.info("Received teacher_created event, {}", teacher);
+        buUserRegisterService.registerTeacher(teacher);
     }
 }

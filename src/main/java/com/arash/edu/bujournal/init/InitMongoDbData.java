@@ -3,6 +3,7 @@ package com.arash.edu.bujournal.init;
 import com.arash.edu.bujournal.domain.*;
 import com.arash.edu.bujournal.domain.enums.LessonType;
 import com.arash.edu.bujournal.repository.*;
+import com.arash.edu.bujournal.service.auth.BuUserRegisterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,19 +21,23 @@ import static java.util.UUID.randomUUID;
 public class InitMongoDbData {
 
     @Autowired
-    protected AttendanceRepository attendanceRepository;
+    private AttendanceRepository attendanceRepository;
     @Autowired
-    protected GroupRepository groupRepository;
+    private GroupRepository groupRepository;
     @Autowired
-    protected LessonRepository lessonRepository;
+    private LessonRepository lessonRepository;
     @Autowired
-    protected StudentRepository studentRepository;
+    private StudentRepository studentRepository;
     @Autowired
-    protected SubjectRepository subjectRepository;
+    private SubjectRepository subjectRepository;
     @Autowired
-    protected TeacherRepository teacherRepository;
+    private TeacherRepository teacherRepository;
     @Autowired
-    protected SourceRepository sourceRepository;
+    private SourceRepository sourceRepository;
+    @Autowired
+    private BuUserRepository buUserRepository;
+    @Autowired
+    private BuUserRegisterService buUserRegisterService;
 
     @PostConstruct
     void initData() {
@@ -43,12 +48,18 @@ public class InitMongoDbData {
         studentRepository.deleteAll();
         subjectRepository.deleteAll();
         teacherRepository.deleteAll();
+        buUserRepository.deleteAll();
 
         log.info("Initializing test teachers data");
         Teacher teacher1 = new Teacher(randomUUID(), "Артеменко", "Ольга", "Іванівна");
         Teacher teacher2 = new Teacher(randomUUID(), "Штерма", "Тетяна", "Василівна");
         Teacher teacher3 = new Teacher(randomUUID(), "Євдокименко", "Валерій", "Кирилович");
         teacherRepository.saveAll(List.of(teacher1, teacher2, teacher3));
+
+        log.info("Registering users for teachers");
+        buUserRegisterService.registerTeacher(teacher1);
+        buUserRegisterService.registerTeacher(teacher2);
+        buUserRegisterService.registerTeacher(teacher3);
 
         log.info("Initializing test group data");
         Group group1 = new Group(randomUUID(), "KM-501", teacher1.getId());
@@ -63,6 +74,13 @@ public class InitMongoDbData {
         Student student4 = new Student(randomUUID(), group1.getId(), "Головач", "Іван", "Павлович");
         Student student5 = new Student(randomUUID(), group1.getId(), "Ящук", "Ігор", "Миколайович");
         studentRepository.saveAll(List.of(student1, student2, student3, student4, student5));
+
+        log.info("Registering users for students");
+        buUserRegisterService.registerStudent(student1);
+        buUserRegisterService.registerStudent(student2);
+        buUserRegisterService.registerStudent(student3);
+        buUserRegisterService.registerStudent(student4);
+        buUserRegisterService.registerStudent(student5);
 
         log.info("Initializing test subject data");
         Subject subject1 = new Subject(randomUUID(), "Основи програмування", teacher1.getId(), group1.getId());

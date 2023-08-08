@@ -45,7 +45,9 @@ public class TeacherService {
         if (teacher.getId() == null) {
             teacher.setId(UUID.randomUUID());
         }
-        return teacherRepository.save(teacher);
+        Teacher created = teacherRepository.save(teacher);
+        teacherEventListener.onTeacherCreated(teacher);
+        return created;
     }
 
     public Teacher editTeacher(@NonNull UUID id, @NonNull Teacher teacher) {
