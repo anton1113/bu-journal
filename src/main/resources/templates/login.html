@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <link th:href="@{/styles/journal.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<nav th:replace="fragments/general::navbar"></nav>
+
+<div th:replace="fragments/general::#errorModal"></div>
+
+<div id="loginContainer" style="padding-left: 30%; padding-right: 30%; padding-top: 20px">
+    <div th:if="${param.error}">
+        <p class="text-danger" th:text="#{text.auth.error}"></p>
+    </div>
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label th:for="username" th:text="#{label.input.login.username}">Username</label>
+            <input id="username" required=true class="form-control" name="username">
+        </div>
+        <div class="form-group">
+            <label th:for="password" th:text="#{label.input.login.password}">Password</label>
+            <input id="password" required=true type="password" class="form-control" name="password">
+        </div>
+        <button class="btn btn-primary" type="submit" th:text="#{label.button.login}">Login</button>
+    </form>
+</div>
+
+</body>
+</html>

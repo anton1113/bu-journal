@@ -14,7 +14,7 @@ public class IndexController {
     @Value("${app.version}")
     private String appVersion;
 
-    @GetMapping("/")
+    @GetMapping(value = {"/", "/index"})
     public String showIndexPage(Model model) {
         model.addAttribute("appName", appName);
         model.addAttribute("appVersion", appVersion);
