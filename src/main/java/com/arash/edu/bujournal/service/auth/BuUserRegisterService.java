@@ -1,5 +1,6 @@
 package com.arash.edu.bujournal.service.auth;
 
+import com.arash.edu.bujournal.domain.Admin;
 import com.arash.edu.bujournal.domain.BuUser;
 import com.arash.edu.bujournal.domain.Student;
 import com.arash.edu.bujournal.domain.Teacher;
@@ -57,6 +58,26 @@ public class BuUserRegisterService {
                 .build();
 
         log.info("Created teacher user {}", buUser);
+        return buUserRepository.save(buUser);
+    }
+
+    public BuUser registerAdmin(Admin admin) {
+        log.info("Registering admin {}", admin);
+        String firstName = admin.getFirstName();
+        String lastName = admin.getLastName();
+
+        String username = toUsername(firstName, lastName);
+        String password = toPassword(firstName, lastName);
+
+        BuUser buUser = BuUser.builder()
+                .id(UUID.randomUUID())
+                .externalId(admin.getId())
+                .username(username)
+                .password(passwordEncoder.encode(password))
+                .role(BuUserRole.ADMIN)
+                .build();
+
+        log.info("Created admin user {}", buUser);
         return buUserRepository.save(buUser);
     }
 
