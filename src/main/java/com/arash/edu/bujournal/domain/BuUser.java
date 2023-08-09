@@ -4,6 +4,7 @@ import com.arash.edu.bujournal.domain.enums.BuUserRole;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,8 +23,10 @@ public class BuUser implements UserDetails {
     private UUID id;
     private UUID externalId;
 
+    @Indexed(unique = true)
     private String username;
     private String password;
+
     private BuUserRole role;
 
     @Override
