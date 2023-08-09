@@ -1,6 +1,6 @@
 package com.arash.edu.bujournal.config;
 
-import com.arash.edu.bujournal.service.auth.BuUserDetailsService;
+import com.arash.edu.bujournal.service.auth.BuUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +14,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SpringSecurityConfig {
 
-    private final BuUserDetailsService buUserDetailsService;
+    private final BuUserService buUserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.userDetailsService(buUserDetailsService)
+        http.userDetailsService(buUserService)
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()

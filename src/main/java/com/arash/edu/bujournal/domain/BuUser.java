@@ -21,6 +21,8 @@ public class BuUser implements UserDetails {
 
     @Id
     private UUID id;
+
+    @Indexed(unique = true)
     private UUID externalId;
 
     @Indexed(unique = true)
