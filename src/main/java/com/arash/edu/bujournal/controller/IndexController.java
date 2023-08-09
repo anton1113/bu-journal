@@ -1,23 +1,30 @@
 package com.arash.edu.bujournal.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.arash.edu.bujournal.domain.BuUser;
+import com.arash.edu.bujournal.util.BuSecurityUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
 
-    @Value("${app.name}")
-    private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
-
     @GetMapping(value = {"/", "/index"})
-    public String showIndexPage(Model model) {
-        model.addAttribute("appName", appName);
-        model.addAttribute("appVersion", appVersion);
-        return "index";
+    public String showIndexPage() {
+        BuUser loggedInUser = BuSecurityUtil.getLoggedInUser();
+        switch (loggedInUser.getRole()) {
+            case STUDENT: {
+                return "redirect:/students/" + loggedInUser.getExternalId();
+            }
+            case TEACHER: {
+                return "redirect:/teachers/" + loggedInUser.getExternalId();
+            }
+            case DEAN: {
+                return "redirect:/deans/" + loggedInUser.getExternalId();
+            }
+            case ADMIN: {
+                return "redirect:/admins/" + loggedInUser.getExternalId();
+            }
+            default: throw new IllegalStateException("Unexpected logged in user role " + loggedInUser.getRole() + ", userId=" + loggedInUser.getId());
+        }
     }
 }
