@@ -13,40 +13,42 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th th:text="#{lesson.date}">Lesson date</th>
-        <th th:text="#{lesson.name}">Lesson name</th>
-        <th th:text="#{lesson.type}">Lesson type</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="lesson : ${lessons}" th:attr="onclick=|redirect('/lessons/${lesson.id}')|" >
-        <td th:text="${lesson.date}">Lesson date</td>
-        <td th:text="${lesson.name}">Lesson name</td>
-        <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
-        <td>
-            <a th:alt="#{label.href.edit}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" id="editButton">✏️</a>
-        </td>
-        <td>
-            <a th:alt="#{label.href.delete}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">❌</a>
-        </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <td>
-            <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add lesson</button>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-</table>
+<div id="subjectContainer" class="page-container">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th th:text="#{lesson.date}">Lesson date</th>
+            <th th:text="#{lesson.name}">Lesson name</th>
+            <th th:text="#{lesson.type}">Lesson type</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lesson : ${lessons}" th:attr="onclick=|redirect('/lessons/${lesson.id}')|" >
+            <td th:text="${lesson.date}">Lesson date</td>
+            <td th:text="${lesson.name}">Lesson name</td>
+            <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
+            <td>
+                <a th:alt="#{label.href.edit}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" id="editButton">✏️</a>
+            </td>
+            <td>
+                <a th:alt="#{label.href.delete}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">❌</a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>
+                <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add lesson</button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
 
 <div th:if="${editLessonDraft}" id="editModal" class="modal" style="display: block">
     <div class="modal-content">

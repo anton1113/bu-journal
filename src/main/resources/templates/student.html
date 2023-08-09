@@ -14,7 +14,7 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<div id="studentContainer" style="padding-left: 50px; padding-right: 50px; padding-top: 20px">
+<div id="studentContainer" class="page-container">
     <h5 th:text="${student.getFullName()}"></h5>
     <br>
     <h6 th:text="#{text.student.group(${group.name})}"></h6>

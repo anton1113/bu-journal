@@ -14,7 +14,7 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<div id="lessonContainer" style="padding-left: 50px; padding-right: 50px; padding-top: 20px">
+<div id="lessonContainer" class="page-container">
     <h5 th:text="(${lesson.date} == null ? '': ${lesson.date} + '. ') + ${lesson.name} + (${lesson.type} == null ? '': ' (' + ${lesson.type.getUaValue()} + ')')"></h5>
     <br>
     <h6 th:text="${subject.name} + ' (' + ${group.name} + ')'"></h6>

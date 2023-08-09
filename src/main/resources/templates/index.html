@@ -1,4 +1,4 @@
-<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -14,11 +14,7 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<div style="padding-left: 30%; padding-right: 30%; padding-top: 20px">
-    <div sec:authorize="hasRole('STUDENT')">Text visible to student.</div>
-    <div sec:authentication="name"></div>
-    <div sec:authentication="principal.authorities"></div>
-    <div sec:authentication="principal.externalId"></div>
+<div class="background-image" style="background-image: url('/images/bu_image.jpeg')">
 </div>
 
 <footer th:replace="fragments/general::footer"></footer>

@@ -13,34 +13,36 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th th:text="#{student.name}">Student name</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
-        <td th:text="${student.getFullName()}">Full name</td>
-        <td>
-            <a th:alt="#{label.href.edit}" th:href="@{__${group.id}__/students/__${student.id}__/draft}">✏️</a>
-        </td>
-        <td>
-            <a th:alt="#{label.href.delete}" th:href="@{__${group.id}__/students/__${student.id}__/delete}">❌</a>
-        </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <td>
-            <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add student</button>
-        </td>
-        <td></td>
-        <td></td>
-    </tr>
-</table>
+<div id="groupContainer" class="page-container">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th th:text="#{student.name}">Student name</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
+            <td th:text="${student.getFullName()}">Full name</td>
+            <td>
+                <a th:alt="#{label.href.edit}" th:href="@{__${group.id}__/students/__${student.id}__/draft}">✏️</a>
+            </td>
+            <td>
+                <a th:alt="#{label.href.delete}" th:href="@{__${group.id}__/students/__${student.id}__/delete}">❌</a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>
+                <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add student</button>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
 
 <div th:if="${editStudentDraft}" id="editModal" class="modal" style="display: block">
     <div class="modal-content">
