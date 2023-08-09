@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface BuUserRepository extends MongoRepository<BuUser, UUID> {
 
     BuUser findByUsername(String username);
+    BuUser deleteByExternalId(UUID externalId);
 }

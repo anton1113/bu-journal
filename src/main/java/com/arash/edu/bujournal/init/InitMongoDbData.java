@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
@@ -33,6 +34,8 @@ public class InitMongoDbData {
     @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
+    private AdminRepository adminRepository;
+    @Autowired
     private SourceRepository sourceRepository;
     @Autowired
     private BuUserRepository buUserRepository;
@@ -48,6 +51,7 @@ public class InitMongoDbData {
         studentRepository.deleteAll();
         subjectRepository.deleteAll();
         teacherRepository.deleteAll();
+        adminRepository.deleteAll();
         buUserRepository.deleteAll();
 
         log.info("Initializing test teachers data");
@@ -81,6 +85,13 @@ public class InitMongoDbData {
         buUserRegisterService.registerStudent(student3);
         buUserRegisterService.registerStudent(student4);
         buUserRegisterService.registerStudent(student5);
+
+        log.info("Initializing test admin data");
+        Admin admin = new Admin(UUID.randomUUID(), "Rash", "Anton", null);
+        adminRepository.save(admin);
+
+        log.info("Registering users for admins");
+        buUserRegisterService.registerAdmin(admin);
 
         log.info("Initializing test subject data");
         Subject subject1 = new Subject(randomUUID(), "Основи програмування", teacher1.getId(), group1.getId());

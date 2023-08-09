@@ -2,18 +2,26 @@ package com.arash.edu.bujournal.service.auth;
 
 import com.arash.edu.bujournal.domain.BuUser;
 import com.arash.edu.bujournal.repository.BuUserRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class BuUserDetailsService implements UserDetailsService {
+public class BuUserService implements UserDetailsService {
 
     private final BuUserRepository buUserRepository;
+
+    public BuUser deleteUserByExternalId(@NonNull UUID externalId) {
+        log.info("Delete user by externalId {}", externalId);
+        return buUserRepository.deleteByExternalId(externalId);
+    }
 
     @Override
     public BuUser loadUserByUsername(String username) throws UsernameNotFoundException {
