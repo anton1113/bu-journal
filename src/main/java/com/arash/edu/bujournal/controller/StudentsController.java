@@ -1,13 +1,12 @@
 package com.arash.edu.bujournal.controller;
 
-import com.arash.edu.bujournal.domain.Group;
-import com.arash.edu.bujournal.domain.Student;
-import com.arash.edu.bujournal.domain.Subject;
-import com.arash.edu.bujournal.domain.Teacher;
+import com.arash.edu.bujournal.domain.*;
+import com.arash.edu.bujournal.domain.enums.BuUserRole;
 import com.arash.edu.bujournal.service.GroupService;
 import com.arash.edu.bujournal.service.StudentService;
 import com.arash.edu.bujournal.service.SubjectService;
 import com.arash.edu.bujournal.service.TeacherService;
+import com.arash.edu.bujournal.util.BuSecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,5 +43,15 @@ public class StudentsController {
         model.addAttribute("curator", curator);
         model.addAttribute("subjects", subjects);
         return "student";
+    }
+
+    @GetMapping("/students/my-group")
+    public String showStudentsGroup() {
+        BuUser loggedInUser = BuSecurityUtil.getLoggedInUser();
+        if (loggedInUser.getRole() != BuUserRole.STUDENT) {
+            throw new IllegalStateException("Requested to show student group by non-student user " + loggedInUser);
+        }
+        Student student = studentService.findById(loggedInUser.getExternalId());
+        return "redirect:/groups/" + student.getGroupId();
     }
 }
