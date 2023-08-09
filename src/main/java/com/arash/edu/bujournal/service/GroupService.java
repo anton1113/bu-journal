@@ -23,6 +23,11 @@ public class GroupService {
         return groupRepository.findAll();
     }
 
+    public List<Group> findAllByCuratorId(@NonNull UUID curatorId) {
+        log.info("Find all groups by curatorId {}", curatorId);
+        return groupRepository.findAllByCuratorId(curatorId);
+    }
+
     public Group add(@NonNull Group group) {
         log.info("Add group {}", group);
         if (group.getId() == null) {

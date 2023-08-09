@@ -30,6 +30,11 @@ public class SubjectService {
         return subjectRepository.findAllByGroupId(groupId);
     }
 
+    public List<Subject> findAllByTeacherId(@NonNull UUID teacherId) {
+        log.info("Find all subjects by teacher id [{}]", teacherId);
+        return subjectRepository.findAllByTeacherId(teacherId);
+    }
+
     public Subject findById(@NonNull UUID id) {
         log.info("Find subject by id [{}]", id);
         return subjectRepository.findById(id)
