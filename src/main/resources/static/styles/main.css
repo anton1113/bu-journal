@@ -22,6 +22,12 @@ div.background-image {
     opacity: 0.75;
 }
 
+div.page-container {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 20px;
+}
+
 .modal {
     display: none;
     /* Hidden by default */

@@ -13,45 +13,47 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th th:text="#{group.name}">Group name</th>
-        <th th:text="#{group.curator}">Curator</th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="group : ${groups}" th:with="curator=${@teacherService.findByNullableId(group.curatorId)}">
-        <td th:text="${group.name}">Name</td>
-        <td th:text="${curator} == null ? #{text.curator.empty} : |${curator.lastName} ${curator.firstName} ${curator.patronymic}|">
-            Last name
-        </td>
-        <td>
-            <a th:text="#{label.href.students.list}" th:href="@{groups/__${group.id}__}">Details</a>
-        </td>
-        <td>
-            <a th:alt="#{label.href.edit}" th:href="@{groups/__${group.id}__/draft}">✏️</a>
-        </td>
-        <td>
-            <a th:alt="#{label.href.delete}" th:href="@{groups/__${group.id}__/delete}">❌</a>
-        </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <td>
-            <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add group</button>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    </tfoot>
-</table>
+<div id="groupsContainer" class="page-container">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th th:text="#{group.name}">Group name</th>
+            <th th:text="#{group.curator}">Curator</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="group : ${groups}" th:with="curator=${@teacherService.findByNullableId(group.curatorId)}">
+            <td th:text="${group.name}">Name</td>
+            <td th:text="${curator} == null ? #{text.curator.empty} : |${curator.lastName} ${curator.firstName} ${curator.patronymic}|">
+                Last name
+            </td>
+            <td>
+                <a th:text="#{label.href.students.list}" th:href="@{groups/__${group.id}__}">Details</a>
+            </td>
+            <td>
+                <a th:alt="#{label.href.edit}" th:href="@{groups/__${group.id}__/draft}">✏️</a>
+            </td>
+            <td>
+                <a th:alt="#{label.href.delete}" th:href="@{groups/__${group.id}__/delete}">❌</a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>
+                <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add group</button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 
 <div th:if="${editGroupDraft}" id="editModal" class="modal" style="display: block">
     <div class="modal-content">

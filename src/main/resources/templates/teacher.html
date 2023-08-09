@@ -14,7 +14,7 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<div id="teacherContainer" style="padding-left: 50px; padding-right: 50px; padding-top: 20px">
+<div id="teacherContainer" class="page-container">
     <h5 th:text="${teacher.getFullName()}"></h5>
     <br>
     <h6 th:text="#{text.teacher.curator(${teacherGroupNames})}"></h6>
