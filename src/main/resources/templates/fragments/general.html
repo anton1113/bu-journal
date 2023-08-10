@@ -9,13 +9,6 @@
 
 <body>
 
-<footer class="footer bg-light" th:fragment="footer">
-    <span class="text-secondary">
-        <p style="margin-left: 25px"
-           th:text="#{footer.text}">Footer text</p>
-    </span>
-</footer>
-
 <div th:if="${errorMessage}" id="errorModal" class="error-modal">
     <span id="closeSpan" class="close-error-modal">&times;</span>
     <div class="error-modal-content">
