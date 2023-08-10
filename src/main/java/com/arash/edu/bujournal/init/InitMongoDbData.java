@@ -40,6 +40,8 @@ public class InitMongoDbData {
     @Autowired
     private BuUserRepository buUserRepository;
     @Autowired
+    private FeedbackRepository feedbackRepository;
+    @Autowired
     private BuUserRegisterService buUserRegisterService;
 
     @PostConstruct
@@ -54,6 +56,7 @@ public class InitMongoDbData {
         adminRepository.deleteAll();
         sourceRepository.deleteAll();
         buUserRepository.deleteAll();
+        feedbackRepository.deleteAll();
 
         log.info("Initializing test teachers data");
         Teacher teacher1 = new Teacher(randomUUID(), "Артеменко", "Ольга", "Іванівна");
