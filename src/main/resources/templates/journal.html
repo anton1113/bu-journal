@@ -36,7 +36,7 @@
                        th:attr="id=${attendance.id}, value=${attendance.toCellValue()}"
                        onchange="onChangeHandler(this.id, this.value)">
                 <input sec:authorize="hasAuthority('STUDENT')" class="editable-cell" type="text" size="4"
-                       th:attr="id=${attendance.id}, value=${attendance.toCellValue()}"
+                       th:value="${attendance.toCellValue()}"
                        onchange="onForbiddenChangeHandler()" readonly style="pointer-events: none">
             </td>
         </tr>
@@ -46,6 +46,7 @@
 
 <script type="text/javascript" th:inline="javascript">
     var username = [[${#authentication.principal.username}]];
+    var role = [[${#authentication.principal.role.name()}]];
 </script>
 <script th:inline="javascript" type="text/javascript" th:src="@{/js/change-journal.js}"></script>
 

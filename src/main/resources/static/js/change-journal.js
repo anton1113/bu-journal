@@ -1,4 +1,9 @@
 function onChangeHandler(id, val) {
+    if (role === 'STUDENT') {
+        console.log("Nice try, " + username + ", =)");
+        return;
+    }
+
     console.log(id, val);
     console.log(window.location.origin)
 
