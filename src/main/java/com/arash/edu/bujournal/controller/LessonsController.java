@@ -21,6 +21,7 @@ public class LessonsController {
     private final LessonService lessonService;
     private final SubjectService subjectService;
     private final SourceService sourceService;
+    private final AssignmentService assignmentService;
     private final TeacherService teacherService;
     private final GroupService groupService;
 
@@ -28,15 +29,18 @@ public class LessonsController {
     public String showLesson(@PathVariable UUID lessonId, Model model) {
         Lesson lesson = lessonService.findById(lessonId);
         List<Source> sources = sourceService.findAllByLessonId(lesson.getId());
+        List<Assignment> assignments = assignmentService.findAllByLessonId(lesson.getId());
         Subject subject = subjectService.findById(lesson.getSubjectId());
         Teacher teacher = teacherService.findByNullableId(subject.getTeacherId());
         Group group = groupService.findById(subject.getGroupId());
         model.addAttribute("lesson", lesson);
         model.addAttribute("sources", sources);
+        model.addAttribute("assignments", assignments);
         model.addAttribute("subject", subject);
         model.addAttribute("teacher", teacher);
         model.addAttribute("group", group);
         model.addAttribute("addSourceDraft", new Source());
+        model.addAttribute("addAssignmentDraft", new Source());
         return "lesson";
     }
 
@@ -69,6 +73,38 @@ public class LessonsController {
     @GetMapping("/lessons/{lessonId}/sources/{sourceId}/delete/confirm")
     public String confirmDeleteSourceOfLesson(@PathVariable UUID lessonId, @PathVariable UUID sourceId) {
         sourceService.deleteSource(sourceId);
+        return "redirect:/lessons/" + lessonId;
+    }
+
+    @PostMapping("/lessons/{lessonId}/assignments")
+    public String addAssignmentToLesson(@PathVariable UUID lessonId, @ModelAttribute Assignment assignment) {
+        assignmentService.addAssignment(assignment, lessonId);
+        return "redirect:/lessons/" + lessonId;
+    }
+
+    @GetMapping("/lessons/{lessonId}/assignments/{assignmentId}/draft")
+    public String getAssignmentOfLessonDraft(@PathVariable UUID lessonId, @PathVariable UUID assignmentId, RedirectAttributes redirectAttributes) {
+        Assignment assignment = assignmentService.findById(assignmentId);
+        redirectAttributes.addFlashAttribute("editAssignmentDraft", assignment);
+        return "redirect:/lessons/" + lessonId;
+    }
+
+    @PostMapping("/lessons/{lessonId}/assignments/{assignmentId}")
+    public String editAssignmentOfLesson(@PathVariable UUID lessonId, @PathVariable UUID assignmentId, @ModelAttribute Assignment assignment) {
+        assignmentService.editAssignment(assignmentId, assignment);
+        return "redirect:/lessons/" + lessonId;
+    }
+
+    @GetMapping("/lessons/{lessonId}/assignments/{assignmentId}/delete")
+    public String deleteAssignmentOfLesson(@PathVariable UUID lessonId, @PathVariable UUID assignmentId, RedirectAttributes redirectAttributes) {
+        Assignment assignment = assignmentService.findById(assignmentId);
+        redirectAttributes.addFlashAttribute("assignmentDeleteCandidate", assignment);
+        return "redirect:/lessons/" + lessonId;
+    }
+
+    @GetMapping("/lessons/{lessonId}/assignments/{assignmentId}/delete/confirm")
+    public String confirmDeleteAssignmentOfLesson(@PathVariable UUID lessonId, @PathVariable UUID assignmentId) {
+        assignmentService.deleteAssignment(assignmentId);
         return "redirect:/lessons/" + lessonId;
     }
 }
