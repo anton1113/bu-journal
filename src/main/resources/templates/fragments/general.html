@@ -21,6 +21,9 @@
             <li class="nav-item" sec:authorize="hasAuthority('STUDENT')">
                 <a th:text="#{nav.my-group}" class="nav-link" href="/students/my-group">My group</a>
             </li>
+            <li class="nav-item" sec:authorize="hasAuthority('TEACHER')">
+                <a th:text="#{nav.my-groups}" class="nav-link" href="/teachers/my-groups">My groups</a>
+            </li>
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                 <a th:text="#{nav.teachers}" class="nav-link" href="/teachers">Teachers</a>
             </li>

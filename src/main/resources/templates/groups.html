@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Bu groups</title>
@@ -18,31 +18,31 @@
         <thead>
         <tr>
             <th th:text="#{group.name}">Group name</th>
-            <th th:text="#{group.curator}">Curator</th>
+            <th sec:authorize="hasAuthority('ADMIN')" th:text="#{group.curator}">Curator</th>
             <th></th>
-            <th></th>
-            <th></th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="group : ${groups}" th:with="curator=${@teacherService.findByNullableId(group.curatorId)}">
             <td th:text="${group.name}">Name</td>
-            <td th:text="${curator} == null ? #{text.curator.empty} : |${curator.lastName} ${curator.firstName} ${curator.patronymic}|">
+            <td sec:authorize="hasAuthority('ADMIN')" th:text="${curator} == null ? #{text.curator.empty} : |${curator.lastName} ${curator.firstName} ${curator.patronymic}|">
                 Last name
             </td>
             <td>
-                <a th:text="#{label.href.students.list}" th:href="@{groups/__${group.id}__}">Details</a>
+                <a th:text="#{label.href.students.list}" th:href="@{/groups/__${group.id}__}">Details</a>
             </td>
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <a th:alt="#{label.href.edit}" th:href="@{groups/__${group.id}__/draft}">✏️</a>
             </td>
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <a th:alt="#{label.href.delete}" th:href="@{groups/__${group.id}__/delete}">❌</a>
             </td>
         </tr>
         </tbody>
         <tfoot>
-        <tr>
+        <tr sec:authorize="hasAuthority('ADMIN')">
             <td>
                 <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add group</button>
             </td>
@@ -55,7 +55,7 @@
     </table>
 </div>
 
-<div th:if="${editGroupDraft}" id="editModal" class="modal" style="display: block">
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${editGroupDraft}" id="editModal" class="modal" style="display: block">
     <div class="modal-content">
         <form action="#" th:action="@{/groups/__${editGroupDraft.id}__}" th:object="${editGroupDraft}" method="post">
             <span class="close" id="closeEditSpan">&times;</span>
@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<div id="insertModal" class="modal">
+<div sec:authorize="hasAuthority('ADMIN')" id="insertModal" class="modal">
     <div class="modal-content">
         <form action="#" th:action="@{/groups}" th:object="${addGroupDraft}" method="post">
             <span class="close" id="closeInsertSpan">&times;</span>
