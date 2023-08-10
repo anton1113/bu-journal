@@ -14,9 +14,19 @@
 
 <div th:replace="fragments/general::#errorModal"></div>
 
-<p>
-    This page is not implemented yet
-</p>
+<div id="feedbackContainer" class="page-container">
+    <h6 th:utext="#{text.feedback}">Pls leave your feedback below</h6>
+    <br>
+    <div id="feedbackFormContainer">
+        <form action="#" th:action="@{/feedback}" th:object="${feedbackDraft}" method="post">
+            <div class="form-group">
+                <textarea id="text" rows="10" cols="64" th:field="*{text}"
+                          name="text"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
+        </form>
+    </div>
+</div>
 
 <footer th:replace="fragments/general::footer"></footer>
 
