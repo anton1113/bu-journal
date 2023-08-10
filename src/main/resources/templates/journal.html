@@ -31,7 +31,7 @@
             <td th:text="${student.getFullName()}">Full name</td>
             <td th:each="lesson: ${lessons}"
                 th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">
-                <input sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER', 'DEAN')" class="editable-cell" type="text"
+                <input sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="editable-cell" type="text"
                        size="4"
                        th:attr="id=${attendance.id}, value=${attendance.toCellValue()}"
                        onchange="onChangeHandler(this.id, this.value)">

@@ -8,7 +8,6 @@ public enum BuUserRole {
 
     STUDENT("Student", "Студент"),
     TEACHER("Teacher", "Викладач"),
-    DEAN("Dean", "Декан"),
     ADMIN("Admin", "Admin");
 
     @Getter

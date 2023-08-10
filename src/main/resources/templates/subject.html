@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="${subject.name}">Group name</title>
@@ -20,8 +20,8 @@
             <th th:text="#{lesson.date}">Lesson date</th>
             <th th:text="#{lesson.name}">Lesson name</th>
             <th th:text="#{lesson.type}">Lesson type</th>
-            <th></th>
-            <th></th>
+            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
+            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
         </tr>
         </thead>
         <tbody>
@@ -29,16 +29,16 @@
             <td th:text="${lesson.date}">Lesson date</td>
             <td th:text="${lesson.name}">Lesson name</td>
             <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
-            <td>
+            <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
                 <a th:alt="#{label.href.edit}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" id="editButton">✏️</a>
             </td>
-            <td>
+            <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
                 <a th:alt="#{label.href.delete}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">❌</a>
             </td>
         </tr>
         </tbody>
         <tfoot>
-        <tr>
+        <tr sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
             <td>
                 <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add lesson</button>
             </td>
@@ -50,7 +50,7 @@
     </table>
 </div>
 
-<div th:if="${editLessonDraft}" id="editModal" class="modal" style="display: block">
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${editLessonDraft}" id="editModal" class="modal" style="display: block">
     <div class="modal-content">
         <form action="#" th:action="@{/subjects/__${subject.id}__/lessons/__${editLessonDraft.id}__}" th:object="${editLessonDraft}" method="post">
             <span class="close" id="closeEditSpan">&times;</span>
@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<div id="insertModal" class="modal">
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" id="insertModal" class="modal">
     <div class="modal-content">
         <form action="#" th:action="@{/subjects/__${subject.id}__/lessons}" th:object="${addLessonDraft}" method="post">
             <span class="close" id="closeInsertSpan">&times;</span>
@@ -111,7 +111,7 @@
     </div>
 </div>
 
-<div th:if="${lessonDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${lessonDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
     <div class="modal-content">
         <form action="#" th:action="@{/subjects/__${subject.id}__/lessons/__${lessonDeleteCandidate.id}__/delete/confirm}" th:object="${lessonDeleteCandidate}" method="get">
             <span class="close" id="closeDeleteSpan">&times;</span>
