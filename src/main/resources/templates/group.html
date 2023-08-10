@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="${group.name}">Group name</title>
@@ -14,32 +14,35 @@
 <div th:replace="fragments/general::#errorModal"></div>
 
 <div id="groupContainer" class="page-container">
+    <h5 th:text="${group.name}"></h5>
+    <h6 th:text="${curator} == null ? #{text.curator.empty} : #{text.student.curator(${curator.getFullName()})}"></h6>
+    <br>
     <table class="table table-hover">
         <thead>
         <tr>
             <th th:text="#{student.name}">Student name</th>
-            <th></th>
-            <th></th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
             <td th:text="${student.getFullName()}">Full name</td>
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <a th:alt="#{label.href.edit}" th:href="@{__${group.id}__/students/__${student.id}__/draft}">✏️</a>
             </td>
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <a th:alt="#{label.href.delete}" th:href="@{__${group.id}__/students/__${student.id}__/delete}">❌</a>
             </td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add student</button>
             </td>
-            <td></td>
-            <td></td>
+            <td sec:authorize="hasAuthority('ADMIN')"></td>
+            <td sec:authorize="hasAuthority('ADMIN')"></td>
         </tr>
     </table>
 </div>
