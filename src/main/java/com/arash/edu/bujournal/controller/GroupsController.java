@@ -58,7 +58,9 @@ public class GroupsController {
     public String showGroup(@PathVariable UUID id, Model model) {
         Group group = groupService.findById(id);
         List<Student> students = studentService.findAllByGroupId(group.getId());
+        Teacher curator = teacherService.findByNullableId(group.getCuratorId());
         model.addAttribute("group", group);
+        model.addAttribute("curator", curator);
         model.addAttribute("students", students);
         Student addStudentDraft = new Student();
         addStudentDraft.setGroupId(group.getId());

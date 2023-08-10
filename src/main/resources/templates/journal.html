@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="${group.name} + ' ' + ${subject.name}">Group name</title>
@@ -31,16 +31,24 @@
             <td th:text="${student.getFullName()}">Full name</td>
             <td th:each="lesson: ${lessons}"
                 th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">
-                <input class="editable-cell" type="text" size="4"
+                <input sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="editable-cell" type="text"
+                       size="4"
                        th:attr="id=${attendance.id}, value=${attendance.toCellValue()}"
                        onchange="onChangeHandler(this.id, this.value)">
+                <input sec:authorize="hasAuthority('STUDENT')" class="editable-cell" type="text" size="4"
+                       th:value="${attendance.toCellValue()}"
+                       onchange="onForbiddenChangeHandler()" readonly style="pointer-events: none">
             </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<script type="text/javascript" th:src="@{/js/change-journal.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    var username = [[${#authentication.principal.username}]];
+    var role = [[${#authentication.principal.role.name()}]];
+</script>
+<script th:inline="javascript" type="text/javascript" th:src="@{/js/change-journal.js}"></script>
 
 </body>
 </html>

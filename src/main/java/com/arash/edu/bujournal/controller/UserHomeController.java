@@ -18,9 +18,6 @@ public class UserHomeController {
             case TEACHER: {
                 return "redirect:/teachers/" + loggedInUser.getExternalId();
             }
-            case DEAN: {
-                return "redirect:/deans/" + loggedInUser.getExternalId();
-            }
             case ADMIN: {
                 return "redirect:/admins/" + loggedInUser.getExternalId();
             }

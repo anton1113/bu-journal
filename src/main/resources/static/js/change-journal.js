@@ -1,4 +1,9 @@
 function onChangeHandler(id, val) {
+    if (role === 'STUDENT') {
+        console.log("Nice try, " + username + ", =)");
+        return;
+    }
+
     console.log(id, val);
     console.log(window.location.origin)
 
@@ -9,4 +14,8 @@ function onChangeHandler(id, val) {
     };
     fetch(window.location.origin + '/attendances/' + id, requestOptions)
         .then(response => console.log(response.json()));
+}
+
+function onForbiddenChangeHandler() {
+    console.log("Nice try, " + username + ", =)");
 }
