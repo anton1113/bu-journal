@@ -52,6 +52,7 @@ public class InitMongoDbData {
         subjectRepository.deleteAll();
         teacherRepository.deleteAll();
         adminRepository.deleteAll();
+        sourceRepository.deleteAll();
         buUserRepository.deleteAll();
 
         log.info("Initializing test teachers data");

@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 import static java.util.Collections.singletonList;
@@ -31,12 +33,16 @@ public class TestMongoConfig {
     @Bean
     public MongoTemplate mongoTemplate(MongoClient mongoClient, MongoConfigProperties mongoConfigProperties) {
         MongoDatabaseFactory dbFactory = new SimpleMongoClientDatabaseFactory(mongoClient, mongoConfigProperties.getDatabase());
+        DefaultDbRefResolver dbRefResolver = new DefaultDbRefResolver(dbFactory);
 
         MongoMappingContext mongoMappingContext = new MongoMappingContext();
         mongoMappingContext.setAutoIndexCreation(true);
         mongoMappingContext.afterPropertiesSet();
 
-        return new MongoTemplate(dbFactory);
+        MappingMongoConverter mappingMongoConverter = new MappingMongoConverter(dbRefResolver, mongoMappingContext);
+        mappingMongoConverter.afterPropertiesSet();
+
+        return new MongoTemplate(dbFactory, mappingMongoConverter);
     }
 
     @Bean
