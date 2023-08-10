@@ -10,3 +10,7 @@ function onChangeHandler(id, val) {
     fetch(window.location.origin + '/attendances/' + id, requestOptions)
         .then(response => console.log(response.json()));
 }
+
+function onForbiddenChangeHandler() {
+    console.log("Nice try, " + username + ", =)");
+}

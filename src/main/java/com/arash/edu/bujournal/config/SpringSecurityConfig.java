@@ -36,7 +36,10 @@ public class SpringSecurityConfig {
                 .logout()
                 .permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/login")
+            .and()
+                .csrf()
+                .disable();
         return http.build();
     }
 }
