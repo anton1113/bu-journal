@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
-    <title th:text="${group.name} + ' ' + ${subject.name}">Group name</title>
-    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link th:href="@{/styles/journal.css}" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <title th:text="${group.name} + ' ' + ${subject.name}">Group name</title>
 </head>
 <body>
 
-<h5 class="centered-text" th:text="#{text.journal.subject.name} + ': ' + ${subject.name}"></h5>
-<h5 class="centered-text"
-    th:text="${teacher} == null ? #{text.teacher.empty} : #{text.journal.teacher.name} + ': ' + ${teacher.getFullName()}"></h5>
-<h5 class="centered-text" th:text="#{text.journal.group.name} + ': ' + ${group.name}"></h5><br>
-<h6 class="centered-text" th:text="#{text.journal.table.head}"></h6>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div>
-    <table class="table-bordered journal">
+<div class="container">
+    <h5 th:text="#{text.journal.subject.name} + ': ' + ${subject.name}"></h5>
+    <br>
+    <h6 th:text="${teacher} == null ? #{text.teacher.empty} : #{text.journal.teacher.name} + ': ' + ${teacher.getFullName()}"></h6>
+    <h6 th:text="#{text.journal.group.name} + ': ' + ${group.name}"></h6>
+
+    <table class="table table-bordered journal-table caption-top">
+        <caption th:text="#{text.journal.table.head}"></caption>
         <thead>
         <tr>
             <th th:text="#{student.name}">Student full name</th>
-            <th th:each="lesson: ${lessons}" th:text="${lesson.getFormattedDate()}" class="lesson-date">Lesson date</th>
+            <th th:each="lesson: ${lessons}" th:text="${lesson.getFormattedDate()}">Lesson date</th>
         </tr>
         </thead>
         <tbody>
@@ -29,11 +36,10 @@
             <td th:text="${student.getFullName()}">Full name</td>
             <td th:each="lesson: ${lessons}"
                 th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">
-                <input sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="editable-cell" type="text"
-                       size="4"
+                <input sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" type="text" class="journal-cell"
                        th:attr="id=${attendance.id}, value=${attendance.toCellValue()}"
                        onchange="onChangeHandler(this.id, this.value)">
-                <input sec:authorize="hasAuthority('STUDENT')" class="editable-cell" type="text" size="4"
+                <input sec:authorize="hasAuthority('STUDENT')" type="text" class="journal-cell"
                        th:value="${attendance.toCellValue()}"
                        onchange="onForbiddenChangeHandler()" readonly style="pointer-events: none">
             </td>

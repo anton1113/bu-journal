@@ -32,6 +32,17 @@ a.icon-link {
     text-decoration: none;
 }
 
+table.journal-table {
+    width: 100%;
+    height: 100%;
+}
+
+input.journal-cell {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
 .modal {
     display: none;
     /* Hidden by default */
