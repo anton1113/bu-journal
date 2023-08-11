@@ -41,7 +41,7 @@
         </tr>
         </tbody>
     </table>
-    <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add teacher</button>
+    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add teacher</button>
 </div>
 
 <div th:if="${editTeacherDraft}" id="editModal" class="modal" style="display: block">

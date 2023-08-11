@@ -32,7 +32,7 @@
             <td th:text="${curator} == null ? #{text.curator.empty} : |${curator.lastName} ${curator.firstName} ${curator.patronymic}|">
                 Last name
             </td>
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <a href="#" class="icon-link" th:href="@{/groups/__${group.id}__}" data-bs-toggle="tooltip" data-bs-placement="top"
                    th:title="#{tooltip.icon.show}">
                     <i class="material-icons show-icon">visibility</i>
