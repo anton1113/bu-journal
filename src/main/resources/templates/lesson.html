@@ -15,7 +15,7 @@
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div id="lessonContainer" class="page-container">
+<div id="lessonContainer" class="container">
     <h5 th:text="(${lesson.date} == null ? '': ${lesson.date} + '. ') + ${lesson.name} + (${lesson.type} == null ? '': ' (' + ${lesson.type.getUaValue()} + ')')"></h5>
     <br>
     <h6 th:text="${subject.name} + ' (' + ${group.name} + ')'"></h6>

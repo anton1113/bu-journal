@@ -10,47 +10,46 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <title th:text="${subject.name}">Group name</title>
+    <title th:text="${subject.name}">Subject name</title>
 </head>
 <body>
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div id="subjectContainer" class="page-container">
-    <table class="table table-hover">
-        <thead>
+<div id="subjectContainer" class="container">
+    <table class="table caption-top">
+        <caption th:text="#{caption.table.lessons}">List of lessons</caption>
+        <thead class="table-light">
         <tr>
             <th th:text="#{lesson.date}">Lesson date</th>
             <th th:text="#{lesson.name}">Lesson name</th>
             <th th:text="#{lesson.type}">Lesson type</th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
+            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="lesson : ${lessons}" th:attr="onclick=|redirect('/lessons/${lesson.id}')|" >
+        <tr th:each="lesson : ${lessons}">
             <td th:text="${lesson.date}">Lesson date</td>
             <td th:text="${lesson.name}">Lesson name</td>
             <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
             <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-                <a th:alt="#{label.href.edit}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" id="editButton">✏️</a>
-            </td>
-            <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-                <a th:alt="#{label.href.delete}" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">❌</a>
+                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__}" data-bs-toggle="tooltip" data-bs-placement="top"
+                   th:title="#{tooltip.icon.show}">
+                    <i class="material-icons show-icon">visibility</i>
+                </a>
+                <a href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
+                   th:title="#{tooltip.icon.edit}">
+                    <i class="material-icons edit-icon">edit</i>
+                </a>
+                <a href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}" data-bs-toggle="tooltip"
+                   data-bs-placement="top" th:title="#{tooltip.icon.delete}">
+                    <i class="material-icons delete-icon">delete</i>
+                </a>
             </td>
         </tr>
         </tbody>
-        <tfoot>
-        <tr sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-            <td>
-                <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add lesson</button>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
     </table>
+    <button sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add lesson</button>
 </div>
 
 <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${editLessonDraft}" id="editModal" class="modal" style="display: block">
@@ -143,7 +142,6 @@
 <script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
 <script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
 <script type="text/javascript" th:src="@{/js/delete-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/commons.js}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
