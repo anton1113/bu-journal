@@ -10,5 +10,6 @@ import java.util.UUID;
 @Repository
 public interface FeedbackRepository extends MongoRepository<Feedback, UUID> {
 
+    boolean existsByTextAndSessionId(String text, String sessionId);
     int countAllBySessionIdAndCreatedOnAfter(String sessionId, LocalDateTime createdOn);
 }
