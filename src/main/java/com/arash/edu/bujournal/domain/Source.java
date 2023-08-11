@@ -23,7 +23,5 @@ public class Source {
 
     private String link;
 
-    private String comment;
-
     private UUID attachmentId;
 }

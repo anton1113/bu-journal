@@ -23,7 +23,5 @@ public class Assignment {
 
     private String link;
 
-    private String comment;
-
     private UUID attachmentId;
 }

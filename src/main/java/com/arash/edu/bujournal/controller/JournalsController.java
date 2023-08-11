@@ -21,13 +21,6 @@ public class JournalsController {
     private final LessonService lessonService;
     private final TeacherService teacherService;
 
-    @GetMapping("/journals")
-    public String showJournals(Model model) {
-        List<Group> groups = groupService.findAll();
-        model.addAttribute("groups", groups);
-        return "journals";
-    }
-
     @GetMapping("/journals/subjects/{subjectId}")
     public String showSubjectJournal(@PathVariable UUID subjectId, Model model) {
         Subject subject = subjectService.findById(subjectId);

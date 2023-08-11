@@ -1,9 +1,3 @@
-div.page-container {
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 20px;
-}
-
 img.bu-logo {
     height: 45px;
     width: 45px;
@@ -21,6 +15,16 @@ img.bu-logo {
 
 .journal-icon {
     color: #6b6b6b;
+    padding-right: 10px;
+}
+
+.edit-icon {
+    color: darkgoldenrod;
+    padding-right: 10px;
+}
+
+.delete-icon {
+    color: orangered;
     padding-right: 10px;
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <title>Bu subjects</title>
 </head>
@@ -15,18 +16,15 @@
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div th:replace="fragments/general::#errorModal"></div>
-
-<div id="subjectsContainer" class="page-container">
-    <table class="table table-hover">
-        <thead>
+<div id="subjectsContainer" class="container">
+    <table class="table caption-top">
+        <caption th:text="#{caption.table.subjects}">List of subjects</caption>
+        <thead class="table-light">
         <tr>
             <th th:text="#{subject.name}">Subject name</th>
             <th th:text="#{subject.teacher.name}">Subject teacher name</th>
             <th th:text="#{subject.group.name}">Subject group name</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th sec:authorize="hasAuthority('ADMIN')" th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -35,30 +33,28 @@
             <td th:text="${subject.name}">Subject name</td>
             <td th:text="${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()}">Teacher full name</td>
             <td th:text="${group} == null ? #{text.group.empty} : ${group.name}">Group name</td>
-            <td>
-                <a th:text="#{label.href.subject.lessons}" th:href="@{subjects/__${subject.id}__}">Lessons schedule</a>
-            </td>
-            <td>
-                <a th:alt="#{label.href.edit}" th:href="@{subjects/__${subject.id}__/draft}" id="editButton">✏️</a>
-            </td>
-            <td>
-                <a th:alt="#{label.href.delete}" th:href="@{subjects/__${subject.id}__/delete}">❌</a>
+            <td sec:authorize="hasAuthority('ADMIN')">
+                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__}" data-bs-toggle="tooltip" data-bs-placement="top"
+                   th:title="#{tooltip.icon.show}">
+                    <i class="material-icons show-icon">visibility</i>
+                </a>
+                <a href="#" class="icon-link" th:href="@{/journals/subjects/__${subject.id}__/}" data-bs-toggle="tooltip"
+                   data-bs-placement="top" th:title="#{tooltip.icon.journal}">
+                    <i class="material-icons journal-icon">menu_book</i>
+                </a>
+                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
+                   th:title="#{tooltip.icon.edit}">
+                    <i class="material-icons edit-icon">edit</i>
+                </a>
+                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__/delete}" data-bs-toggle="tooltip"
+                   data-bs-placement="top" th:title="#{tooltip.icon.delete}">
+                    <i class="material-icons delete-icon">delete</i>
+                </a>
             </td>
         </tr>
         </tbody>
-        <tfoot>
-        <tr>
-            <td>
-                <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add subject</button>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tfoot>
     </table>
+    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add subject</button>
 </div>
 
 <div th:if="${editSubjectDraft}" id="editModal" class="modal" style="display: block">

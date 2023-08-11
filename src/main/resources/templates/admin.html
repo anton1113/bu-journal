@@ -15,9 +15,7 @@
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div th:replace="fragments/general::#errorModal"></div>
-
-<div id="adminContainer" class="page-container">
+<div id="adminContainer" class="container">
     <h5 th:text="${admin.getFullName()}"></h5>
     <br>
     <h6 th:text="#{text.admin.role}"></h6>

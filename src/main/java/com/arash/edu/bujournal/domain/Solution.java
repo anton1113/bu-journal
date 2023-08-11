@@ -21,8 +21,6 @@ public class Solution {
 
     private UUID studentId;
 
-    private String comment;
-
     private String link;
 
     private UUID attachmentId;

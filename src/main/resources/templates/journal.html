@@ -10,8 +10,6 @@
 </head>
 <body>
 
-<div th:replace="fragments/general::#errorModal"></div>
-
 <h5 class="centered-text" th:text="#{text.journal.subject.name} + ': ' + ${subject.name}"></h5>
 <h5 class="centered-text"
     th:text="${teacher} == null ? #{text.teacher.empty} : #{text.journal.teacher.name} + ': ' + ${teacher.getFullName()}"></h5>
