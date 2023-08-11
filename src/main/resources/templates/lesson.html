@@ -28,7 +28,6 @@
             <tr>
                 <th th:text="#{label.table.column.lesson.sources.name}">Source name</th>
                 <th th:text="#{label.table.column.lesson.sources.link}">Preview link</th>
-                <th th:text="#{label.table.column.lesson.sources.comment}">Comment</th>
                 <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
                 <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
             </tr>
@@ -39,7 +38,6 @@
                 <td>
                     <a th:href="${source.link}" th:text="${source.link}"></a>
                 </td>
-                <td th:text="${source.comment}">Source comment</td>
                 <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
                     <a th:alt="#{label.href.edit}" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}" id="editButton">✏️</a>
                 </td>
@@ -68,7 +66,6 @@
             <tr>
                 <th th:text="#{label.table.column.lesson.assignments.name}">Assignment name</th>
                 <th th:text="#{label.table.column.lesson.assignments.link}">Preview link</th>
-                <th th:text="#{label.table.column.lesson.assignments.comment}">Comment</th>
                 <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
                 <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')"></th>
             </tr>
@@ -79,7 +76,6 @@
                 <td>
                     <a th:href="${assignment.link}" th:text="${assignment.link}"></a>
                 </td>
-                <td th:text="${assignment.comment}">Assignment comment</td>
                 <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
                     <a th:alt="#{label.href.edit}" th:href="@{/lessons/__${lesson.id}__/assignments/__${assignment.id}__/draft}" id="editButton">✏️</a>
                 </td>

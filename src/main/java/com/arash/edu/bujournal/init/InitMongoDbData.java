@@ -123,15 +123,15 @@ public class InitMongoDbData {
         lessonRepository.saveAll(List.of(lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11));
 
         log.info("Initializing test source data");
-        Source source1 = new Source(randomUUID(), lesson1.getId(), "Методичка", "https://google.com/", null, null);
-        Source source2 = new Source(randomUUID(), lesson1.getId(), "Підручник", "https://www.wikipedia.org/", null, null);
-        Source source3 = new Source(randomUUID(), lesson1.getId(), "Додаткові матеріали", "https://github.com/", null, null);
+        Source source1 = new Source(randomUUID(), lesson1.getId(), "Методичка", "https://google.com/", null);
+        Source source2 = new Source(randomUUID(), lesson1.getId(), "Підручник", "https://www.wikipedia.org/", null);
+        Source source3 = new Source(randomUUID(), lesson1.getId(), "Додаткові матеріали", "https://github.com/", null);
         sourceRepository.saveAll(List.of(source1, source2, source3));
 
         log.info("Initializing test assignment data");
-        Assignment assignment1 = new Assignment(randomUUID(), lesson1.getId(), "Лабораторна", "https://netflix.com/", null, null);
-        Assignment assignment2 = new Assignment(randomUUID(), lesson1.getId(), "Реферат", "https://diia.gov.ua/", null, null);
-        Assignment assignment3 = new Assignment(randomUUID(), lesson1.getId(), "Твір", "https://taras-shevchenko.com.ua/", null, null);
+        Assignment assignment1 = new Assignment(randomUUID(), lesson1.getId(), "Лабораторна", "https://netflix.com/", null);
+        Assignment assignment2 = new Assignment(randomUUID(), lesson1.getId(), "Реферат", "https://diia.gov.ua/", null);
+        Assignment assignment3 = new Assignment(randomUUID(), lesson1.getId(), "Твір", "https://taras-shevchenko.com.ua/", null);
         assignmentRepository.saveAll(List.of(assignment1, assignment2, assignment3));
     }
 }
