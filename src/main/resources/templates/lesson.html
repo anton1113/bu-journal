@@ -15,8 +15,6 @@
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div th:replace="fragments/general::#errorModal"></div>
-
 <div id="lessonContainer" class="page-container">
     <h5 th:text="(${lesson.date} == null ? '': ${lesson.date} + '. ') + ${lesson.name} + (${lesson.type} == null ? '': ' (' + ${lesson.type.getUaValue()} + ')')"></h5>
     <br>
