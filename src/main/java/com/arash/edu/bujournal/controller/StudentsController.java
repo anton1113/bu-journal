@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -46,11 +47,12 @@ public class StudentsController {
     }
 
     @GetMapping("/students/my-group")
-    public String showStudentsGroup() {
+    public String showStudentsGroup(RedirectAttributes redirectAttributes) {
         BuUser loggedInUser = BuSecurityUtil.getLoggedInUser();
         if (loggedInUser.getRole() != BuUserRole.STUDENT) {
             throw new IllegalStateException("Requested to show student group by non-student user " + loggedInUser);
         }
+        redirectAttributes.addFlashAttribute("redirectedFrom", "/students/my-group");
         Student student = studentService.findById(loggedInUser.getExternalId());
         return "redirect:/groups/" + student.getGroupId();
     }
