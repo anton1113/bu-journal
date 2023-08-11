@@ -21,34 +21,54 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a th:text="#{nav.user.home}" class="nav-link" href="/me">My homepage</a>
+                    <a th:text="#{nav.user.home}"
+                       th:classappend="${redirectedFrom} == '/me' ? 'active': ''" class="nav-link"
+                       href="/me">My homepage</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('STUDENT')">
-                    <a th:text="#{nav.my-group}" class="nav-link" href="/students/my-group">My group</a>
+                    <a th:text="#{nav.my-group}"
+                       th:classappend="${redirectedFrom} == '/students/my-group' ? 'active': ''"
+                       class="nav-link" href="/students/my-group">My group</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('TEACHER')">
-                    <a th:text="#{nav.my-groups}" class="nav-link" href="/teachers/my-groups">My groups</a>
+                    <a th:text="#{nav.my-groups}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/teachers/my-groups' ? 'active': ''"
+                       class="nav-link" href="/teachers/my-groups">My groups</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                    <a th:text="#{nav.teachers}" class="nav-link" href="/teachers">Teachers</a>
+                    <a th:text="#{nav.teachers}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/teachers' ? 'active': ''" class="nav-link"
+                       href="/teachers">Teachers</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                    <a th:text="#{nav.groups}" class="nav-link" href="/groups">Groups</a>
+                    <a th:text="#{nav.groups}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/groups' ? 'active': ''" class="nav-link"
+                       href="/groups">Groups</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                    <a th:text="#{nav.subjects}" class="nav-link" href="/subjects">Subjects</a>
+                    <a th:text="#{nav.subjects}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/subjects' ? 'active': ''" class="nav-link"
+                       href="/subjects">Subjects</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                    <a th:text="#{nav.journals}" class="nav-link" href="/journals">Journals</a>
+                    <a th:text="#{nav.journals}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/journals' ? 'active': ''" class="nav-link"
+                       href="/journals">Journals</a>
                 </li>
                 <li class="nav-item">
-                    <a th:text="#{nav.feedback}" class="nav-link" href="/feedback">Feedback</a>
+                    <a th:text="#{nav.feedback}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/feedback' ? 'active': ''" class="nav-link"
+                       href="/feedback">Feedback</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a th:text="#{nav.login}" class="nav-link" href="/login">Logout</a>
+                    <a th:text="#{nav.login}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/login' ? 'active': ''" class="nav-link"
+                       href="/login">Login</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a th:text="#{nav.logout}" class="nav-link" href="/logout">Logout</a>
+                    <a th:text="#{nav.logout}"
+                       th:classappend="${#httpServletRequest.requestURI} == '/logout' ? 'active': ''" class="nav-link"
+                       href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
