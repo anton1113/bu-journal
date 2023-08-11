@@ -38,6 +38,10 @@
                    th:title="#{tooltip.icon.show}">
                     <i class="material-icons show-icon">visibility</i>
                 </a>
+                <a href="#" class="icon-link" th:href="@{/journals/subjects/__${subject.id}__/}" data-bs-toggle="tooltip"
+                   data-bs-placement="top" th:title="#{tooltip.icon.journal}">
+                    <i class="material-icons journal-icon">menu_book</i>
+                </a>
                 <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
                    th:title="#{tooltip.icon.edit}">
                     <i class="material-icons edit-icon">edit</i>
