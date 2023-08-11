@@ -9,6 +9,25 @@ img.bu-logo {
     width: 45px;
 }
 
+.container {
+    padding-top: 20px;
+    overflow: auto;
+}
+
+.show-icon {
+    color: #03A9F4;
+    padding-right: 10px;
+}
+
+.journal-icon {
+    color: #6b6b6b;
+    padding-right: 10px;
+}
+
+a.icon-link {
+    text-decoration: none;
+}
+
 .modal {
     display: none;
     /* Hidden by default */
