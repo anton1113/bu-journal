@@ -4,6 +4,11 @@ div.page-container {
     padding-top: 20px;
 }
 
+img.bu-logo {
+    height: 45px;
+    width: 45px;
+}
+
 .modal {
     display: none;
     /* Hidden by default */
