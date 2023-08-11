@@ -24,6 +24,16 @@ img.bu-logo {
     padding-right: 10px;
 }
 
+.edit-icon {
+    color: darkgoldenrod;
+    padding-right: 10px;
+}
+
+.delete-icon {
+    color: orangered;
+    padding-right: 10px;
+}
+
 a.icon-link {
     text-decoration: none;
 }

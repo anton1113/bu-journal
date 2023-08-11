@@ -8,6 +8,7 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <title th:text="${group.name}">Group name</title>
 </head>
@@ -15,40 +16,36 @@
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div th:replace="fragments/general::#errorModal"></div>
-
-<div id="groupContainer" class="page-container">
+<div id="groupContainer" class="container">
     <h5 th:text="${group.name}"></h5>
+    <br>
     <h6 th:text="${curator} == null ? #{text.curator.empty} : #{text.student.curator(${curator.getFullName()})}"></h6>
     <br>
-    <table class="table table-hover">
-        <thead>
+    <table class="table caption-top">
+        <caption th:text="#{caption.table.group.students}">List of students</caption>
+        <thead class="table-light">
         <tr>
             <th th:text="#{student.name}">Student name</th>
-            <th sec:authorize="hasAuthority('ADMIN')"></th>
-            <th sec:authorize="hasAuthority('ADMIN')"></th>
+            <th sec:authorize="hasAuthority('ADMIN')" th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
             <td th:text="${student.getFullName()}">Full name</td>
             <td sec:authorize="hasAuthority('ADMIN')">
-                <a th:alt="#{label.href.edit}" th:href="@{__${group.id}__/students/__${student.id}__/draft}">✏️</a>
-            </td>
-            <td sec:authorize="hasAuthority('ADMIN')">
-                <a th:alt="#{label.href.delete}" th:href="@{__${group.id}__/students/__${student.id}__/delete}">❌</a>
+                <a href="#" class="icon-link" th:href="@{__${group.id}__/students/__${student.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
+                   th:title="#{tooltip.icon.edit}">
+                    <i class="material-icons edit-icon">edit</i>
+                </a>
+                <a href="#" class="icon-link" th:href="@{__${group.id}__/students/__${student.id}__/delete}" data-bs-toggle="tooltip"
+                   data-bs-placement="top" th:title="#{tooltip.icon.delete}">
+                    <i class="material-icons delete-icon">delete</i>
+                </a>
             </td>
         </tr>
         </tbody>
-        <tfoot>
-        <tr>
-            <td sec:authorize="hasAuthority('ADMIN')">
-                <button th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add student</button>
-            </td>
-            <td sec:authorize="hasAuthority('ADMIN')"></td>
-            <td sec:authorize="hasAuthority('ADMIN')"></td>
-        </tr>
     </table>
+    <button sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" id="insertButton" th:text="#{label.button.add}">Add student</button>
 </div>
 
 <div th:if="${editStudentDraft}" id="editModal" class="modal" style="display: block">

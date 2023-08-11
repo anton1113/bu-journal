@@ -23,7 +23,7 @@
     <h6 th:text="${curator} == null ? #{text.curator.empty} : #{text.student.curator(${curator.getFullName()})}"></h6>
 
     <table class="table caption-top">
-        <caption th:text="#{label.table.student.subjects}">List of subjects</caption>
+        <caption th:text="#{caption.table.student.subjects}">List of subjects</caption>
         <thead class="table-light">
         <tr>
             <th th:text="#{label.table.column.student.subjects.name}">Subject name</th>
