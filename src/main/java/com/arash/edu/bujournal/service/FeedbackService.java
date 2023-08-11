@@ -33,6 +33,7 @@ public class FeedbackService {
 
         validateFeedbackDTO(feedbackDTO);
         String sessionId = BuSecurityUtil.getSessionId();
+        checkDuplication(feedbackDTO, sessionId);
         checkSessionSpam(sessionId);
 
         Feedback feedback = feedbackMapper.toModel(feedbackDTO);
@@ -54,6 +55,12 @@ public class FeedbackService {
         }
         if (feedbackDTO.getText().length() > MAX_FEEDBACK_LENGTH) {
             throw new InputValidationException("Feedback length exceeds max value");
+        }
+    }
+
+    private void checkDuplication(FeedbackDTO feedbackDTO, String sessionId) {
+        if (feedbackRepository.existsByTextAndSessionId(feedbackDTO.getText(), sessionId)) {
+            throw new BadRequestException("Duplicated feedback rejected");
         }
     }
 
