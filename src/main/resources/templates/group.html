@@ -64,17 +64,17 @@
                 <form action="#" id="addStudentForm" th:action="@{/groups/__${group.id}__/students}" th:object="${addStudentDraft}"
                       method="post">
                     <div class="mb-3">
-                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}" type="text"
                                name="lastName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-label">First name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
                                type="text" name="firstName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}" class="form-label">Patronymic</label>
                         <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
                     </div>
                 </form>
@@ -104,17 +104,17 @@
                 <form action="#" id="editStudentForm" th:action="@{__${group.id}__/students/__${editStudentDraft.id}__}" th:object="${editStudentDraft}"
                       method="post">
                     <div class="mb-3">
-                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}" type="text"
                                name="lastName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-label">First name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
                                type="text" name="firstName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}" class="form-label">Patronymic</label>
                         <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
                     </div>
                 </form>
@@ -144,17 +144,17 @@
                 <form action="#" id="deleteStudentForm" th:action="@{/groups/__${group.id}__/students/__${studentDeleteCandidate.id}__/delete/confirm}" th:object="${studentDeleteCandidate}"
                       method="get">
                     <div class="mb-3">
-                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}" type="text"
                                name="lastName" readonly>
                     </div>
                     <div class="mb-3">
-                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-label">First name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
                                type="text" name="firstName" readonly>
                     </div>
                     <div class="mb-3">
-                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}" class="form-label">Patronymic</label>
                         <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic" readonly>
                     </div>
                 </form>

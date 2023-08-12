@@ -33,73 +33,122 @@
                 Last name
             </td>
             <td sec:authorize="hasAuthority('ADMIN')">
-                <a href="#" class="icon-link" th:href="@{/groups/__${group.id}__}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.show}">
-                    <i class="material-icons show-icon">visibility</i>
+                <a href="#" class="icon-link" th:href="@{/groups/__${group.id}__}">
+                    <i class="material-icons show-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                       th:title="#{tooltip.icon.show}">visibility</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{groups/__${group.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.edit}">
-                    <i class="material-icons edit-icon">edit</i>
+                <a href="#" class="icon-link" th:href="@{groups/__${group.id}__/draft}">
+                    <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                       th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a style="display: none" href="#" class="icon-link" th:href="@{groups/__${group.id}__/delete}" data-bs-toggle="tooltip"
-                   data-bs-placement="top" th:title="#{tooltip.icon.delete}">
-                    <i class="material-icons delete-icon">delete</i>
+                <a style="display: none" href="#" class="icon-link" th:href="@{groups/__${group.id}__/delete}">
+                    <i class="material-icons delete-icon" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
             </td>
         </tr>
         </tbody>
     </table>
-    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add group</button>
+    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" type="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#addGroupModal">
+        Add group
+    </button>
 </div>
 
-<div sec:authorize="hasAuthority('ADMIN')" th:if="${editGroupDraft}" id="editModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{/groups/__${editGroupDraft.id}__}" th:object="${editGroupDraft}" method="post">
-            <span class="close" id="closeEditSpan">&times;</span>
-            <div class="form-group">
-                <label th:for="groupName" th:text="#{label.input.group.name}">Group name</label>
-                <input id="groupName" required=true class="form-control" th:field="*{name}" type="text"
-                       name="groupName">
+<!-- Add group modal -->
+<div class="modal fade" id="addGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.group.add}" class="modal-title" id="staticBackdropLabel">Add group</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="curator" th:text="#{label.select.group.curator}">Curator</label><br>
-                <select class="custom-select" id="curator" th:field="*{curatorId}">
-                    <option th:text="#{text.curator.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
-                            th:text="${teacher.getFullName()}"></option>
-                </select>
+            <div class="modal-body">
+                <form action="#" id="addGroupForm" th:action="@{/groups}" th:object="${addGroupDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="groupName" th:text="#{label.input.group.name}" class="form-label">Group name</label>
+                        <input id="groupName" required class="form-control" th:field="*{name}" type="text"
+                               name="groupName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="curator" th:text="#{label.select.group.curator}" class="form-label">Curator</label><br>
+                        <select class="form-select" id="curator" th:field="*{curatorId}">
+                            <option th:text="#{text.curator.empty}" th:value="null"></option>
+                            <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                                    th:text="${teacher.getFullName()}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeEditButton">Cancel</button>
-        </form>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="addGroupForm" th:text="#{label.button.add}">
+                    Add group
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
-<div sec:authorize="hasAuthority('ADMIN')" id="insertModal" class="modal">
-    <div class="modal-content">
-        <form action="#" th:action="@{/groups}" th:object="${addGroupDraft}" method="post">
-            <span class="close" id="closeInsertSpan">&times;</span>
-            <div class="form-group">
-                <label th:for="groupName" th:text="#{label.input.group.name}">Group name</label>
-                <input id="groupName" required=true class="form-control" th:field="*{name}" type="text"
-                       name="groupName">
+<!-- Edit group modal -->
+<div th:if="${editGroupDraft}" class="modal fade" id="editGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.group.edit}" class="modal-title" id="staticBackdropLabel">Edit group</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="curator" th:text="#{label.select.group.curator}">Curator</label><br>
-                <select class="custom-select" id="curator" th:field="*{curatorId}">
-                    <option th:text="#{text.curator.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
-                            th:text="${teacher.getFullName()}"></option>
-                </select>
+            <div class="modal-body">
+                <form action="#" id="editGroupForm" th:action="@{/groups/__${editGroupDraft.id}__}" th:object="${editGroupDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="groupName" th:text="#{label.input.group.name}" class="form-label">Group name</label>
+                        <input id="groupName" required class="form-control" th:field="*{name}" type="text"
+                               name="groupName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="curator" th:text="#{label.select.group.curator}" class="form-label">Curator</label><br>
+                        <select class="form-select" id="curator" th:field="*{curatorId}">
+                            <option th:text="#{text.curator.empty}" th:value="null"></option>
+                            <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                                    th:text="${teacher.getFullName()}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add group</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeInsertButton">Cancel</button>
-        </form>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="editGroupForm" th:text="#{label.button.edit}">
+                    Edit group
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
+<script>
+    window.onload = function() {
+        toggleModal('editGroupModal')
+        toggleModal('deleteGroupModal')
+    };
+
+    function toggleModal(id) {
+        var modalDoc = document.getElementById(id);
+        if (modalDoc != null) {
+            var modal = new bootstrap.Modal(modalDoc, {
+                keyboard: false
+            });
+            modal.toggle();
+        }
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
