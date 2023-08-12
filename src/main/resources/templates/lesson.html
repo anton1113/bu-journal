@@ -90,7 +90,7 @@
 </div>
 
 <!-- Add source modal -->
-<div class="modal fade" id="addSourceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="modal fade" id="addSourceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -126,7 +126,7 @@
 </div>
 
 <!-- Edit source modal -->
-<div th:if="${editSourceDraft}" class="modal fade" id="editSourceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${editSourceDraft}" class="modal fade" id="editSourceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -162,7 +162,7 @@
 </div>
 
 <!-- Delete source modal -->
-<div th:if="${sourceDeleteCandidate}" class="modal fade" id="deleteSourceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${sourceDeleteCandidate}" class="modal fade" id="deleteSourceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -198,7 +198,7 @@
 </div>
 
 <!-- Add assignment modal -->
-<div class="modal fade" id="addAssignmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="modal fade" id="addAssignmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -234,7 +234,7 @@
 </div>
 
 <!-- Edit assignment modal -->
-<div th:if="${editAssignmentDraft}" class="modal fade" id="editAssignmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${editAssignmentDraft}" class="modal fade" id="editAssignmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -270,7 +270,7 @@
 </div>
 
 <!-- Delete assignment modal -->
-<div th:if="${assignmentDeleteCandidate}" class="modal fade" id="deleteAssignmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${assignmentDeleteCandidate}" class="modal fade" id="deleteAssignmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

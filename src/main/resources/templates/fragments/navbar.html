@@ -20,7 +20,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('STUDENT', 'TEACHER')">
                     <a th:text="#{nav.user.home}"
                        th:classappend="${redirectedFrom} == '/me' ? 'active': ''" class="nav-link"
                        href="/me">My homepage</a>
@@ -51,7 +51,7 @@
                        href="/subjects">Subjects</a>
                 </li>
                 <li class="nav-item">
-                    <a th:text="#{nav.feedback}"
+                    <a th:text="#{nav.feedback}" sec:authorize="!hasAuthority('ADMIN')"
                        th:classappend="${#httpServletRequest.requestURI} == '/feedback' ? 'active': ''" class="nav-link"
                        href="/feedback">Feedback</a>
                 </li>

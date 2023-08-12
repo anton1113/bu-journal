@@ -23,7 +23,7 @@
         <tr>
             <th th:text="#{group.name}">Group name</th>
             <th th:text="#{group.curator}">Curator</th>
-            <th sec:authorize="hasAuthority('ADMIN')" th:text="#{label.table.column.actions}">Actions</th>
+            <th th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -32,16 +32,16 @@
             <td th:text="${curator} == null ? #{text.curator.empty} : |${curator.lastName} ${curator.firstName} ${curator.patronymic}|">
                 Last name
             </td>
-            <td sec:authorize="hasAuthority('ADMIN')">
+            <td>
                 <a href="#" class="icon-link" th:href="@{/groups/__${group.id}__}">
                     <i class="material-icons show-icon" data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.show}">visibility</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{groups/__${group.id}__/draft}">
+                <a sec:authorize="hasAuthority('ADMIN')" href="#" class="icon-link" th:href="@{groups/__${group.id}__/draft}">
                     <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{groups/__${group.id}__/delete}">
+                <a sec:authorize="hasAuthority('ADMIN')" href="#" class="icon-link" th:href="@{groups/__${group.id}__/delete}">
                     <i class="material-icons delete-icon" data-bs-toggle="tooltip"
                        data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
@@ -56,7 +56,7 @@
 </div>
 
 <!-- Add group modal -->
-<div class="modal fade" id="addGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" class="modal fade" id="addGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -95,7 +95,7 @@
 </div>
 
 <!-- Edit group modal -->
-<div th:if="${editGroupDraft}" class="modal fade" id="editGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${editGroupDraft}" class="modal fade" id="editGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -134,7 +134,7 @@
 </div>
 
 <!-- Delete group modal -->
-<div th:if="${groupDeleteCandidate}" class="modal fade" id="deleteGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${groupDeleteCandidate}" class="modal fade" id="deleteGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

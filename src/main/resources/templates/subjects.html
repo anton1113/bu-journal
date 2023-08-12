@@ -61,7 +61,7 @@
 </div>
 
 <!-- Add subject modal -->
-<div class="modal fade" id="addSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" class="modal fade" id="addSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -107,7 +107,7 @@
 </div>
 
 <!-- Edit subject modal -->
-<div th:if="${editSubjectDraft}" class="modal fade" id="editSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${editSubjectDraft}" class="modal fade" id="editSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -153,7 +153,7 @@
 </div>
 
 <!-- Delete subject modal -->
-<div th:if="${subjectDeleteCandidate}" class="modal fade" id="deleteSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${subjectDeleteCandidate}" class="modal fade" id="deleteSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -56,7 +56,7 @@
 </div>
 
 <!-- Add lesson modal -->
-<div class="modal fade" id="addLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="modal fade" id="addLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -101,7 +101,7 @@
 </div>
 
 <!-- Edit lesson modal -->
-<div th:if="${editLessonDraft}" class="modal fade" id="editLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${editLessonDraft}" class="modal fade" id="editLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -146,7 +146,7 @@
 </div>
 
 <!-- Delete lesson modal -->
-<div th:if="${lessonDeleteCandidate}" class="modal fade" id="deleteLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${lessonDeleteCandidate}" class="modal fade" id="deleteLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
