@@ -33,115 +33,179 @@
             <td th:text="${lesson.name}">Lesson name</td>
             <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
             <td>
-                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.show}">
-                    <i class="material-icons show-icon">visibility</i>
+                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__}">
+                    <i class="material-icons show-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                       th:title="#{tooltip.icon.show}">visibility</i>
                 </a>
-                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.edit}">
-                    <i class="material-icons edit-icon">edit</i>
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}">
+                    <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                       th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}" data-bs-toggle="tooltip"
-                   data-bs-placement="top" th:title="#{tooltip.icon.delete}">
-                    <i class="material-icons delete-icon">delete</i>
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">
+                    <i class="material-icons delete-icon"  data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
             </td>
         </tr>
         </tbody>
     </table>
-    <button sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add lesson</button>
+    <button sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.button.add}" type="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#addLessonModal">
+        Add lesson
+    </button>
 </div>
 
-<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${editLessonDraft}" id="editModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{/subjects/__${subject.id}__/lessons/__${editLessonDraft.id}__}" th:object="${editLessonDraft}" method="post">
-            <span class="close" id="closeEditSpan">&times;</span>
-            <div class="form-group">
-                <label th:for="lessonDate" th:text="#{label.input.lesson.date}">Lesson date</label>
-                <input id="lessonDate" required=true type="date" class="form-control" th:field="*{date}"
-                       name="lessonDate">
+<!-- Add lesson modal -->
+<div class="modal fade" id="addLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.lesson.add}" class="modal-title" >Add lesson</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="lessonName" th:text="#{label.input.lesson.name}">Lesson name</label>
-                <input id="lessonName" required=true class="form-control" th:field="*{name}"
-                       name="lessonName">
+            <div class="modal-body">
+                <form action="#" id="addLessonForm" th:action="@{/subjects/__${subject.id}__/lessons}" th:object="${addLessonDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="lessonDate" th:text="#{label.input.lesson.date}" class="form-label">Lesson date</label>
+                        <input id="lessonDate" required type="date" class="form-control" th:field="*{date}"
+                               name="lessonDate">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="lessonName" th:text="#{label.input.lesson.name}" class="form-label">Lesson name</label>
+                        <input id="lessonName" required class="form-control" th:field="*{name}"
+                               name="lessonName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="lessonType" th:text="#{label.input.lesson.type}" class="form-label">Lesson type</label>
+                        <select class="form-select" id="lessonType" th:field="*{type}">
+                            <option th:text="#{text.lesson.type.empty}" th:value="null"></option>
+                            <option th:each="type: ${T(com.arash.edu.bujournal.domain.enums.LessonType).uaValues()}"
+                                    th:value="${T(com.arash.edu.bujournal.domain.enums.LessonType).fromUaValue(type)}"
+                                    th:text="${type}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="lessonType" th:text="#{label.input.lesson.type}">Lesson type</label>
-                <select class="custom-select" id="lessonType" th:field="*{type}">
-                    <option th:text="#{text.lesson.type.empty}" th:value="null"></option>
-                    <option th:each="type: ${T(com.arash.edu.bujournal.domain.enums.LessonType).uaValues()}"
-                            th:value="${T(com.arash.edu.bujournal.domain.enums.LessonType).fromUaValue(type)}"
-                            th:text="${type}"></option>
-                </select>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="addLessonForm" th:text="#{label.button.add}">
+                    Add lesson
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeEditButton">Cancel</button>
-        </form>
+        </div>
     </div>
 </div>
 
-<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" id="insertModal" class="modal">
-    <div class="modal-content">
-        <form action="#" th:action="@{/subjects/__${subject.id}__/lessons}" th:object="${addLessonDraft}" method="post">
-            <span class="close" id="closeInsertSpan">&times;</span>
-
-            <div class="form-group">
-                <label th:for="lessonDate" th:text="#{label.input.lesson.date}">Lesson date</label>
-                <input id="lessonDate" required=true type="date" class="form-control" th:field="*{date}"
-                       name="lessonDate">
+<!-- Edit lesson modal -->
+<div th:if="${editLessonDraft}" class="modal fade" id="editLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.lesson.edit}" class="modal-title" >Edit lesson</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="lessonName" th:text="#{label.input.lesson.name}">Lesson name</label>
-                <input id="lessonName" required=true class="form-control" th:field="*{name}"
-                       name="lessonName">
+            <div class="modal-body">
+                <form action="#" id="editLessonForm" th:action="@{/subjects/__${subject.id}__/lessons/__${editLessonDraft.id}__}" th:object="${editLessonDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="lessonDate" th:text="#{label.input.lesson.date}" class="form-label">Lesson date</label>
+                        <input id="lessonDate" required type="date" class="form-control" th:field="*{date}"
+                               name="lessonDate">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="lessonName" th:text="#{label.input.lesson.name}" class="form-label">Lesson name</label>
+                        <input id="lessonName" required class="form-control" th:field="*{name}"
+                               name="lessonName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="lessonType" th:text="#{label.input.lesson.type}" class="form-label">Lesson type</label>
+                        <select class="form-select" id="lessonType" th:field="*{type}">
+                            <option th:text="#{text.lesson.type.empty}" th:value="null"></option>
+                            <option th:each="type: ${T(com.arash.edu.bujournal.domain.enums.LessonType).uaValues()}"
+                                    th:value="${T(com.arash.edu.bujournal.domain.enums.LessonType).fromUaValue(type)}"
+                                    th:text="${type}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="lessonType" th:text="#{label.input.lesson.type}">Lesson type</label>
-                <select class="custom-select" id="lessonType" th:field="*{type}">
-                    <option th:text="#{text.lesson.type.empty}" th:value="null"></option>
-                    <option th:each="type: ${T(com.arash.edu.bujournal.domain.enums.LessonType).uaValues()}"
-                            th:value="${T(com.arash.edu.bujournal.domain.enums.LessonType).fromUaValue(type)}"
-                            th:text="${type}"></option>
-                </select>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="editLessonForm" th:text="#{label.button.edit}">
+                    Edit lesson
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add lesson</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeInsertButton">
-                Cancel
-            </button>
-        </form>
+        </div>
     </div>
 </div>
 
-<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${lessonDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{/subjects/__${subject.id}__/lessons/__${lessonDeleteCandidate.id}__/delete/confirm}" th:object="${lessonDeleteCandidate}" method="get">
-            <span class="close" id="closeDeleteSpan">&times;</span>
-            <p class="font-weight-bold" th:text="#{text.delete.confirmation.lesson}">Are you sure want to delete lesson?</p>
-            <div class="form-group">
-                <label th:for="lessonDate" th:text="#{label.input.lesson.date}">Lesson date</label>
-                <input id="lessonDate" required=true type="date" class="form-control" th:field="*{date}"
-                       name="lessonDate" readonly>
+<!-- Delete lesson modal -->
+<div th:if="${lessonDeleteCandidate}" class="modal fade" id="deleteLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.lesson.delete}" class="modal-title" >Delete lesson</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="lessonName" th:text="#{label.input.lesson.name}">Lesson name</label>
-                <input id="lessonName" required=true class="form-control" th:field="*{name}"
-                       name="lessonName" readonly>
+            <div class="modal-body">
+                <form action="#" id="deleteLessonForm" th:action="@{/subjects/__${subject.id}__/lessons/__${lessonDeleteCandidate.id}__/delete/confirm}" th:object="${lessonDeleteCandidate}"
+                      method="get">
+                    <div class="mb-3">
+                        <label th:for="lessonDate" th:text="#{label.input.lesson.date}" class="form-label">Lesson date</label>
+                        <input id="lessonDate" required type="date" class="form-control" th:field="*{date}"
+                               name="lessonDate" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="lessonName" th:text="#{label.input.lesson.name}" class="form-label">Lesson name</label>
+                        <input id="lessonName" required class="form-control" th:field="*{name}"
+                               name="lessonName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="lessonType" th:text="#{label.input.lesson.type}" class="form-label">Lesson type</label>
+                        <select class="form-select" id="lessonType" th:field="*{type}" disabled>
+                            <option th:text="#{text.lesson.type.empty}" th:value="null"></option>
+                            <option th:each="type: ${T(com.arash.edu.bujournal.domain.enums.LessonType).uaValues()}"
+                                    th:value="${T(com.arash.edu.bujournal.domain.enums.LessonType).fromUaValue(type)}"
+                                    th:text="${type}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="lessonType" th:text="#{label.input.lesson.type}">Lesson type</label>
-                <input id="lessonType" required=true class="form-control" th:attr="value=${lessonDeleteCandidate.type} == null ? #{text.lesson.type.empty} : ${lessonDeleteCandidate.type.getUaValue()}"
-                       name="lessonType" readonly>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="submit" form="deleteLessonForm" th:text="#{label.button.delete}">
+                    Delete lesson
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-danger" type="submit" th:text="#{label.button.delete}">Delete</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeDeleteButton">Cancel</button>
-        </form>
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/delete-modal.js}"></script>
+<script>
+    window.onload = function() {
+        toggleModal('editLessonModal')
+        toggleModal('deleteLessonModal')
+    };
+
+    function toggleModal(id) {
+        var modalDoc = document.getElementById(id);
+        if (modalDoc != null) {
+            var modal = new bootstrap.Modal(modalDoc, {
+                keyboard: false
+            });
+            modal.toggle();
+        }
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
