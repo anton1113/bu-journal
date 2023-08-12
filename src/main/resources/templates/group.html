@@ -52,29 +52,29 @@
 </div>
 
 <!-- Add student modal -->
-<div class="modal fade" id="addStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" class="modal fade" id="addStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.student.add}" class="modal-title" id="staticBackdropLabel">Add student</h5>
+                <h5 th:text="#{modal.title.student.add}" class="modal-title" >Add student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="#" id="addStudentForm" th:action="@{/groups/__${group.id}__/students}" th:object="${addStudentDraft}"
                       method="post">
                     <div class="mb-3">
-                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}" type="text"
                                name="lastName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-label">First name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
                                type="text" name="firstName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}" class="form-label">Patronymic</label>
                         <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
                     </div>
                 </form>
@@ -92,29 +92,29 @@
 </div>
 
 <!-- Edit student modal -->
-<div th:if="${editStudentDraft}" class="modal fade" id="editStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${editStudentDraft}" class="modal fade" id="editStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.student.edit}" class="modal-title" id="staticBackdropLabel">Edit student</h5>
+                <h5 th:text="#{modal.title.student.edit}" class="modal-title" >Edit student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="#" id="editStudentForm" th:action="@{__${group.id}__/students/__${editStudentDraft.id}__}" th:object="${editStudentDraft}"
                       method="post">
                     <div class="mb-3">
-                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}" type="text"
                                name="lastName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-label">First name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
                                type="text" name="firstName">
                     </div>
                     <div class="mb-3">
-                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}" class="form-label">Patronymic</label>
                         <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
                     </div>
                 </form>
@@ -132,29 +132,29 @@
 </div>
 
 <!-- Delete student modal -->
-<div th:if="${studentDeleteCandidate}" class="modal fade" id="deleteStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${studentDeleteCandidate}" class="modal fade" id="deleteStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.student.delete}" class="modal-title" id="staticBackdropLabel">Delete student</h5>
+                <h5 th:text="#{modal.title.student.delete}" class="modal-title" >Delete student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="#" id="deleteStudentForm" th:action="@{/groups/__${group.id}__/students/__${studentDeleteCandidate.id}__/delete/confirm}" th:object="${studentDeleteCandidate}"
                       method="get">
                     <div class="mb-3">
-                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}" type="text"
                                name="lastName" readonly>
                     </div>
                     <div class="mb-3">
-                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-label">First name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
                                type="text" name="firstName" readonly>
                     </div>
                     <div class="mb-3">
-                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}" class="form-label">Patronymic</label>
                         <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic" readonly>
                     </div>
                 </form>

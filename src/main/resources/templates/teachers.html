@@ -48,12 +48,12 @@
 </div>
 
 <!-- Add teacher modal -->
-<div class="modal fade" id="addTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" class="modal fade" id="addTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.teacher.add}" class="modal-title" id="staticBackdropLabel">Add teacher</h5>
+                <h5 th:text="#{modal.title.teacher.add}" class="modal-title" >Add teacher</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -91,12 +91,12 @@
 </div>
 
 <!-- Edit teacher modal -->
-<div th:if="${editTeacherDraft}" class="modal fade" id="editTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${editTeacherDraft}" class="modal fade" id="editTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.teacher.edit}" class="modal-title" id="staticBackdropLabel">Edit teacher</h5>
+                <h5 th:text="#{modal.title.teacher.edit}" class="modal-title" >Edit teacher</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -134,12 +134,12 @@
 </div>
 
 <!-- Delete teacher modal -->
-<div th:if="${teacherDeleteCandidate}" class="modal fade" id="deleteTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${teacherDeleteCandidate}" class="modal fade" id="deleteTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.teacher.delete}" class="modal-title" id="staticBackdropLabel">Delete teacher</h5>
+                <h5 th:text="#{modal.title.teacher.delete}" class="modal-title" >Delete teacher</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

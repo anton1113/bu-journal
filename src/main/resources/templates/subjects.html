@@ -34,120 +34,186 @@
             <td th:text="${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()}">Teacher full name</td>
             <td th:text="${group} == null ? #{text.group.empty} : ${group.name}">Group name</td>
             <td sec:authorize="hasAuthority('ADMIN')">
-                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.show}">
-                    <i class="material-icons show-icon">visibility</i>
+                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__}">
+                    <i class="material-icons show-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                       th:title="#{tooltip.icon.show}">visibility</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{/journals/subjects/__${subject.id}__/}" data-bs-toggle="tooltip"
-                   data-bs-placement="top" th:title="#{tooltip.icon.journal}">
-                    <i class="material-icons journal-icon">menu_book</i>
+                <a th:if="${group}" href="#" class="icon-link" th:href="@{/journals/subjects/__${subject.id}__/}">
+                    <i class="material-icons journal-icon" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.journal}">menu_book</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.edit}">
-                    <i class="material-icons edit-icon">edit</i>
+                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__/draft}">
+                    <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                       th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__/delete}" data-bs-toggle="tooltip"
-                   data-bs-placement="top" th:title="#{tooltip.icon.delete}">
-                    <i class="material-icons delete-icon">delete</i>
+                <a href="#" class="icon-link" th:href="@{subjects/__${subject.id}__/delete}">
+                    <i class="material-icons delete-icon" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
             </td>
         </tr>
         </tbody>
     </table>
-    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add subject</button>
+    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" type="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#addSubjectModal">
+        Add subject
+    </button>
 </div>
 
-<div th:if="${editSubjectDraft}" id="editModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{/subjects/__${editSubjectDraft.id}__}" th:object="${editSubjectDraft}" method="post">
-            <span class="close" id="closeEditSpan">&times;</span>
-            <div class="form-group">
-                <label th:for="subjectName" th:text="#{label.input.subject.name}">Subject name</label>
-                <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text"
-                       name="subjectName">
+<!-- Add subject modal -->
+<div sec:authorize="hasAuthority('ADMIN')" class="modal fade" id="addSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.subject.add}" class="modal-title" >Add subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}">Teacher</label><br>
-                <select class="custom-select" id="subjectTeacher" th:field="*{teacherId}">
-                    <option th:text="#{text.teacher.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
-                            th:text="${teacher.getFullName()}"></option>
-                </select>
+            <div class="modal-body">
+                <form action="#" id="addSubjectForm" th:action="@{/subjects}" th:object="${addSubjectDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="subjectName" th:text="#{label.input.subject.name}" class="form-label">Subject name</label>
+                        <input id="subjectName" required class="form-control" th:field="*{name}" type="text"
+                               name="subjectName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}" class="form-label">Teacher</label><br>
+                        <select class="form-select" id="subjectTeacher" th:field="*{teacherId}">
+                            <option th:text="#{text.teacher.empty}" th:value="null"></option>
+                            <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                                    th:text="${teacher.getFullName()}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="subjectGroup" th:text="#{label.select.subject.group}" class="form-label">Group</label><br>
+                        <select class="form-select" id="subjectGroup" th:field="*{groupId}">
+                            <option th:text="#{text.group.empty}" th:value="null"></option>
+                            <option th:each="group: ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="subjectGroup" th:text="#{label.select.subject.group}">Group</label><br>
-                <select class="custom-select" id="subjectGroup" th:field="*{groupId}">
-                    <option th:text="#{text.group.empty}" th:value="null"></option>
-                    <option th:each="group: ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
-                </select>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="addSubjectForm" th:text="#{label.button.add}">
+                    Add subject
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeEditButton">Cancel</button>
-        </form>
+        </div>
     </div>
 </div>
 
-<div id="insertModal" class="modal">
-    <div class="modal-content">
-        <form action="#" th:action="@{/subjects}" th:object="${addSubjectDraft}" method="post">
-            <span class="close" id="closeInsertSpan">&times;</span>
-            <div class="form-group">
-                <label th:for="subjectName" th:text="#{label.input.subject.name}">Subject name</label>
-                <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text"
-                       name="subjectName">
+<!-- Edit subject modal -->
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${editSubjectDraft}" class="modal fade" id="editSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.subject.edit}" class="modal-title" >Edit subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}">Teacher</label><br>
-                <select class="custom-select" id="subjectTeacher" th:field="*{teacherId}">
-                    <option th:text="#{text.teacher.empty}" th:value="null"></option>
-                    <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
-                            th:text="${teacher.getFullName()}"></option>
-                </select>
+            <div class="modal-body">
+                <form action="#" id="editSubjectForm" th:action="@{/subjects/__${editSubjectDraft.id}__}" th:object="${editSubjectDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="subjectName" th:text="#{label.input.subject.name}" class="form-label">Subject name</label>
+                        <input id="subjectName" required class="form-control" th:field="*{name}" type="text"
+                               name="subjectName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}" class="form-label">Teacher</label><br>
+                        <select class="form-select" id="subjectTeacher" th:field="*{teacherId}">
+                            <option th:text="#{text.teacher.empty}" th:value="null"></option>
+                            <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                                    th:text="${teacher.getFullName()}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="subjectGroup" th:text="#{label.select.subject.group}" class="form-label">Group</label><br>
+                        <select class="form-select" id="subjectGroup" th:field="*{groupId}">
+                            <option th:text="#{text.group.empty}" th:value="null"></option>
+                            <option th:each="group: ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="subjectGroup" th:text="#{label.select.subject.group}">Group</label><br>
-                <select class="custom-select" id="subjectGroup" th:field="*{groupId}">
-                    <option th:text="#{text.group.empty}" th:value="null"></option>
-                    <option th:each="group: ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
-                </select>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="editSubjectForm" th:text="#{label.button.edit}">
+                    Edit subject
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add subject</button>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">
-                Cancel
-            </button>
-        </form>
+        </div>
     </div>
 </div>
 
-<div th:if="${subjectDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{/subjects/__${subjectDeleteCandidate.id}__/delete/confirm}" th:object="${subjectDeleteCandidate}" method="get">
-            <span class="close" id="closeDeleteSpan">&times;</span>
-            <p class="font-weight-bold" th:text="#{text.delete.confirmation.subject}">Are you sure want to delete subject?</p>
-            <div class="form-group">
-                <label th:for="subjectName" th:text="#{label.input.subject.name}">Subject name</label>
-                <input id="subjectName" required=true class="form-control" th:field="*{name}" type="text"
-                       name="subjectName" readonly>
+<!-- Delete subject modal -->
+<div sec:authorize="hasAuthority('ADMIN')" th:if="${subjectDeleteCandidate}" class="modal fade" id="deleteSubjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:utext="#{modal.title.subject.delete}" class="modal-title" >Delete subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}">Teacher</label><br>
-                <input id="subjectTeacher" required=true class="form-control" th:attr="value=${subjectDeleteCandidateTeacher} == null ? #{text.teacher.empty} : ${subjectDeleteCandidateTeacher.getFullName()}"
-                       name="subjectTeacher" readonly>
+            <div class="modal-body">
+                <form action="#" id="deleteSubjectForm" th:action="@{/subjects/__${subjectDeleteCandidate.id}__/delete/confirm}" th:object="${subjectDeleteCandidate}"
+                      method="get">
+                    <div class="mb-3">
+                        <label th:for="subjectName" th:text="#{label.input.subject.name}" class="form-label">Subject name</label>
+                        <input id="subjectName" required class="form-control" th:field="*{name}" type="text"
+                               name="subjectName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="subjectTeacher" th:text="#{label.select.subject.teacher}" class="form-label">Teacher</label><br>
+                        <select class="form-select" id="subjectTeacher" th:field="*{teacherId}" disabled>
+                            <option th:text="#{text.teacher.empty}" th:value="null"></option>
+                            <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                                    th:text="${teacher.getFullName()}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="subjectGroup" th:text="#{label.select.subject.group}" class="form-label">Group</label><br>
+                        <select class="form-select" id="subjectGroup" th:field="*{groupId}" disabled>
+                            <option th:text="#{text.group.empty}" th:value="null"></option>
+                            <option th:each="group: ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="subjectGroup" th:text="#{label.select.subject.group}">Group</label><br>
-                <input id="subjectGroup" required=true class="form-control" th:attr="value=${subjectDeleteCandidateGroup} == null ? #{text.group.empty} : ${subjectDeleteCandidateGroup.name}"
-                       name="subjectGroup" readonly>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="submit" form="deleteSubjectForm" th:text="#{label.button.delete}">
+                    Delete subject
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-danger" type="submit" th:text="#{label.button.delete}">Delete</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeDeleteButton">Cancel</button>
-        </form>
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/delete-modal.js}"></script>
+<script>
+    window.onload = function() {
+        toggleModal('editSubjectModal')
+        toggleModal('deleteSubjectModal')
+    };
+
+    function toggleModal(id) {
+        var modalDoc = document.getElementById(id);
+        if (modalDoc != null) {
+            var modal = new bootstrap.Modal(modalDoc, {
+                keyboard: false
+            });
+            modal.toggle();
+        }
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
