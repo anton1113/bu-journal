@@ -1,6 +1,7 @@
 package com.arash.edu.bujournal.domain;
 
 import com.arash.edu.bujournal.domain.enums.BuUserRole;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @Builder
 @Data
+@AllArgsConstructor
 @Document(collection = "bu_user")
 public class BuUser implements UserDetails {
 
