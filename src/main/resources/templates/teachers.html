@@ -133,41 +133,53 @@
     </div>
 </div>
 
-<div th:if="${teacherDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{/teachers/__${teacherDeleteCandidate.id}__/delete/confirm}"
-              th:object="${#ctx}" method="get">
-            <span class="close" id="closeDeleteSpan">&times;</span>
-            <p class="font-weight-bold" th:text="#{text.delete.confirmation.teacher}">Are you sure want to delete
-                teacher?</p>
-            <div class="form-group">
-                <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
-                       name="lastName" readonly>
+<!-- Delete teacher modal -->
+<div th:if="${teacherDeleteCandidate}" class="modal fade" id="deleteTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.teacher.delete}" class="modal-title" id="staticBackdropLabel">Delete teacher</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
-                       type="text" name="firstName" readonly>
+            <div class="modal-body">
+                <form action="#" id="deleteTeacherForm" th:action="@{/teachers/__${teacherDeleteCandidate.id}__/delete/confirm}" th:object="${teacherDeleteCandidate}"
+                      method="get">
+                    <div class="mb-3">
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}"
+                               type="text" name="lastName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-lable">First
+                            name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
+                               type="text" name="firstName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}"
+                               class="form-lable">Patronymic</label>
+                        <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text"
+                               name="patronymic" readonly>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
-                <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic"
-                       readonly>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="submit" form="deleteTeacherForm" th:text="#{label.button.delete}">
+                    Delete teacher
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-danger" type="submit" th:text="#{label.button.delete}">Delete</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeDeleteButton">
-                Cancel
-            </button>
-        </form>
+        </div>
     </div>
 </div>
-
-<script type="text/javascript" th:src="@{/js/delete-modal.js}"></script>
 
 <script>
     window.onload = function() {
         toggleModal('editTeacherModal')
+        toggleModal('deleteTeacherModal')
     };
 
     function toggleModal(id) {
