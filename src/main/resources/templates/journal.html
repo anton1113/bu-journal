@@ -18,12 +18,19 @@
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
 <div class="container">
-    <h5 th:text="#{text.journal.subject.name} + ': ' + ${subject.name}"></h5>
+
+    <h5 th:text="${subject.name}"></h5>
+
     <br>
     <h6 th:text="${teacher} == null ? #{text.teacher.empty} : #{text.journal.teacher.name} + ': ' + ${teacher.getFullName()}"></h6>
     <h6 th:text="#{text.journal.group.name} + ': ' + ${group.name}"></h6>
 
-    <table class="table table-bordered journal-table caption-top">
+    <div th:if="${#lists.isEmpty(lessons)}">
+        <br>
+        <h6 th:text="#{text.journal.lessons.empty}"></h6>
+    </div>
+
+    <table th:if="!${#lists.isEmpty(lessons)}" class="table table-bordered journal-table caption-top">
         <caption th:text="#{text.journal.table.head}"></caption>
         <thead>
         <tr>
@@ -34,7 +41,7 @@
         <tbody>
         <tr th:each="student : ${students}">
             <td th:text="${student.getFullName()}">Full name</td>
-            <td th:each="lesson: ${lessons}"
+            <td style="padding: 0" th:each="lesson: ${lessons}"
                 th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">
                 <input sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" type="text" class="journal-cell"
                        th:attr="id=${attendance.id}, value=${attendance.toCellValue()}"
