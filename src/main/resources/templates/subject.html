@@ -24,7 +24,7 @@
             <th th:text="#{lesson.date}">Lesson date</th>
             <th th:text="#{lesson.name}">Lesson name</th>
             <th th:text="#{lesson.type}">Lesson type</th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.table.column.actions}">Actions</th>
+            <th th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -32,16 +32,16 @@
             <td th:text="${lesson.date}">Lesson date</td>
             <td th:text="${lesson.name}">Lesson name</td>
             <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
-            <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
+            <td>
                 <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__}" data-bs-toggle="tooltip" data-bs-placement="top"
                    th:title="#{tooltip.icon.show}">
                     <i class="material-icons show-icon">visibility</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
                    th:title="#{tooltip.icon.edit}">
                     <i class="material-icons edit-icon">edit</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}" data-bs-toggle="tooltip"
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}" data-bs-toggle="tooltip"
                    data-bs-placement="top" th:title="#{tooltip.icon.delete}">
                     <i class="material-icons delete-icon">delete</i>
                 </a>

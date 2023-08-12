@@ -15,7 +15,7 @@
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div id="loginContainer" class="container" style="padding-top: 50px; max-width: 400px">
+<div id="loginContainer" class="container" style="max-width: 400px">
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
         <p th:text="#{text.auth.error}">Error occurred during login attempt</p>
