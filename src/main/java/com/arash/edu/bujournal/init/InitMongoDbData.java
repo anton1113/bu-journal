@@ -1,23 +1,22 @@
 package com.arash.edu.bujournal.init;
 
 import com.arash.edu.bujournal.domain.*;
-import com.arash.edu.bujournal.domain.enums.LessonType;
+import com.arash.edu.bujournal.domain.enums.BuUserRole;
 import com.arash.edu.bujournal.repository.*;
-import com.arash.edu.bujournal.service.auth.BuUserRegisterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
 @Slf4j
-@ConditionalOnProperty(name = "bu.data.mongodb.recreate", havingValue = "true")
+@ConditionalOnProperty(name = "bu.data.mongodb.test-data.init", havingValue = "true")
 @Component
 public class InitMongoDbData {
 
@@ -44,11 +43,16 @@ public class InitMongoDbData {
     @Autowired
     private FeedbackRepository feedbackRepository;
     @Autowired
-    private BuUserRegisterService buUserRegisterService;
+    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     void initData() {
-        log.info("Purging database before creating test data");
+        purgeTestData();
+        createTestData();
+    }
+
+    private void purgeTestData() {
+        log.info("Purging test data");
         attendanceRepository.deleteAll();
         groupRepository.deleteAll();
         lessonRepository.deleteAll();
@@ -60,78 +64,75 @@ public class InitMongoDbData {
         assignmentRepository.deleteAll();
         buUserRepository.deleteAll();
         feedbackRepository.deleteAll();
+    }
 
+    private void createTestData() {
         log.info("Initializing test teachers data");
-        Teacher teacher1 = new Teacher(randomUUID(), "Артеменко", "Ольга", "Іванівна");
-        Teacher teacher2 = new Teacher(randomUUID(), "Штерма", "Тетяна", "Василівна");
-        Teacher teacher3 = new Teacher(randomUUID(), "Євдокименко", "Валерій", "Кирилович");
-        teacherRepository.saveAll(List.of(teacher1, teacher2, teacher3));
+        Teacher teacher1 = new Teacher(randomUUID(), "Морараш", "Галина", "Володимирівна");
+        Teacher teacher2 = new Teacher(randomUUID(), "Вершигора", "Валерія", "Григорівна");
+        Teacher teacher3 = new Teacher(randomUUID(), "Кушнір", "Ярослав", "Вікторович");
+        Teacher teacher4 = new Teacher(randomUUID(), "Руснак", "Леся", "Михайлівна");
+        Teacher teacher5 = new Teacher(randomUUID(), "Веклич", "Мар'яна", "Миколаївна");
+        Teacher teacher6 = new Teacher(randomUUID(), "Боренко", "Валерій", "Борисович");
+        Teacher teacher7 = new Teacher(randomUUID(), "Іванчен", "Ілля", "Віталійович");
+        Teacher teacher8 = new Teacher(randomUUID(), "Штерма", "Тетяна", "Василівна");
+        teacherRepository.saveAll(List.of(teacher1, teacher2, teacher3, teacher4, teacher5, teacher6, teacher7, teacher8));
 
-        log.info("Registering users for teachers");
-        buUserRegisterService.registerTeacher(teacher1);
-        buUserRegisterService.registerTeacher(teacher2);
-        buUserRegisterService.registerTeacher(teacher3);
+        BuUser teacherUser = new BuUser(UUID.randomUUID(), teacher1.getId(), "teacher", passwordEncoder.encode("teacher"), BuUserRole.TEACHER);
+        buUserRepository.save(teacherUser);
 
         log.info("Initializing test group data");
-        Group group1 = new Group(randomUUID(), "KM-501", teacher1.getId());
-        Group group2 = new Group(randomUUID(), "ФM-501", teacher2.getId());
-        Group group3 = new Group(randomUUID(), "АM-501", teacher3.getId());
-        groupRepository.saveAll(List.of(group1, group2, group3));
+        Group group1 = new Group(randomUUID(), "KM-501", teacher8.getId());
+        groupRepository.save(group1);
 
         log.info("Initializing test student data");
-        Student student1 = new Student(randomUUID(), group1.getId(), "Расщектаєв", "Антон", "Володимирович");
-        Student student2 = new Student(randomUUID(), group1.getId(), "Дудник", "Роман", "Борисович");
-        Student student3 = new Student(randomUUID(), group1.getId(), "Павлюк", "Іван", "Іванович");
-        Student student4 = new Student(randomUUID(), group1.getId(), "Головач", "Іван", "Павлович");
-        Student student5 = new Student(randomUUID(), group1.getId(), "Ящук", "Ігор", "Миколайович");
-        studentRepository.saveAll(List.of(student1, student2, student3, student4, student5));
+        Student student1 = new Student(randomUUID(), group1.getId(), "Ботнар" ,"Денис", "Русланович");
+        Student student2 = new Student(randomUUID(), group1.getId(), "Бурса" ,"Валентин", "Валентинович");
+        Student student3 = new Student(randomUUID(), group1.getId(), "Гончарук" ,"Олексій", "Романович");
+        Student student4 = new Student(randomUUID(), group1.getId(), "Гринчук" ,"Назар", "Васильович");
+        Student student5 = new Student(randomUUID(), group1.getId(), "Гусениця" ,"Гліб", "Сергійович");
+        Student student6 = new Student(randomUUID(), group1.getId(), "Зеліско" ,"Станіслав", "Васильович");
+        Student student7 = new Student(randomUUID(), group1.getId(), "Калинюк" ,"Ілля" ,"Дмитрович");
+        Student student8 = new Student(randomUUID(), group1.getId(), "Кременецький" ,"Михайло" ,"Русланович");
+        Student student9 = new Student(randomUUID(), group1.getId(), "Ланівський" ,"Микола" ,"Віталійович");
+        Student student10 = new Student(randomUUID(), group1.getId(), "Луцкевіч" ,"Кирил" ,"Станісоавович");
+        Student student11 = new Student(randomUUID(), group1.getId(), "Максимчук" ,"Денис" ,"Вадимович");
+        Student student12 = new Student(randomUUID(), group1.getId(), "Мельник" ,"Артем" ,"Олегович");
+        Student student13 = new Student(randomUUID(), group1.getId(), "Микитюк" ,"Аліса" ,"Теофілівна");
+        Student student14 = new Student(randomUUID(), group1.getId(), "Мінтянський" ,"Євгеній" ,"Іларійович");
+        Student student15 = new Student(randomUUID(), group1.getId(), "Неборак" ,"Євгеній" ,"Віталійович");
+        Student student16 = new Student(randomUUID(), group1.getId(), "Радукан" ,"Яна" ,"Пантелеймонівна");
+        Student student17 = new Student(randomUUID(), group1.getId(), "Савчук" ,"Максим" ,"Анатолійович");
+        Student student18 = new Student(randomUUID(), group1.getId(), "Семенюк" ,"Дар’я" ,"Миколаївна");
+        Student student19 = new Student(randomUUID(), group1.getId(), "Синиця" ,"Станіслав" ,"Юрійович");
+        Student student20 = new Student(randomUUID(), group1.getId(), "Ткач" ,"Дмитро" ,"Михайлович");
+        Student student21 = new Student(randomUUID(), group1.getId(), "Туряк" ,"Владислав" ,"Дмитрович");
+        Student student22 = new Student(randomUUID(), group1.getId(), "Федорюк" ,"Назар-Степан" ,"Сергійович");
+        studentRepository.saveAll(List.of(student1, student2, student3, student4, student5, student6, student7, student8,
+                student9, student10, student11, student12, student13, student14, student15, student16, student17, student18,
+                student19, student20, student21, student22));
 
-        log.info("Registering users for students");
-        buUserRegisterService.registerStudent(student1);
-        buUserRegisterService.registerStudent(student2);
-        buUserRegisterService.registerStudent(student3);
-        buUserRegisterService.registerStudent(student4);
-        buUserRegisterService.registerStudent(student5);
+        BuUser studentUser = new BuUser(UUID.randomUUID(), student1.getId(), "student", passwordEncoder.encode("student"), BuUserRole.STUDENT);
+        buUserRepository.save(studentUser);
 
         log.info("Initializing test admin data");
         Admin admin = new Admin(UUID.randomUUID(), "Rash", "Anton", null);
         adminRepository.save(admin);
 
-        log.info("Registering users for admins");
-        buUserRegisterService.registerAdmin(admin);
+        BuUser adminUser = new BuUser(UUID.randomUUID(), admin.getId(), "admin", passwordEncoder.encode("admin"), BuUserRole.ADMIN);
+        buUserRepository.save(adminUser);
 
         log.info("Initializing test subject data");
-        Subject subject1 = new Subject(randomUUID(), "Основи програмування", teacher1.getId(), group1.getId());
-        Subject subject2 = new Subject(randomUUID(), "Менеджмент знань", teacher2.getId(), group1.getId());
-        Subject subject3 = new Subject(randomUUID(), "Методологія наукових досліждень", teacher3.getId(), group1.getId());
-        Subject subject4 = new Subject(randomUUID(), "Педагогіка та методика вищої школи", teacher2.getId(), group1.getId());
-        Subject subject5 = new Subject(randomUUID(), "Нечіткі моделі та методи обчислювального інтелекту", teacher1.getId(), group1.getId());
-        subjectRepository.saveAll(List.of(subject1, subject2, subject3, subject4, subject5));
-
-        log.info("Initializing test lesson data");
-        Lesson lesson1 = new Lesson(randomUUID(), "Вступ до основ програмування", LessonType.LECTURE, LocalDate.of(2023, 3, 1), subject1.getId());
-        Lesson lesson2 = new Lesson(randomUUID(), "Типи даних", LessonType.LECTURE, LocalDate.of(2023, 3, 8), subject1.getId());
-        Lesson lesson3 = new Lesson(randomUUID(), "Масиви", LessonType.LECTURE, LocalDate.of(2023, 3, 15), subject1.getId());
-        Lesson lesson4 = new Lesson(randomUUID(), "Вступ до ООП, Об'єкти і класи", LessonType.LECTURE, LocalDate.of(2023, 3, 22), subject1.getId());
-        Lesson lesson5 = new Lesson(randomUUID(), "Основні принципи ООП", LessonType.LECTURE, LocalDate.of(2023, 3, 29), subject1.getId());
-        Lesson lesson6 = new Lesson(randomUUID(), "Встановлення середовища розробки Java. Hello world!", LessonType.SEMINAR, LocalDate.of(2023, 4, 4), subject1.getId());
-        Lesson lesson7 = new Lesson(randomUUID(), "Робота з примітивними типами. Калькулятор.", LessonType.SEMINAR, LocalDate.of(2023, 4, 11), subject1.getId());
-        Lesson lesson8 = new Lesson(randomUUID(), "Робота з масивами. Операції над матрицями.", LessonType.SEMINAR, LocalDate.of(2023, 4, 18), subject1.getId());
-        Lesson lesson9 = new Lesson(randomUUID(), "Робота з класами. Модулювання уявних чисел.", LessonType.SEMINAR, LocalDate.of(2023, 4, 25), subject1.getId());
-        Lesson lesson10 = new Lesson(randomUUID(), "Реалізація поліморфізму. Шаблон 'Абстрактна фабрика'", LessonType.SEMINAR, LocalDate.of(2023, 5, 2), subject1.getId());
-        Lesson lesson11 = new Lesson(randomUUID(), "Підсумкова контрольна робота", null, LocalDate.of(2023, 5, 9), subject1.getId());
-        lessonRepository.saveAll(List.of(lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11));
-
-        log.info("Initializing test source data");
-        Source source1 = new Source(randomUUID(), lesson1.getId(), "Методичка", "https://google.com/", null);
-        Source source2 = new Source(randomUUID(), lesson1.getId(), "Підручник", "https://www.wikipedia.org/", null);
-        Source source3 = new Source(randomUUID(), lesson1.getId(), "Додаткові матеріали", "https://github.com/", null);
-        sourceRepository.saveAll(List.of(source1, source2, source3));
-
-        log.info("Initializing test assignment data");
-        Assignment assignment1 = new Assignment(randomUUID(), lesson1.getId(), "Лабораторна", "https://netflix.com/", null);
-        Assignment assignment2 = new Assignment(randomUUID(), lesson1.getId(), "Реферат", "https://diia.gov.ua/", null);
-        Assignment assignment3 = new Assignment(randomUUID(), lesson1.getId(), "Твір", "https://taras-shevchenko.com.ua/", null);
-        assignmentRepository.saveAll(List.of(assignment1, assignment2, assignment3));
+        Subject subject1 = new Subject(randomUUID(), "Українська мова", teacher1.getId(), group1.getId());
+        Subject subject2 = new Subject(randomUUID(), "Українська література", teacher1.getId(), group1.getId());
+        Subject subject3 = new Subject(randomUUID(), "Зарубіжна література", teacher1.getId(), group1.getId());
+        Subject subject4 = new Subject(randomUUID(), "Математика", teacher2.getId(), group1.getId());
+        Subject subject5 = new Subject(randomUUID(), "Історія: Україна і світ", teacher3.getId(), group1.getId());
+        Subject subject6 = new Subject(randomUUID(), "Громадянська освіта* (Соціологія, Безпека життєдіяльності та цивільний захист)", teacher4.getId(), group1.getId());
+        Subject subject7 = new Subject(randomUUID(), "Природничі науки", teacher5.getId(), group1.getId());
+        Subject subject8 = new Subject(randomUUID(), "Іноземна мова", teacher6.getId(), group1.getId());
+        Subject subject9 = new Subject(randomUUID(), "Фізична культура", teacher7.getId(), group1.getId());
+        Subject subject10 = new Subject(randomUUID(), "Захист України", teacher3.getId(), group1.getId());
+        subjectRepository.saveAll(List.of(subject1, subject2, subject3, subject4, subject5, subject6, subject7, subject8, subject9, subject10));
     }
 }

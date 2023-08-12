@@ -34,8 +34,8 @@ a.icon-link {
 }
 
 table.journal-table {
-    width: 100%;
     height: 100%;
+    max-width: fit-content;
 }
 
 input.journal-cell {
