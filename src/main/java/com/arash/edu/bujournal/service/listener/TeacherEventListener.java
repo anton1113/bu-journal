@@ -31,14 +31,14 @@ public class TeacherEventListener {
 
         List<Group> teacherGroups = groupRepository.findAllByCuratorId(teacherId);
         if (!CollectionUtils.isEmpty(teacherGroups)) {
-            log.info("Teacher [{}] is not a curator of groups {}", teacherId, teacherGroups);
+            log.info("Teacher [{}] is curator of groups {}", teacherId, teacherGroups);
             teacherGroups.forEach(group -> group.setCuratorId(null));
             groupRepository.saveAll(teacherGroups);
         }
 
         List<Subject> teacherSubjects = subjectRepository.findAllByTeacherId(teacherId);
         if (!CollectionUtils.isEmpty(teacherSubjects)) {
-            log.info("Teacher [{}] has no any subjects {}", teacherId, teacherSubjects);
+            log.info("Teacher [{}] has subjects {}", teacherId, teacherSubjects);
             teacherSubjects.forEach(subject -> subject.setTeacherId(null));
             subjectRepository.saveAll(teacherSubjects);;
         }

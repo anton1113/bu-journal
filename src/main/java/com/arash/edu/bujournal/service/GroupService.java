@@ -3,6 +3,7 @@ package com.arash.edu.bujournal.service;
 import com.arash.edu.bujournal.domain.Group;
 import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.repository.GroupRepository;
+import com.arash.edu.bujournal.service.listener.GroupEventListener;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class GroupService {
 
     private final GroupRepository groupRepository;
+    private final GroupEventListener groupEventListener;
 
     public List<Group> findAll() {
         log.info("Find all groups");
@@ -57,11 +59,12 @@ public class GroupService {
             return null;
         }
         return groupRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Group not found by id " + id));
+                .orElse(null);
     }
 
     public void deleteById(@NonNull UUID groupId) {
         log.info("Delete group by id [{}]", groupId);
         groupRepository.deleteById(groupId);
+        groupEventListener.onGroupDeleted(groupId);
     }
 }

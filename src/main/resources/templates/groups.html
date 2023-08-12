@@ -41,7 +41,7 @@
                     <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a style="display: none" href="#" class="icon-link" th:href="@{groups/__${group.id}__/delete}">
+                <a href="#" class="icon-link" th:href="@{groups/__${group.id}__/delete}">
                     <i class="material-icons delete-icon" data-bs-toggle="tooltip"
                        data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
@@ -61,7 +61,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.group.add}" class="modal-title" id="staticBackdropLabel">Add group</h5>
+                <h5 th:text="#{modal.title.group.add}" class="modal-title" >Add group</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -100,7 +100,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{modal.title.group.edit}" class="modal-title" id="staticBackdropLabel">Edit group</h5>
+                <h5 th:text="#{modal.title.group.edit}" class="modal-title" >Edit group</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -124,6 +124,45 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" type="submit" form="editGroupForm" th:text="#{label.button.edit}">
                     Edit group
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete group modal -->
+<div th:if="${groupDeleteCandidate}" class="modal fade" id="deleteGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:utext="#{modal.title.group.delete}" class="modal-title" >Delete group</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="deleteGroupForm" th:action="@{groups/__${groupDeleteCandidate.id}__/delete/confirm}" th:object="${groupDeleteCandidate}"
+                      method="get">
+                    <div class="mb-3">
+                        <label th:for="groupName" th:text="#{label.input.group.name}" class="form-label">Group name</label>
+                        <input id="groupName" required class="form-control" th:field="*{name}" type="text"
+                               name="groupName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="curator" th:text="#{label.select.group.curator}" class="form-label">Curator</label><br>
+                        <select class="form-select" id="curator" th:field="*{curatorId}" disabled>
+                            <option th:text="#{text.curator.empty}" th:value="null"></option>
+                            <option th:each="teacher: ${teachers}" th:value="${teacher.id}"
+                                    th:text="${teacher.getFullName()}"></option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="submit" form="deleteGroupForm" th:text="#{label.button.delete}">
+                    Delete group
                 </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         th:text="#{label.button.cancel}">Cancel

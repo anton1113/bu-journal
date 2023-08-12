@@ -49,6 +49,13 @@ public class GroupsController {
     }
 
     @GetMapping("/groups/{groupId}/delete")
+    public String deleteGroup(@PathVariable UUID groupId, RedirectAttributes redirectAttributes) {
+        Group group = groupService.findById(groupId);
+        redirectAttributes.addFlashAttribute("groupDeleteCandidate", group);
+        return "redirect:/groups";
+    }
+
+    @GetMapping("/groups/{groupId}/delete/confirm")
     public String deleteGroup(@PathVariable UUID groupId) {
         groupService.deleteById(groupId);
         return "redirect:/groups";
