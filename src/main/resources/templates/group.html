@@ -33,97 +33,160 @@
         <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
             <td th:text="${student.getFullName()}">Full name</td>
             <td sec:authorize="hasAuthority('ADMIN')">
-                <a href="#" class="icon-link" th:href="@{__${group.id}__/students/__${student.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.edit}">
-                    <i class="material-icons edit-icon">edit</i>
+                <a href="#" class="icon-link" th:href="@{__${group.id}__/students/__${student.id}__/draft}">
+                    <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                       th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{__${group.id}__/students/__${student.id}__/delete}" data-bs-toggle="tooltip"
-                   data-bs-placement="top" th:title="#{tooltip.icon.delete}">
-                    <i class="material-icons delete-icon">delete</i>
+                <a href="#" class="icon-link" th:href="@{__${group.id}__/students/__${student.id}__/delete}">
+                    <i class="material-icons delete-icon" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
             </td>
         </tr>
         </tbody>
     </table>
-    <button sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" id="insertButton" th:text="#{label.button.add}">Add student</button>
+    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" type="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#addStudentModal">
+        Add student
+    </button>
 </div>
 
-<div th:if="${editStudentDraft}" id="editModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{__${group.id}__/students/__${editStudentDraft.id}__}" th:object="${editStudentDraft}" method="post">
-            <span class="close" id="closeEditSpan">&times;</span>
-            <div class="form-group">
-                <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
-                       name="lastName">
+<!-- Add student modal -->
+<div class="modal fade" id="addStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.student.add}" class="modal-title" id="staticBackdropLabel">Add student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
-                       type="text" name="firstName">
+            <div class="modal-body">
+                <form action="#" id="addStudentForm" th:action="@{/groups/__${group.id}__/students}" th:object="${addStudentDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
+                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                               name="lastName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
+                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                               type="text" name="firstName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
-                <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="addStudentForm" th:text="#{label.button.add}">
+                    Add student
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.save}">Save</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeEditButton">Cancel</button>
-        </form>
+        </div>
     </div>
 </div>
 
-<div id="insertModal" class="modal">
-    <div class="modal-content">
-        <form action="#" th:action="@{/groups/__${group.id}__/students}" th:object="${addStudentDraft}" method="post">
-            <span class="close" id="closeInsertSpan">&times;</span>
-            <div class="form-group">
-                <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
-                       name="lastName">
+<!-- Edit student modal -->
+<div th:if="${editStudentDraft}" class="modal fade" id="editStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.student.edit}" class="modal-title" id="staticBackdropLabel">Edit student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
-                       type="text" name="firstName">
+            <div class="modal-body">
+                <form action="#" id="editStudentForm" th:action="@{__${group.id}__/students/__${editStudentDraft.id}__}" th:object="${editStudentDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
+                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                               name="lastName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
+                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                               type="text" name="firstName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
-                <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic">
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="editStudentForm" th:text="#{label.button.edit}">
+                    Edit student
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-primary" type="submit" th:text="#{label.button.add}">Add student</button>
-            <button class="btn btn-secondary" type="submit" th:text="#{label.button.cancel}" id="closeInsertButton">Cancel</button>
-        </form>
+        </div>
     </div>
 </div>
 
-<div th:if="${studentDeleteCandidate}" id="deleteModal" class="modal" style="display: block">
-    <div class="modal-content">
-        <form action="#" th:action="@{/groups/__${group.id}__/students/__${studentDeleteCandidate.id}__/delete/confirm}" th:object="${studentDeleteCandidate}" method="get">
-            <span class="close" id="closeDeleteSpan">&times;</span>
-            <p class="font-weight-bold" th:text="#{text.delete.confirmation.student}">Are you sure want to delete student?</p>
-            <div class="form-group">
-                <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
-                <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
-                       name="lastName" readonly>
+<!-- Delete student modal -->
+<div th:if="${studentDeleteCandidate}" class="modal fade" id="deleteStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.student.delete}" class="modal-title" id="staticBackdropLabel">Delete student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
-                <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
-                       type="text" name="firstName" readonly>
+            <div class="modal-body">
+                <form action="#" id="deleteStudentForm" th:action="@{/groups/__${group.id}__/students/__${studentDeleteCandidate.id}__/delete/confirm}" th:object="${studentDeleteCandidate}"
+                      method="get">
+                    <div class="mb-3">
+                        <label th:for="lastName" th:text="#{label.input.lastname}">Last name</label>
+                        <input id="lastName" required=true minlength="2" class="form-control" th:field="*{lastName}" type="text"
+                               name="lastName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="firstName" th:text="#{label.input.firstname}">First name</label>
+                        <input id="firstName" required=true minlength="2" class="form-control" th:field="*{firstName}"
+                               type="text" name="firstName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
+                        <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic" readonly>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label th:for="patronymic" th:text="#{label.input.patronymic}">Patronymic</label>
-                <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text" name="patronymic" readonly>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="submit" form="deleteStudentForm" th:text="#{label.button.delete}">
+                    Delete student
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
             </div>
-            <button class="btn btn-danger" type="submit" th:text="#{label.button.delete}">Delete</button>
-            <button class="btn btn-secondary" type="button" th:text="#{label.button.cancel}" id="closeDeleteButton">Cancel</button>
-        </form>
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
-<script type="text/javascript" th:src="@{/js/delete-modal.js}"></script>
+<script>
+    window.onload = function() {
+        toggleModal('editStudentModal')
+        toggleModal('deleteStudentModal')
+    };
+
+    function toggleModal(id) {
+        var modalDoc = document.getElementById(id);
+        if (modalDoc != null) {
+            var modal = new bootstrap.Modal(modalDoc, {
+                keyboard: false
+            });
+            modal.toggle();
+        }
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

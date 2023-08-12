@@ -16,7 +16,7 @@
 
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div id="feedbackContainer" class="container" style="padding-top: 50px; max-width: 500px">
+<div id="feedbackContainer" class="container" style="max-width: 500px">
 
     <div class="alert alert-primary alert-dismissible fade show" role="alert" th:if="${infoMessage}">
         <p th:text="${infoMessage}">Feedback has been sent successfully</p>
