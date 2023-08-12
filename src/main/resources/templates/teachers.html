@@ -29,8 +29,8 @@
         <tr th:each="teacher : ${teachers}">
             <td th:text="${teacher.getFullName()}">Full name</td>
             <td sec:authorize="hasAuthority('ADMIN')">
-                <a href="#" class="icon-link" th:href="@{teachers/__${teacher.id}__/draft}" data-bs-toggle="tooltip" data-bs-placement="top"
-                   th:title="#{tooltip.icon.edit}">
+                <a href="#" class="icon-link" th:href="@{teachers/__${teacher.id}__/draft}" data-bs-toggle="tooltip"
+                   data-bs-placement="top" th:title="#{tooltip.icon.edit}">
                     <i class="material-icons edit-icon">edit</i>
                 </a>
                 <a href="#" class="icon-link" th:href="@{teachers/__${teacher.id}__/delete}" data-bs-toggle="tooltip"
@@ -41,7 +41,54 @@
         </tr>
         </tbody>
     </table>
-    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" class="btn btn-primary" id="insertButton">Add teacher</button>
+    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.add}" type="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#addTeacherModal">
+        Add teacher
+    </button>
+</div>
+
+<!-- Add teacher modal -->
+<div class="modal fade" id="addTeacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.teacher.add}" class="modal-title" id="staticBackdropLabel">Add teacher</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="addTeacherForm" th:action="@{/teachers}" th:object="${addTeacherDraft}"
+                      method="post">
+                    <div class="mb-3">
+                        <label th:for="lastName" th:text="#{label.input.lastname}" class="form-label">Last name</label>
+                        <input id="lastName" required minlength="2" class="form-control" th:field="*{lastName}"
+                               type="text"
+                               name="lastName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="firstName" th:text="#{label.input.firstname}" class="form-lable">First
+                            name</label>
+                        <input id="firstName" required minlength="2" class="form-control" th:field="*{firstName}"
+                               type="text" name="firstName">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="patronymic" th:text="#{label.input.patronymic}"
+                               class="form-lable">Patronymic</label>
+                        <input id="patronymic" class="form-control" th:field="*{patronymic}" type="text"
+                               name="patronymic">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="addTeacherForm" th:text="#{label.button.add}">
+                    Add teacher
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div th:if="${editTeacherDraft}" id="editModal" class="modal" style="display: block">
@@ -127,7 +174,6 @@
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/js/insert-modal.js}"></script>
 <script type="text/javascript" th:src="@{/js/edit-modal.js}"></script>
 <script type="text/javascript" th:src="@{/js/delete-modal.js}"></script>
 
