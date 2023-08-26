@@ -2,6 +2,7 @@ package com.arash.edu.bujournal.init;
 
 import com.arash.edu.bujournal.domain.*;
 import com.arash.edu.bujournal.domain.enums.BuUserRole;
+import com.arash.edu.bujournal.domain.enums.LessonType;
 import com.arash.edu.bujournal.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -134,5 +136,14 @@ public class InitMongoDbData {
         Subject subject9 = new Subject(randomUUID(), "Фізична культура", teacher7.getId(), group1.getId());
         Subject subject10 = new Subject(randomUUID(), "Захист України", teacher3.getId(), group1.getId());
         subjectRepository.saveAll(List.of(subject1, subject2, subject3, subject4, subject5, subject6, subject7, subject8, subject9, subject10));
+
+        log.info("Initializing test lesson data");
+        Lesson lesson1 = new Lesson(randomUUID(), "Вступ. Функціональна стилістика і культура мовлення. Функції мови і мовлення", LessonType.LECTURE, LocalDate.of(2023, 9, 5), subject1.getId());
+        lessonRepository.saveAll(List.of(lesson1));
+
+        log.info("Initializing test source data");
+        Source source1 = new Source(randomUUID(), lesson1.getId(), "Функціональні стилі української мови", "https://www.youtube.com/watch?v=VsxGT7yIzQo", null);
+        Source source2 = new Source(randomUUID(), lesson1.getId(), "Функції мови і мовлення", "https://www.youtube.com/watch?v=68QQ2VJtV3M", null);
+        sourceRepository.saveAll(List.of(source1, source2));
     }
 }
