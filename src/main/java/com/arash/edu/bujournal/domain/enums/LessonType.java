@@ -20,9 +20,9 @@ public enum LessonType {
     private final String uaValue;
 
     public static LessonType fromUaValue(final String uaValue) {
-        for (LessonType suggestionType : LessonType.values()) {
-            if (suggestionType.uaValue.equals(uaValue)) {
-                return suggestionType;
+        for (LessonType lessonType : LessonType.values()) {
+            if (lessonType.uaValue.equals(uaValue)) {
+                return lessonType;
             }
         }
         throw new IllegalArgumentException("Unexpected uaValue '" + uaValue + "'");
