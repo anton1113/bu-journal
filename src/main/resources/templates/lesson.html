@@ -28,6 +28,7 @@
         <tr>
             <th th:text="#{label.table.column.lesson.sources.name}">Source name</th>
             <th th:text="#{label.table.column.lesson.sources.link}">Preview link</th>
+            <th th:text="#{label.table.column.lesson.sources.attachment}">Attachment</th>
             <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
@@ -37,6 +38,7 @@
             <td>
                 <a th:href="${source.link}" th:text="${source.link}"></a>
             </td>
+            <td th:text="${source.attachmentName}"></td>
             <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
                 <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}">
                     <i class="material-icons edit-icon"  data-bs-toggle="tooltip" data-bs-placement="top"
@@ -99,7 +101,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" id="addSourceForm" th:action="@{/lessons/__${lesson.id}__/sources}" th:object="${addSourceDraft}"
+                <form action="#" id="addSourceForm" th:action="@{/lessons/__${lesson.id}__/sources}" th:object="${addSourceDraft}" enctype="multipart/form-data"
                       method="post">
                     <div class="mb-3">
                         <label th:for="sourceName" th:text="#{label.input.source.name}" class="form-label">Source name</label>
@@ -108,8 +110,12 @@
                     </div>
                     <div class="mb-3">
                         <label th:for="sourceLink" th:text="#{label.input.source.link}" class="form-label">Source link</label>
-                        <input id="sourceLink" required class="form-control" th:field="*{link}" type="text"
+                        <input id="sourceLink" class="form-control" th:field="*{link}" type="text"
                                name="sourceLink">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" id="sourceFile" name="file">
                     </div>
                 </form>
             </div>
@@ -147,6 +153,10 @@
                         <input id="sourceLink" required class="form-control" th:field="*{link}" type="text"
                                name="sourceLink">
                     </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" th:field="*{file}" id="sourceFile" name="file">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -182,6 +192,10 @@
                         <label th:for="sourceLink" th:text="#{label.input.source.link}" class="form-label">Source link</label>
                         <input id="sourceLink" required class="form-control" th:field="*{link}" type="text"
                                name="sourceLink" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" id="sourceFile" name="file">
                     </div>
                 </form>
             </div>

@@ -2,6 +2,7 @@ package com.arash.edu.bujournal.controller;
 
 import com.arash.edu.bujournal.domain.*;
 import com.arash.edu.bujournal.service.*;
+import com.arash.edu.bujournal.view.MultipartFileNameView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +54,7 @@ public class LessonsController {
     @GetMapping("/lessons/{lessonId}/sources/{sourceId}/draft")
     public String getSourceOfLessonDraft(@PathVariable UUID lessonId, @PathVariable UUID sourceId, RedirectAttributes redirectAttributes) {
         Source source = sourceService.findById(sourceId);
+        source.setFile(new MultipartFileNameView(source.getAttachmentName()));
         redirectAttributes.addFlashAttribute("editSourceDraft", source);
         return "redirect:/lessons/" + lessonId;
     }
@@ -66,6 +68,7 @@ public class LessonsController {
     @GetMapping("/lessons/{lessonId}/sources/{sourceId}/delete")
     public String deleteSourceOfLesson(@PathVariable UUID lessonId, @PathVariable UUID sourceId, RedirectAttributes redirectAttributes) {
         Source source = sourceService.findById(sourceId);
+        source.setFile(new MultipartFileNameView(source.getAttachmentName()));
         redirectAttributes.addFlashAttribute("sourceDeleteCandidate", source);
         return "redirect:/lessons/" + lessonId;
     }

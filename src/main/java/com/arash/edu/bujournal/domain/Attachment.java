@@ -19,5 +19,5 @@ public class Attachment {
 
     private String name;
 
-    private Object file;
+    private byte[] content;
 }
