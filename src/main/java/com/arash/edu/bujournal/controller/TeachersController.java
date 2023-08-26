@@ -1,11 +1,11 @@
 package com.arash.edu.bujournal.controller;
 
-import com.arash.edu.bujournal.domain.*;
-import com.arash.edu.bujournal.domain.enums.BuUserRole;
+import com.arash.edu.bujournal.domain.Group;
+import com.arash.edu.bujournal.domain.Subject;
+import com.arash.edu.bujournal.domain.Teacher;
 import com.arash.edu.bujournal.service.GroupService;
 import com.arash.edu.bujournal.service.SubjectService;
 import com.arash.edu.bujournal.service.TeacherService;
-import com.arash.edu.bujournal.util.BuSecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,20 +46,6 @@ public class TeachersController {
     public String showTeachers(Model model) {
         populateAllTeachers(model);
         return "teachers";
-    }
-
-    @GetMapping("/teachers/my-groups")
-    public String showTeacherGroups(Model model) {
-        BuUser loggedInUser = BuSecurityUtil.getLoggedInUser();
-        if (loggedInUser.getRole() != BuUserRole.TEACHER) {
-            throw new IllegalStateException("Requested to show teacher groups by non-teacher user " + loggedInUser);
-        }
-
-        Teacher teacher = teacherService.findById(loggedInUser.getExternalId());
-        List<Group> groups = groupService.findAllByCuratorId(teacher.getId());
-        model.addAttribute("teacher", teacher);
-        model.addAttribute("groups", groups);
-        return "groups";
     }
 
     @PostMapping("/teachers")

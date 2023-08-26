@@ -50,4 +50,9 @@ public class TeacherEventListener {
         log.info("Received teacher_created event, {}", teacher);
         buUserRegisterService.registerTeacher(teacher);
     }
+
+    public void onTeacherChanged(@NonNull Teacher teacher) {
+        log.info("Received teacher_changed event, {}", teacher);
+        buUserRegisterService.updateTeacherCredentials(teacher);
+    }
 }
