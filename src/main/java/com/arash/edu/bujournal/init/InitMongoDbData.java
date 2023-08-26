@@ -4,6 +4,7 @@ import com.arash.edu.bujournal.domain.*;
 import com.arash.edu.bujournal.domain.enums.BuUserRole;
 import com.arash.edu.bujournal.domain.enums.LessonType;
 import com.arash.edu.bujournal.repository.*;
+import com.arash.edu.bujournal.service.auth.BuUserRegisterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -44,6 +45,9 @@ public class InitMongoDbData {
     private BuUserRepository buUserRepository;
     @Autowired
     private FeedbackRepository feedbackRepository;
+
+    @Autowired
+    private BuUserRegisterService buUserRegisterService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -80,8 +84,14 @@ public class InitMongoDbData {
         Teacher teacher8 = new Teacher(randomUUID(), "Штерма", "Тетяна", "Василівна");
         teacherRepository.saveAll(List.of(teacher1, teacher2, teacher3, teacher4, teacher5, teacher6, teacher7, teacher8));
 
-        BuUser teacherUser = new BuUser(UUID.randomUUID(), teacher1.getId(), "teacher", passwordEncoder.encode("teacher"), BuUserRole.TEACHER);
-        buUserRepository.save(teacherUser);
+        buUserRegisterService.registerTeacher(teacher1);
+        buUserRegisterService.registerTeacher(teacher2);
+        buUserRegisterService.registerTeacher(teacher3);
+        buUserRegisterService.registerTeacher(teacher4);
+        buUserRegisterService.registerTeacher(teacher5);
+        buUserRegisterService.registerTeacher(teacher6);
+        buUserRegisterService.registerTeacher(teacher7);
+        buUserRegisterService.registerTeacher(teacher8);
 
         log.info("Initializing test group data");
         Group group1 = new Group(randomUUID(), "KM-501", teacher8.getId());
@@ -114,8 +124,28 @@ public class InitMongoDbData {
                 student9, student10, student11, student12, student13, student14, student15, student16, student17, student18,
                 student19, student20, student21, student22));
 
-        BuUser studentUser = new BuUser(UUID.randomUUID(), student1.getId(), "student", passwordEncoder.encode("student"), BuUserRole.STUDENT);
-        buUserRepository.save(studentUser);
+        buUserRegisterService.registerStudent(student1);
+        buUserRegisterService.registerStudent(student2);
+        buUserRegisterService.registerStudent(student3);
+        buUserRegisterService.registerStudent(student4);
+        buUserRegisterService.registerStudent(student5);
+        buUserRegisterService.registerStudent(student6);
+        buUserRegisterService.registerStudent(student7);
+        buUserRegisterService.registerStudent(student8);
+        buUserRegisterService.registerStudent(student9);
+        buUserRegisterService.registerStudent(student10);
+        buUserRegisterService.registerStudent(student11);
+        buUserRegisterService.registerStudent(student12);
+        buUserRegisterService.registerStudent(student13);
+        buUserRegisterService.registerStudent(student14);
+        buUserRegisterService.registerStudent(student15);
+        buUserRegisterService.registerStudent(student16);
+        buUserRegisterService.registerStudent(student17);
+        buUserRegisterService.registerStudent(student18);
+        buUserRegisterService.registerStudent(student19);
+        buUserRegisterService.registerStudent(student20);
+        buUserRegisterService.registerStudent(student21);
+        buUserRegisterService.registerStudent(student22);
 
         log.info("Initializing test admin data");
         Admin admin = new Admin(UUID.randomUUID(), "Rash", "Anton", null);

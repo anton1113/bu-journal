@@ -52,7 +52,9 @@ public class StudentService {
             throw new NotFoundException("Student with id " + id + "not found, unable to edit");
         }
         student.setId(id);
-        return studentRepository.save(student);
+        Student edited = studentRepository.save(student);
+        studentEventListener.onStudentChanged(edited);
+        return edited;
     }
 
     public void deleteById(@NonNull UUID id) {

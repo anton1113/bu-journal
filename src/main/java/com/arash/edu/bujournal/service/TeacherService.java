@@ -56,7 +56,9 @@ public class TeacherService {
             throw new NotFoundException("Teacher with id " + id + "not found, unable to edit");
         }
         teacher.setId(id);
-        return teacherRepository.save(teacher);
+        Teacher edited = teacherRepository.save(teacher);
+        teacherEventListener.onTeacherChanged(edited);
+        return edited;
     }
 
     public void deleteTeacher(@NonNull UUID id) {

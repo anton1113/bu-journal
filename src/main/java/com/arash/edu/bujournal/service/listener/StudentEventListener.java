@@ -30,4 +30,9 @@ public class StudentEventListener {
         log.info("Received student_created event, {}", student);
         buUserRegisterService.registerStudent(student);
     }
+
+    public void onStudentChanged(@NonNull Student student) {
+        log.info("Received student_changed event, {}", student);
+        buUserRegisterService.updateStudentCredentials(student);
+    }
 }
