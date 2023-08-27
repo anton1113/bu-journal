@@ -28,6 +28,7 @@
         <tr>
             <th th:text="#{label.table.column.lesson.sources.name}">Source name</th>
             <th th:text="#{label.table.column.lesson.sources.link}">Preview link</th>
+            <th th:text="#{label.table.column.lesson.sources.attachment}">Attachment</th>
             <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
@@ -37,14 +38,19 @@
             <td>
                 <a th:href="${source.link}" th:text="${source.link}"></a>
             </td>
-            <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}">
+            <td th:text="${source.attachmentName}"></td>
+            <td>
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}">
                     <i class="material-icons edit-icon"  data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/delete}">
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/delete}">
                     <i class="material-icons delete-icon" data-bs-toggle="tooltip"
                        data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
+                </a>
+                <a th:if="${source.attachmentId != null}" href="#" class="icon-link" th:href="@{/attachments/__${source.attachmentId}__/download}">
+                    <i class="material-icons" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.download}">download</i>
                 </a>
             </td>
         </tr>
@@ -100,7 +106,7 @@
             </div>
             <div class="modal-body">
                 <form action="#" id="addSourceForm" th:action="@{/lessons/__${lesson.id}__/sources}" th:object="${addSourceDraft}"
-                      method="post">
+                      method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label th:for="sourceName" th:text="#{label.input.source.name}" class="form-label">Source name</label>
                         <input id="sourceName" required class="form-control" th:field="*{name}" type="text"
@@ -108,8 +114,12 @@
                     </div>
                     <div class="mb-3">
                         <label th:for="sourceLink" th:text="#{label.input.source.link}" class="form-label">Source link</label>
-                        <input id="sourceLink" required class="form-control" th:field="*{link}" type="text"
+                        <input id="sourceLink" class="form-control" th:field="*{link}" type="text"
                                name="sourceLink">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" id="sourceFile" name="file">
                     </div>
                 </form>
             </div>
@@ -136,7 +146,7 @@
             </div>
             <div class="modal-body">
                 <form action="#" id="editSourceForm" th:action="@{/lessons/__${lesson.id}__/sources/__${editSourceDraft.id}__}" th:object="${editSourceDraft}"
-                      method="post">
+                      method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label th:for="sourceName" th:text="#{label.input.source.name}" class="form-label">Source name</label>
                         <input id="sourceName" required class="form-control" th:field="*{name}" type="text"
@@ -144,8 +154,17 @@
                     </div>
                     <div class="mb-3">
                         <label th:for="sourceLink" th:text="#{label.input.source.link}" class="form-label">Source link</label>
-                        <input id="sourceLink" required class="form-control" th:field="*{link}" type="text"
+                        <input id="sourceLink" class="form-control" th:field="*{link}" type="text"
                                name="sourceLink">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Source file</label>
+                        <input id="sourceFile" class="form-control" th:field="*{attachmentName}" type="text"
+                               name="sourceFile" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment.replace}" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" th:field="*{file}" id="sourceFile" name="file">
                     </div>
                 </form>
             </div>
@@ -182,6 +201,11 @@
                         <label th:for="sourceLink" th:text="#{label.input.source.link}" class="form-label">Source link</label>
                         <input id="sourceLink" required class="form-control" th:field="*{link}" type="text"
                                name="sourceLink" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Source file</label>
+                        <input id="sourceFile" required class="form-control" th:field="*{attachmentName}" type="text"
+                               name="sourceFile" readonly>
                     </div>
                 </form>
             </div>

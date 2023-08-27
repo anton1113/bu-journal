@@ -45,6 +45,8 @@ public class InitMongoDbData {
     private BuUserRepository buUserRepository;
     @Autowired
     private FeedbackRepository feedbackRepository;
+    @Autowired
+    private AttachmentRepository attachmentRepository;
 
     @Autowired
     private BuUserRegisterService buUserRegisterService;
@@ -70,6 +72,7 @@ public class InitMongoDbData {
         assignmentRepository.deleteAll();
         buUserRepository.deleteAll();
         feedbackRepository.deleteAll();
+        attachmentRepository.deleteAll();
     }
 
     private void createTestData() {
@@ -172,8 +175,8 @@ public class InitMongoDbData {
         lessonRepository.saveAll(List.of(lesson1));
 
         log.info("Initializing test source data");
-        Source source1 = new Source(randomUUID(), lesson1.getId(), "Функціональні стилі української мови", "https://www.youtube.com/watch?v=VsxGT7yIzQo", null);
-        Source source2 = new Source(randomUUID(), lesson1.getId(), "Функції мови і мовлення", "https://www.youtube.com/watch?v=68QQ2VJtV3M", null);
+        Source source1 = new Source(randomUUID(), lesson1.getId(), "Функціональні стилі української мови", "https://www.youtube.com/watch?v=VsxGT7yIzQo", null, null, null);
+        Source source2 = new Source(randomUUID(), lesson1.getId(), "Функції мови і мовлення", "https://www.youtube.com/watch?v=68QQ2VJtV3M", null, null, null);
         sourceRepository.saveAll(List.of(source1, source2));
     }
 }
