@@ -31,11 +31,8 @@ public class AttachmentService {
         return attachmentRepository.save(attachment);
     }
 
-    public Attachment findByNullableId(UUID id) {
+    public Attachment findById(UUID id) {
         log.info("Get attachment by nullable id [{}]", id);
-        if (id == null) {
-            return null;
-        }
         return attachmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Attachment not found by id " + id));
     }

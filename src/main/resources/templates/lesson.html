@@ -39,14 +39,18 @@
                 <a th:href="${source.link}" th:text="${source.link}"></a>
             </td>
             <td th:text="${source.attachmentName}"></td>
-            <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}">
+            <td>
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}">
                     <i class="material-icons edit-icon"  data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/delete}">
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/delete}">
                     <i class="material-icons delete-icon" data-bs-toggle="tooltip"
                        data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
+                </a>
+                <a th:if="${source.attachmentId != null}" href="#" class="icon-link" th:href="@{/attachments/__${source.attachmentId}__/download}">
+                    <i class="material-icons" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.download}">download</i>
                 </a>
             </td>
         </tr>
