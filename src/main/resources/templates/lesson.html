@@ -27,17 +27,13 @@
         <thead class="table-light">
         <tr>
             <th th:text="#{label.table.column.lesson.sources.name}">Source name</th>
-            <th th:text="#{label.table.column.lesson.sources.link}">Preview link</th>
             <th th:text="#{label.table.column.lesson.sources.attachment}">Attachment</th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.table.column.actions}">Actions</th>
+            <th th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="source : ${sources}">
             <td th:text="${source.name}">Source name</td>
-            <td>
-                <a th:href="${source.link}" th:text="${source.link}"></a>
-            </td>
             <td th:text="${source.attachmentName}"></td>
             <td>
                 <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/sources/__${source.id}__/draft}">
@@ -49,8 +45,12 @@
                        data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
                 <a th:if="${source.attachmentId != null}" href="#" class="icon-link" th:href="@{/attachments/__${source.attachmentId}__/download}">
-                    <i class="material-icons" data-bs-toggle="tooltip"
+                    <i class="material-icons download-icon" data-bs-toggle="tooltip"
                        data-bs-placement="top" th:title="#{tooltip.icon.download}">download</i>
+                </a>
+                <a th:if="${!#strings.isEmpty(source.link)}" href="#" class="icon-link" th:href="${source.link}" target="_blank">
+                    <i class="material-icons link-icon" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.link}">link</i>
                 </a>
             </td>
         </tr>
@@ -66,24 +66,30 @@
         <thead class="table-light">
         <tr>
             <th th:text="#{label.table.column.lesson.assignments.name}">Assignment name</th>
-            <th th:text="#{label.table.column.lesson.assignments.link}">Preview link</th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.table.column.actions}">Actions</th>
+            <th th:text="#{label.table.column.lesson.assignments.attachment}">Attachment</th>
+            <th th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="assignment : ${assignments}">
             <td th:text="${assignment.name}">Assignment name</td>
+            <td th:text="${assignment.attachmentName}"></td>
             <td>
-                <a th:href="${assignment.link}" th:text="${assignment.link}"></a>
-            </td>
-            <td sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/assignments/__${assignment.id}__/draft}">
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/assignments/__${assignment.id}__/draft}">
                     <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/assignments/__${assignment.id}__/delete}">
+                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/lessons/__${lesson.id}__/assignments/__${assignment.id}__/delete}">
                     <i class="material-icons delete-icon" data-bs-toggle="tooltip"
                        data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
+                </a>
+                <a th:if="${assignment.attachmentId != null}" href="#" class="icon-link" th:href="@{/attachments/__${assignment.attachmentId}__/download}">
+                    <i class="material-icons download-icon" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.download}">download</i>
+                </a>
+                <a th:if="${!#strings.isEmpty(assignment.link)}" href="#" class="icon-link" th:href="${assignment.link}" target="_blank">
+                    <i class="material-icons link-icon" data-bs-toggle="tooltip"
+                       data-bs-placement="top" th:title="#{tooltip.icon.link}">link</i>
                 </a>
             </td>
         </tr>
@@ -158,9 +164,9 @@
                                name="sourceLink">
                     </div>
                     <div class="mb-3">
-                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Source file</label>
-                        <input id="sourceFile" class="form-control" th:field="*{attachmentName}" type="text"
-                               name="sourceFile" readonly>
+                        <label th:for="sourceFileName" th:text="#{label.input.source.attachment}" class="form-label">Source file</label>
+                        <input id="sourceFileName" class="form-control" th:field="*{attachmentName}" type="text"
+                               name="sourceFileName" readonly>
                     </div>
                     <div class="mb-3">
                         <label th:for="sourceFile" th:text="#{label.input.source.attachment.replace}" class="form-label">Attachment</label>
@@ -232,7 +238,7 @@
             </div>
             <div class="modal-body">
                 <form action="#" id="addAssignmentForm" th:action="@{/lessons/__${lesson.id}__/assignments}" th:object="${addAssignmentDraft}"
-                      method="post">
+                      method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label th:for="assignmentName" th:text="#{label.input.assignment.name}" class="form-label">Assignment name</label>
                         <input id="assignmentName" required class="form-control" th:field="*{name}" type="text"
@@ -240,8 +246,12 @@
                     </div>
                     <div class="mb-3">
                         <label th:for="assignmentLink" th:text="#{label.input.assignment.link}" class="form-label">Assignment link</label>
-                        <input id="assignmentLink" required class="form-control" th:field="*{link}" type="text"
+                        <input id="assignmentLink" class="form-control" th:field="*{link}" type="text"
                                name="assignmentLink">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="assignmentFile" th:text="#{label.input.assignment.attachment}" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" id="assignmentFile" name="file">
                     </div>
                 </form>
             </div>
@@ -268,7 +278,7 @@
             </div>
             <div class="modal-body">
                 <form action="#" id="editAssignmentForm" th:action="@{/lessons/__${lesson.id}__/assignments/__${editAssignmentDraft.id}__}" th:object="${editAssignmentDraft}"
-                      method="post">
+                      method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label th:for="assignmentName" th:text="#{label.input.assignment.name}" class="form-label">Assignment name</label>
                         <input id="assignmentName" required class="form-control" th:field="*{name}" type="text"
@@ -276,8 +286,17 @@
                     </div>
                     <div class="mb-3">
                         <label th:for="assignmentLink" th:text="#{label.input.assignment.link}" class="form-label">Assignment link</label>
-                        <input id="assignmentLink" required class="form-control" th:field="*{link}" type="text"
+                        <input id="assignmentLink" class="form-control" th:field="*{link}" type="text"
                                name="assignmentLink">
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="assignmentFileName" th:text="#{label.input.assignment.attachment}" class="form-label">Assignment file</label>
+                        <input id="assignmentFileName" class="form-control" th:field="*{attachmentName}" type="text"
+                               name="assignmentFileName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="assignmentFile" th:text="#{label.input.assignment.attachment.replace}" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" th:field="*{file}" id="assignmentFile" name="file">
                     </div>
                 </form>
             </div>
@@ -314,6 +333,11 @@
                         <label th:for="assignmentLink" th:text="#{label.input.assignment.link}" class="form-label">Assignment link</label>
                         <input id="assignmentLink" required class="form-control" th:field="*{link}" type="text"
                                name="assignmentLink" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="assignmentFile" th:text="#{label.input.assignment.attachment}" class="form-label">Assignment file</label>
+                        <input id="assignmentFile" required class="form-control" th:field="*{attachmentName}" type="text"
+                               name="assignmentFile" readonly>
                     </div>
                 </form>
             </div>

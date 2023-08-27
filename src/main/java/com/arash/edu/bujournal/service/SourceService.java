@@ -43,7 +43,7 @@ public class SourceService {
         }
         source.setLessonId(lessonId);
 
-        if (source.getFile() != null) {
+        if (source.getFile() != null && !source.getFile().isEmpty()) {
             Attachment attachment = attachmentService.addAttachment(source.getFile(), source.getId());
             source.setAttachmentId(attachment.getId());
             source.setAttachmentName(attachment.getName());
@@ -59,7 +59,7 @@ public class SourceService {
         }
         source.setId(id);
 
-        if (source.getFile() != null) {
+        if (source.getFile() != null && !source.getFile().isEmpty()) {
             // delete old attachment
             sourceRepository.findById(id)
                     .map(Source::getAttachmentId)
