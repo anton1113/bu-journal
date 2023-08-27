@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -24,4 +26,9 @@ public class Assignment {
     private String link;
 
     private UUID attachmentId;
+
+    private String attachmentName;
+
+    @Transient
+    private MultipartFile file;
 }

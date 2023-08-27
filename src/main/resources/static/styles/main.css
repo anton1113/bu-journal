@@ -29,6 +29,16 @@ img.bu-logo {
     padding-right: 10px;
 }
 
+.download-icon {
+    color: forestgreen;
+    padding-right: 10px;
+}
+
+.link-icon {
+    color: blue;
+    padding-right: 10px;
+}
+
 a.icon-link {
     text-decoration: none;
 }
