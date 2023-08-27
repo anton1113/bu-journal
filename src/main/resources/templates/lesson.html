@@ -101,8 +101,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" id="addSourceForm" th:action="@{/lessons/__${lesson.id}__/sources}" th:object="${addSourceDraft}" enctype="multipart/form-data"
-                      method="post">
+                <form action="#" id="addSourceForm" th:action="@{/lessons/__${lesson.id}__/sources}" th:object="${addSourceDraft}"
+                      method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label th:for="sourceName" th:text="#{label.input.source.name}" class="form-label">Source name</label>
                         <input id="sourceName" required class="form-control" th:field="*{name}" type="text"
@@ -142,7 +142,7 @@
             </div>
             <div class="modal-body">
                 <form action="#" id="editSourceForm" th:action="@{/lessons/__${lesson.id}__/sources/__${editSourceDraft.id}__}" th:object="${editSourceDraft}"
-                      method="post">
+                      method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label th:for="sourceName" th:text="#{label.input.source.name}" class="form-label">Source name</label>
                         <input id="sourceName" required class="form-control" th:field="*{name}" type="text"
@@ -150,11 +150,16 @@
                     </div>
                     <div class="mb-3">
                         <label th:for="sourceLink" th:text="#{label.input.source.link}" class="form-label">Source link</label>
-                        <input id="sourceLink" required class="form-control" th:field="*{link}" type="text"
+                        <input id="sourceLink" class="form-control" th:field="*{link}" type="text"
                                name="sourceLink">
                     </div>
                     <div class="mb-3">
-                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Attachment</label>
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Source file</label>
+                        <input id="sourceFile" class="form-control" th:field="*{attachmentName}" type="text"
+                               name="sourceFile" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment.replace}" class="form-label">Attachment</label>
                         <input class="form-control" type="file" th:field="*{file}" id="sourceFile" name="file">
                     </div>
                 </form>
@@ -194,8 +199,9 @@
                                name="sourceLink" readonly>
                     </div>
                     <div class="mb-3">
-                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Attachment</label>
-                        <input class="form-control" type="file" id="sourceFile" name="file">
+                        <label th:for="sourceFile" th:text="#{label.input.source.attachment}" class="form-label">Source file</label>
+                        <input id="sourceFile" required class="form-control" th:field="*{attachmentName}" type="text"
+                               name="sourceFile" readonly>
                     </div>
                 </form>
             </div>

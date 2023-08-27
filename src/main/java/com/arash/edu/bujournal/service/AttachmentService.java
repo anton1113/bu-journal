@@ -39,4 +39,9 @@ public class AttachmentService {
         return attachmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Attachment not found by id " + id));
     }
+
+    public void deleteAttachment(@NonNull UUID attachmentId) {
+        log.info("Delete attachment {}", attachmentId);
+        attachmentRepository.deleteById(attachmentId);
+    }
 }
