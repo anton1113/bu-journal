@@ -45,10 +45,10 @@
             <td th:text="${student.getFullName()}">Full name</td>
             <td style="padding: 0" th:each="lesson: ${lessons}"
                 th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">
-                <input sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" type="text" class="journal-cell"
+                <input sec:authorize="hasAuthority('TEACHER')" type="text" class="journal-cell"
                        th:attr="id=${attendance.id}, value=${attendance.toCellValue()}"
                        onchange="onChangeHandler(this.id, this.value)">
-                <input sec:authorize="hasAuthority('STUDENT')" type="text" class="journal-cell"
+                <input sec:authorize="hasAnyAuthority('STUDENT', 'ADMIN')" type="text" class="journal-cell"
                        th:value="${attendance.toCellValue()}"
                        onchange="onForbiddenChangeHandler()" readonly style="pointer-events: none">
             </td>
