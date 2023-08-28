@@ -33,7 +33,7 @@ public class StudentService {
 
     public List<Student> findAllByGroupId(@NonNull UUID groupId) {
         log.info("Find students by group id [{}]", groupId);
-        return studentRepository.findAllByGroupId(groupId);
+        return studentRepository.findAllByGroupIdOrderByLastNameAsc(groupId);
     }
 
     public Student addStudent(@NonNull Student student) {

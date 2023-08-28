@@ -61,22 +61,6 @@
                        th:classappend="${#httpServletRequest.requestURI} == '/logout' ? 'active': ''" class="nav-link"
                        href="/logout">Logout</a>
                 </li>
-                <li>
-                    <div>
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle icon-link" href="#"
-                                   id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-                                    <i class="material-icons">language</i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a th:text="#{nav.lang.uk}" th:href="${#httpServletRequest.requestURI} == '/login' ? @{/(lang=uk)}: @{''(lang=uk)}" class="dropdown-item" href="#">Ukrainian</a></li>
-                                    <li><a th:text="#{nav.lang.en}" th:href="${#httpServletRequest.requestURI} == '/login' ? @{/(lang=en)}: @{''(lang=en)}" class="dropdown-item" href="#">English</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>

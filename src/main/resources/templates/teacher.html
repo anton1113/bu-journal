@@ -20,7 +20,7 @@
 
     <h5 th:text="${teacher.getFullName()}"></h5>
     <br>
-    <h6 th:text="#{text.teacher.curator(${teacherGroupNames})}"></h6>
+    <h6 th:if="!${#strings.isEmpty(teacherGroupNames)}" th:text="#{text.teacher.curator(${teacherGroupNames})}"></h6>
 
     <table class="table caption-top">
         <caption th:text="#{caption.table.teacher.subjects}">List of subjects</caption>

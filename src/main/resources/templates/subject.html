@@ -37,11 +37,11 @@
                     <i class="material-icons show-icon" data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.show}">visibility</i>
                 </a>
-                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}">
+                <a sec:authorize="hasAuthority('TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/draft}">
                     <i class="material-icons edit-icon" data-bs-toggle="tooltip" data-bs-placement="top"
                        th:title="#{tooltip.icon.edit}">edit</i>
                 </a>
-                <a sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">
+                <a sec:authorize="hasAuthority('TEACHER')" href="#" class="icon-link" th:href="@{/subjects/__${subject.id}__/lessons/__${lesson.id}__/delete}">
                     <i class="material-icons delete-icon"  data-bs-toggle="tooltip"
                        data-bs-placement="top" th:title="#{tooltip.icon.delete}">delete</i>
                 </a>
@@ -49,14 +49,14 @@
         </tr>
         </tbody>
     </table>
-    <button sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:text="#{label.button.add}" type="button" class="btn btn-primary"
+    <button sec:authorize="hasAuthority('TEACHER')" th:text="#{label.button.add}" type="button" class="btn btn-primary"
             data-bs-toggle="modal" data-bs-target="#addLessonModal">
         Add lesson
     </button>
 </div>
 
 <!-- Add lesson modal -->
-<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="modal fade" id="addLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('TEACHER')" class="modal fade" id="addLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -101,7 +101,7 @@
 </div>
 
 <!-- Edit lesson modal -->
-<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${editLessonDraft}" class="modal fade" id="editLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('TEACHER')" th:if="${editLessonDraft}" class="modal fade" id="editLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -146,7 +146,7 @@
 </div>
 
 <!-- Delete lesson modal -->
-<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" th:if="${lessonDeleteCandidate}" class="modal fade" id="deleteLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div sec:authorize="hasAuthority('TEACHER')" th:if="${lessonDeleteCandidate}" class="modal fade" id="deleteLessonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
