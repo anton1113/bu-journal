@@ -22,7 +22,7 @@
     <h5 th:text="${subject.name}"></h5>
 
     <br>
-    <h6 th:text="${teacher} == null ? #{text.teacher.empty} : #{text.journal.teacher.name} + ': ' + ${teacher.getFullName()}"></h6>
+    <h6 th:text="${teacher} == null ? #{text.teacher.empty} : ${teacher.getFullName()}"></h6>
     <h6 th:text="#{text.journal.group.name} + ': ' + ${group.name}"></h6>
 
     <div th:if="${#lists.isEmpty(lessons)}">
@@ -34,12 +34,14 @@
         <caption th:text="#{text.journal.table.head}"></caption>
         <thead>
         <tr>
+            <th>#</th>
             <th th:text="#{student.name}">Student full name</th>
             <th th:each="lesson: ${lessons}" th:text="${lesson.getFormattedDate()}">Lesson date</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="student : ${students}">
+        <tr th:each="student, iterStat : ${students}">
+            <td th:text="${iterStat.count}">Student number</td>
             <td th:text="${student.getFullName()}">Full name</td>
             <td style="padding: 0" th:each="lesson: ${lessons}"
                 th:with="attendance=${@attendanceService.findOrCreateByStudentIdAndLessonId(student.id, lesson.id)}">

@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface StudentRepository extends MongoRepository<Student, UUID> {
 
-    List<Student> findAllByGroupId(UUID groupId);
+    List<Student> findAllByGroupIdOrderByLastNameAsc(UUID groupId);
 }

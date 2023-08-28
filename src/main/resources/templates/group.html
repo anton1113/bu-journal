@@ -25,12 +25,14 @@
         <caption th:text="#{caption.table.group.students}">List of students</caption>
         <thead class="table-light">
         <tr>
+            <th>#</th>
             <th th:text="#{student.name}">Student name</th>
             <th sec:authorize="hasAuthority('ADMIN')" th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="student : ${students}" th:with="group=${@groupService.findById(student.groupId)}">
+        <tr th:each="student, iterStat : ${students}">
+            <td th:text="${iterStat.count}">Student number</td>
             <td th:text="${student.getFullName()}">Full name</td>
             <td sec:authorize="hasAuthority('ADMIN')">
                 <a href="#" class="icon-link" th:href="@{__${group.id}__/students/__${student.id}__/draft}">
