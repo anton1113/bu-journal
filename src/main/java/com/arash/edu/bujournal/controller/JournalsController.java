@@ -1,7 +1,9 @@
 package com.arash.edu.bujournal.controller;
 
 import com.arash.edu.bujournal.domain.*;
+import com.arash.edu.bujournal.error.IllegalAccessException;
 import com.arash.edu.bujournal.service.*;
+import com.arash.edu.bujournal.util.BuSecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +28,7 @@ public class JournalsController {
         Subject subject = subjectService.findById(subjectId);
         Teacher teacher = teacherService.findByNullableId(subject.getTeacherId());
         Group group = groupService.findById(subject.getGroupId());
-        List<Student> students = studentService.findAllByGroupId(group.getId());
+        List<Student> students = getJournalStudents(group.getId());
         List<Lesson> lessons = lessonService.findAllBySubjectId(subject.getId());
         model.addAttribute("subject", subject);
         model.addAttribute("teacher", teacher);
@@ -34,5 +36,21 @@ public class JournalsController {
         model.addAttribute("students", students);
         model.addAttribute("lessons", lessons);
         return "journal";
+    }
+
+    private List<Student> getJournalStudents(UUID groupId) {
+        BuUser buUser = BuSecurityUtil.getLoggedInUser();
+        switch (buUser.getRole()) {
+            case STUDENT: {
+                return List.of(studentService.findById(buUser.getExternalId()));
+            }
+            case ADMIN:
+            case TEACHER: {
+                return studentService.findAllByGroupId(groupId);
+            }
+            default: {
+                throw new IllegalAccessException("Unable to prepare journal for role " + buUser.getRole());
+            }
+        }
     }
 }
