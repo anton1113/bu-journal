@@ -22,7 +22,7 @@ public class TeacherService {
 
     public List<Teacher> findAll() {
         log.info("Find all teachers");
-        return teacherRepository.findAll();
+        return teacherRepository.findAllByOrderByLastNameAsc();
     }
 
     public Teacher findById(@NonNull UUID id) {
