@@ -21,12 +21,14 @@
         <caption th:text="#{caption.table.teachers}">List of teachers</caption>
         <thead class="table-light">
         <tr>
+            <th>#</th>
             <th th:text="#{teacher.name}">Teacher name</th>
             <th sec:authorize="hasAuthority('ADMIN')" th:text="#{label.table.column.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="teacher : ${teachers}">
+        <tr th:each="teacher, iterStat : ${teachers}">
+            <td th:text="${iterStat.count}">Teacher number</td>
             <td th:text="${teacher.getFullName()}">Full name</td>
             <td sec:authorize="hasAuthority('ADMIN')">
                 <a href="#" th:href="@{teachers/__${teacher.id}__/draft}" class="icon-link">
