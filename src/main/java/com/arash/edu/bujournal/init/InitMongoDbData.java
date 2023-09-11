@@ -2,6 +2,7 @@ package com.arash.edu.bujournal.init;
 
 import com.arash.edu.bujournal.domain.*;
 import com.arash.edu.bujournal.domain.enums.BuUserRole;
+import com.arash.edu.bujournal.domain.enums.FeedbackState;
 import com.arash.edu.bujournal.domain.enums.LessonType;
 import com.arash.edu.bujournal.repository.*;
 import com.arash.edu.bujournal.service.auth.BuUserRegisterService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -156,6 +158,11 @@ public class InitMongoDbData {
 
         BuUser adminUser = new BuUser(UUID.randomUUID(), admin.getId(), "admin", passwordEncoder.encode("admin"), BuUserRole.ADMIN);
         buUserRepository.save(adminUser);
+
+        Feedback feedback1 = new Feedback(randomUUID(), "Nice site", null, FeedbackState.ACTIVE, LocalDateTime.now(), adminUser.getId());
+        Feedback feedback2 = new Feedback(randomUUID(), "It is the best experience of using electronic journal", null, FeedbackState.ACTIVE, LocalDateTime.now(), adminUser.getId());
+        Feedback feedback3 = new Feedback(randomUUID(), "I am very happy to use this amazing product", null, FeedbackState.ACTIVE, LocalDateTime.now(), adminUser.getId());
+        feedbackRepository.saveAll(List.of(feedback1, feedback2, feedback3));
 
         log.info("Initializing test subject data");
         Subject subject1 = new Subject(randomUUID(), "Українська мова", teacher1.getId(), group1.getId());

@@ -1,5 +1,6 @@
 package com.arash.edu.bujournal.domain;
 
+import com.arash.edu.bujournal.domain.enums.FeedbackState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ public class Feedback {
     private String text;
 
     private String sessionId;
+
+    private FeedbackState state;
 
     private LocalDateTime createdOn;
 
