@@ -9,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.Collator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,10 +21,13 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final TeacherEventListener teacherEventListener;
+    private final Collator uaCollator;
 
     public List<Teacher> findAll() {
         log.info("Find all teachers");
-        return teacherRepository.findAllByOrderByLastNameAsc();
+        return teacherRepository.findAll().stream()
+                .sorted((t1, t2) -> uaCollator.compare(t1.getLastName(), t2.getLastName()))
+                .collect(Collectors.toList());
     }
 
     public Teacher findById(@NonNull UUID id) {
