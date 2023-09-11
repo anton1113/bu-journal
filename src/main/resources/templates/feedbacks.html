@@ -22,6 +22,16 @@
         <tbody>
         <tr>
             <td th:text="${feedback.text}">Feedback</td>
+            <td style="width: 100px">
+                <a href="#" class="icon-link" th:href="@{/feedback/__${feedback.id}__(state=RESOLVED)}" data-bs-toggle="tooltip" data-bs-placement="top"
+                   th:title="#{tooltip.icon.check}">
+                    <i class="material-icons check-icon">check</i>
+                </a>
+                <a href="#" class="icon-link" th:href="@{/feedback/__${feedback.id}__/(state=REJECTED)}" data-bs-toggle="tooltip"
+                   data-bs-placement="top" th:title="#{tooltip.icon.cancel}">
+                    <i class="material-icons cancel-icon">cancel</i>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>

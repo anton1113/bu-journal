@@ -3,8 +3,10 @@ package com.arash.edu.bujournal.service;
 import com.arash.edu.bujournal.domain.BuUser;
 import com.arash.edu.bujournal.domain.Feedback;
 import com.arash.edu.bujournal.domain.dto.FeedbackDTO;
+import com.arash.edu.bujournal.domain.enums.FeedbackState;
 import com.arash.edu.bujournal.error.BadRequestException;
 import com.arash.edu.bujournal.error.InputValidationException;
+import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.mapper.FeedbackMapper;
 import com.arash.edu.bujournal.repository.FeedbackRepository;
 import com.arash.edu.bujournal.util.BuSecurityUtil;
@@ -29,9 +31,9 @@ public class FeedbackService {
     private final FeedbackMapper feedbackMapper;
     private final FeedbackRepository feedbackRepository;
 
-    public List<Feedback> getAllFeedbacks() {
-        log.info("Get all feedbacks");
-        return feedbackRepository.findAll();
+    public List<Feedback> getActiveFeedbacks() {
+        log.info("Get active feedbacks");
+        return feedbackRepository.findAllByStateOrderByCreatedOnDesc(FeedbackState.ACTIVE);
     }
 
     public Feedback postFeedback(@NonNull FeedbackDTO feedbackDTO) {
@@ -45,6 +47,17 @@ public class FeedbackService {
         Feedback feedback = feedbackMapper.toModel(feedbackDTO);
         feedback.setSessionId(sessionId);
         feedback.setCreatedBy(getCreatedBy());
+        feedback.setState(FeedbackState.ACTIVE);
+
+        return feedbackRepository.save(feedback);
+    }
+
+    public Feedback setState(@NonNull UUID id, @NonNull FeedbackState state) {
+        log.info("Set state {} to feedback with id {}", state, id);
+
+        Feedback feedback = feedbackRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Feedback not found by id " + id));
+        feedback.setState(state);
 
         return feedbackRepository.save(feedback);
     }

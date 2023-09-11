@@ -14,6 +14,16 @@ img.bu-logo {
     padding-right: 10px;
 }
 
+.check-icon {
+    color: green;
+    padding-right: 10px;
+}
+
+.cancel-icon {
+    color: red;
+    padding-right: 10px;
+}
+
 .journal-icon {
     color: #6b6b6b;
     padding-right: 10px;
