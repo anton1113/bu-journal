@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -27,6 +28,11 @@ public class FeedbackService {
 
     private final FeedbackMapper feedbackMapper;
     private final FeedbackRepository feedbackRepository;
+
+    public List<Feedback> getAllFeedbacks() {
+        log.info("Get all feedbacks");
+        return feedbackRepository.findAll();
+    }
 
     public Feedback postFeedback(@NonNull FeedbackDTO feedbackDTO) {
         log.info("Post feedback {}", feedbackDTO);

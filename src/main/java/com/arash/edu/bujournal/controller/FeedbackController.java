@@ -1,5 +1,6 @@
 package com.arash.edu.bujournal.controller;
 
+import com.arash.edu.bujournal.domain.Feedback;
 import com.arash.edu.bujournal.domain.dto.FeedbackDTO;
 import com.arash.edu.bujournal.service.FeedbackService;
 import lombok.RequiredArgsConstructor;
@@ -10,13 +11,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class FeedbackController {
 
     private final FeedbackService feedbackService;
 
-    @GetMapping(value = {"/feedback"})
+    @GetMapping("/feedback")
     public String showFeedbackPage(Model model) {
         FeedbackDTO feedbackDraft = new FeedbackDTO();
         model.addAttribute("feedbackDraft", feedbackDraft);
@@ -33,5 +36,12 @@ public class FeedbackController {
         }
 
         return "redirect:/feedback";
+    }
+
+    @GetMapping("/feedbacks")
+    public String showAllFeedbacks(Model model) {
+        List<Feedback> feedbacks = feedbackService.getAllFeedbacks();
+        model.addAttribute("feedbacks", feedbacks);
+        return "feedbacks";
     }
 }

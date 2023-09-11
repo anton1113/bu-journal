@@ -1,6 +1,7 @@
 package com.arash.edu.bujournal.service.auth;
 
 import com.arash.edu.bujournal.domain.BuUser;
+import com.arash.edu.bujournal.error.NotFoundException;
 import com.arash.edu.bujournal.repository.BuUserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,16 @@ import java.util.UUID;
 public class BuUserService implements UserDetailsService {
 
     private final BuUserRepository buUserRepository;
+
+    public String findUsernameByNullableId(UUID id) {
+        log.info("Get user by nullable id [{}]", id);
+        if (id == null) {
+            return null;
+        }
+        return buUserRepository.findById(id)
+                .map(BuUser::getUsername)
+                .orElseThrow(() -> new NotFoundException("User not found by id " + id));
+    }
 
     public BuUser deleteUserByExternalId(@NonNull UUID externalId) {
         log.info("Delete user by externalId {}", externalId);

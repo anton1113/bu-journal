@@ -47,9 +47,14 @@
                        href="/subjects">Subjects</a>
                 </li>
                 <li class="nav-item">
-                    <a th:text="#{nav.feedback}" sec:authorize="!hasAuthority('ADMIN')"
+                    <a th:text="#{nav.feedback}" sec:authorize="hasAnyAuthority('STUDENT', 'TEACHER')"
                        th:classappend="${#httpServletRequest.requestURI} == '/feedback' ? 'active': ''" class="nav-link"
                        href="/feedback">Feedback</a>
+                </li>
+                <li class="nav-item">
+                    <a th:text="#{nav.feedbacks}" sec:authorize="hasAuthority('ADMIN')"
+                       th:classappend="${#httpServletRequest.requestURI} == '/feedbacks' ? 'active': ''" class="nav-link"
+                       href="/feedbacks">Feedbacks</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAnonymous()">
                     <a th:text="#{nav.login}"
