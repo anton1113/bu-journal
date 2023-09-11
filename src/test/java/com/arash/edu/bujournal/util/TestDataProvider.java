@@ -6,6 +6,8 @@ import com.arash.edu.bujournal.domain.Teacher;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -15,6 +17,7 @@ public class TestDataProvider {
 
     public static Student createStudent() {
         Student student = new Student();
+        student.setId(UUID.randomUUID());
         student.setFirstName(randomAlphabetic(RANDOM_ALPHABETIC_LENGTH));
         student.setLastName(randomAlphabetic(RANDOM_ALPHABETIC_LENGTH));
         return student;

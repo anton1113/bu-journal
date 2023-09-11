@@ -7,6 +7,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.text.Collator;
 import java.util.Locale;
 
 @Configuration
@@ -32,5 +33,13 @@ public class TranslationConfiguration {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
+    }
+
+    @Bean
+    public Collator uaCollator() {
+        Locale uaLocale = new Locale("uk", "UA");
+        Collator uaCollator = Collator.getInstance(uaLocale);
+        uaCollator.setStrength(Collator.SECONDARY);
+        return uaCollator;
     }
 }
