@@ -1,0 +1,38 @@
+openapi: 3.0.3
+
+info:
+  title: Bu Students API
+  version: 1.0.0
+
+paths:
+  /rest/students:
+    get:
+      tags:
+        - students
+      operationId: getAllStudents
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
+
+    post:
+      tags:
+        - students
+      operationId: postStudent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
