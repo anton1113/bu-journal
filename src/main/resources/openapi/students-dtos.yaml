@@ -1,0 +1,25 @@
+openapi: 3.0.3
+
+info:
+  title: BU Students DTOs
+  version: 1.0.0
+paths: {}
+
+components:
+  schemas:
+    StudentDTO:
+      title: StudentDTO
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        groupId:
+          type: string
+          format: uuid
+        lastName:
+          type: string
+        firstName:
+          type: string
+        patronymic:
+          type: string
