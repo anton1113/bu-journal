@@ -1,0 +1,56 @@
+openapi: 3.0.3
+
+info:
+  title: Bu Teachers API
+  version: 1.0.0
+
+paths:
+  /rest/teachers:
+    get:
+      tags:
+        - teachers
+      operationId: getAllTeachers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'teachers-dtos.yaml#/components/schemas/TeacherDTO'
+    post:
+      tags:
+        - teachers
+      operationId: postTeacher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'teachers-dtos.yaml#/components/schemas/TeacherDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'teachers-dtos.yaml#/components/schemas/TeacherDTO'
+  /rest/teachers/{teacherId}:
+    delete:
+      tags:
+        - teachers
+      operationId: deleteTeacher
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'teachers-dtos.yaml#/components/schemas/TeacherDTO'
