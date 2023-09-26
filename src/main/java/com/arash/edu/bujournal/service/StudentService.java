@@ -30,8 +30,7 @@ public class StudentService {
 
     public Student findById(@NonNull UUID id) {
         log.info("Find student by id [{}]", id);
-        return studentRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Student not found by id " + id));
+        return findStudent(id);
     }
 
     public List<Student> findAllByGroupId(@NonNull UUID groupId) {
@@ -62,9 +61,16 @@ public class StudentService {
         return edited;
     }
 
-    public void deleteById(@NonNull UUID id) {
+    public Student deleteById(@NonNull UUID id) {
         log.info("Deleting student by id {}", id);
-        studentRepository.deleteById(id);
+        Student student = findStudent(id);
+        studentRepository.delete(student);
         studentEventListener.onStudentDeleted(id);
+        return student;
+    }
+
+    private Student findStudent(@NonNull UUID id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student not found by id " + id));
     }
 }

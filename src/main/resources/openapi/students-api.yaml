@@ -19,7 +19,6 @@ paths:
                 type: array
                 items:
                   $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
-
     post:
       tags:
         - students
@@ -29,6 +28,25 @@ paths:
           application/json:
             schema:
               $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
+  /rest/students/{studentId}:
+    delete:
+      tags:
+        - students
+      operationId: deleteStudent
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK

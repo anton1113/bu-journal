@@ -9,6 +9,8 @@ import com.arash.edu.bujournal.service.auth.BuUserRegisterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +51,8 @@ public class InitMongoDbData {
     private FeedbackRepository feedbackRepository;
     @Autowired
     private AttachmentRepository attachmentRepository;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private BuUserRegisterService buUserRegisterService;
@@ -75,6 +79,7 @@ public class InitMongoDbData {
         buUserRepository.deleteAll();
         feedbackRepository.deleteAll();
         attachmentRepository.deleteAll();
+        mongoTemplate.remove(new Query(), "sessions");
     }
 
     private void createTestData() {
