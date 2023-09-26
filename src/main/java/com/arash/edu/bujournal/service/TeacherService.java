@@ -32,8 +32,7 @@ public class TeacherService {
 
     public Teacher findById(@NonNull UUID id) {
         log.info("Get teacher by id [{}]", id);
-        return teacherRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Teacher not found by id " + id));
+        return findTeacher(id);
     }
 
     public Teacher findByNullableId(UUID id) {
@@ -66,9 +65,16 @@ public class TeacherService {
         return edited;
     }
 
-    public void deleteTeacher(@NonNull UUID id) {
+    public Teacher deleteTeacher(@NonNull UUID id) {
         log.info("Delete teacher by id [{}]", id);
-        teacherRepository.deleteById(id);
+        Teacher teacher = findTeacher(id);
+        teacherRepository.delete(teacher);
         teacherEventListener.onTeacherDeleted(id);
+        return teacher;
+    }
+
+    private Teacher findTeacher(@NonNull UUID id) {
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Teacher not found by id " + id));
     }
 }
