@@ -7,12 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @NoArgsConstructor
 @Data
 @Document(collection = "bu_attendance")
-public class Attendance {
+public class Attendance implements Serializable {
 
     @Id
     private UUID id;

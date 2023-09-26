@@ -142,6 +142,27 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>user-dtos</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/src/main/resources/openapi/user-dtos.yaml
+                            </inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.arash.edu.bujournal.api</apiPackage>
+                            <modelPackage>com.arash.edu.bujournal.dtos</modelPackage>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useTags>true</useTags>
+                                <useResponseEntity>false</useResponseEntity>
+                            </configOptions>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>students-api</id>
                         <goals>
                             <goal>generate</goal>
@@ -149,6 +170,27 @@
                         <configuration>
                             <inputSpec>
                                 ${project.basedir}/src/main/resources/openapi/students-api.yaml
+                            </inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.arash.edu.bujournal.api</apiPackage>
+                            <modelPackage>com.arash.edu.bujournal.dtos</modelPackage>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useTags>true</useTags>
+                                <useResponseEntity>false</useResponseEntity>
+                            </configOptions>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>login-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/src/main/resources/openapi/login-api.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>com.arash.edu.bujournal.api</apiPackage>

@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @Document(collection = "bu_user")
-public class BuUser implements UserDetails {
+public class BuUser implements UserDetails, Serializable {
 
     @Id
     private UUID id;
