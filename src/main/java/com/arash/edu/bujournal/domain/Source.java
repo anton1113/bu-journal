@@ -8,13 +8,14 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Document(collection = "bu_source")
-public class Source {
+public class Source implements Serializable {
 
     @Id
     private UUID id;

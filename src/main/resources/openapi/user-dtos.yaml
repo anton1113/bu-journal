@@ -1,0 +1,23 @@
+openapi: 3.0.3
+
+info:
+  title: BU Users DTOs
+  version: 1.0.0
+paths: {}
+
+components:
+  schemas:
+    BuUserDTO:
+      title: BuUserDTO
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        externalId:
+          type: string
+          format: uuid
+        username:
+          type: string
+        role:
+          type: string

@@ -1,0 +1,17 @@
+openapi: 3.0.3
+
+info:
+  title: BU Login DTOs
+  version: 1.0.0
+paths: {}
+
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string

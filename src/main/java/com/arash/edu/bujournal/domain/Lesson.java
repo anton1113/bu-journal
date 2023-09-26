@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Document(collection = "bu_lesson")
-public class Lesson {
+public class Lesson implements Serializable {
 
     @Id
     private UUID id;

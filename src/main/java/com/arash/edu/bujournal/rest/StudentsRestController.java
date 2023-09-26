@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,5 +29,11 @@ public class StudentsRestController implements StudentsApi {
         Student student = studentsMapper.toModel(studentDTO);
         Student newStudent = studentService.addStudent(student);
         return studentsMapper.toDTO(newStudent);
+    }
+
+    @Override
+    public StudentDTO deleteStudent(UUID studentId) {
+        Student deletedStudent = studentService.deleteById(studentId);
+        return studentsMapper.toDTO(deletedStudent);
     }
 }

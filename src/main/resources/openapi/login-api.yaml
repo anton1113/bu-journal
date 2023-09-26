@@ -1,0 +1,24 @@
+openapi: 3.0.3
+
+info:
+  title: Bu Login API
+  version: 1.0.0
+
+paths:
+  /rest/login:
+    post:
+      tags:
+        - login
+      operationId: doLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'login-dtos.yaml#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'user-dtos.yaml#/components/schemas/BuUserDTO'
