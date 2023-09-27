@@ -196,6 +196,27 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>subjects-dtos</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/src/main/resources/openapi/subjects-dtos.yaml
+                            </inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.arash.edu.bujournal.api</apiPackage>
+                            <modelPackage>com.arash.edu.bujournal.dtos</modelPackage>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useTags>true</useTags>
+                                <useResponseEntity>false</useResponseEntity>
+                            </configOptions>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>user-dtos</id>
                         <goals>
                             <goal>generate</goal>
@@ -287,6 +308,27 @@
                         <configuration>
                             <inputSpec>
                                 ${project.basedir}/src/main/resources/openapi/groups-api.yaml
+                            </inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.arash.edu.bujournal.api</apiPackage>
+                            <modelPackage>com.arash.edu.bujournal.dtos</modelPackage>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useTags>true</useTags>
+                                <useResponseEntity>false</useResponseEntity>
+                            </configOptions>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>subjects-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/src/main/resources/openapi/subjects-api.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>com.arash.edu.bujournal.api</apiPackage>

@@ -35,10 +35,14 @@ public class SubjectService {
         return subjectRepository.findAllByTeacherId(teacherId);
     }
 
+    public List<Subject> findAllByTeacherIdAndGroupId(@NonNull UUID teacherId, @NonNull UUID groupId) {
+        log.info("Find all subjects by teacher id [{}] and group id [{}]", teacherId, groupId);
+        return subjectRepository.findAllByTeacherIdAndGroupId(teacherId, groupId);
+    }
+
     public Subject findById(@NonNull UUID id) {
         log.info("Find subject by id [{}]", id);
-        return subjectRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Subject not found by id"));
+        return findSubject(id);
     }
 
     public Subject add(@NonNull Subject subject) {
@@ -49,10 +53,12 @@ public class SubjectService {
         return subjectRepository.save(subject);
     }
 
-    public void deleteSubject(@NonNull UUID id) {
+    public Subject deleteSubject(@NonNull UUID id) {
         log.info("Delete subject by id [{}]", id);
-        subjectRepository.deleteById(id);
+        Subject subject = findSubject(id);
+        subjectRepository.delete(subject);
         subjectEventListener.onSubjectDeleted(id);
+        return subject;
     }
 
     public Subject editSubject(@NonNull UUID id, @NonNull Subject subject) {
@@ -62,5 +68,10 @@ public class SubjectService {
         }
         subject.setId(id);
         return subjectRepository.save(subject);
+    }
+
+    private Subject findSubject(@NonNull UUID subjectId) {
+        return subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new NotFoundException("Subject not found by id" + subjectId));
     }
 }

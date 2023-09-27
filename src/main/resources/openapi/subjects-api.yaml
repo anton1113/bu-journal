@@ -1,0 +1,69 @@
+openapi: 3.0.3
+
+info:
+  title: Bu Subjects API
+  version: 1.0.0
+
+paths:
+  /rest/subjects:
+    get:
+      tags:
+        - subjects
+      operationId: getAllSubjects
+      parameters:
+        - name: teacherId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: groupId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'subjects-dtos.yaml#/components/schemas/SubjectDTO'
+    post:
+      tags:
+        - subjects
+      operationId: postSubject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'subjects-dtos.yaml#/components/schemas/SubjectDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'subjects-dtos.yaml#/components/schemas/SubjectDTO'
+  /rest/subjects/{subjectId}:
+    delete:
+      tags:
+        - subjects
+      operationId: deleteSubject
+      parameters:
+        - name: subjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'subjects-dtos.yaml#/components/schemas/SubjectDTO'

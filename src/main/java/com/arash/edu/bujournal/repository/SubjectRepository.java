@@ -10,4 +10,5 @@ public interface SubjectRepository extends MongoRepository<Subject, UUID> {
 
     List<Subject> findAllByGroupId(UUID groupId);
     List<Subject> findAllByTeacherId(UUID teacherId);
+    List<Subject> findAllByTeacherIdAndGroupId(UUID teacherId, UUID groupId);
 }
