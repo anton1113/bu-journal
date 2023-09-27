@@ -19,8 +19,10 @@ public class StudentsRestController implements StudentsApi {
     private final StudentsMapper studentsMapper;
 
     @Override
-    public List<StudentDTO> getAllStudents() {
-        List<Student> students = studentService.findAll();
+    public List<StudentDTO> getAllStudents(UUID groupId) {
+        List<Student> students = groupId == null ?
+                studentService.findAll() :
+                studentService.findAllByGroupId(groupId);
         return studentsMapper.toDTOList(students);
     }
 

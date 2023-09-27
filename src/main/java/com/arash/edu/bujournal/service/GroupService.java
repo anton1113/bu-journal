@@ -30,6 +30,20 @@ public class GroupService {
         return groupRepository.findAllByCuratorId(curatorId);
     }
 
+    public Group findById(@NonNull UUID id) {
+        log.info("Find group by id [{}]", id);
+        return findGroup(id);
+    }
+
+    public Group findByNullableId(UUID id) {
+        log.info("Find group by nullable id [{}]", id);
+        if (id == null) {
+            return null;
+        }
+        return groupRepository.findById(id)
+                .orElse(null);
+    }
+
     public Group add(@NonNull Group group) {
         log.info("Add group {}", group);
         if (group.getId() == null) {
@@ -47,24 +61,16 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
-    public Group findById(@NonNull UUID id) {
-        log.info("Find group by id [{}]", id);
+    public Group deleteById(@NonNull UUID groupId) {
+        log.info("Delete group by id [{}]", groupId);
+        Group group = findGroup(groupId);
+        groupRepository.delete(group);
+        groupEventListener.onGroupDeleted(groupId);
+        return group;
+    }
+
+    private Group findGroup(@NonNull UUID id) {
         return groupRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Group not found by id " + id));
-    }
-
-    public Group findByNullableId(UUID id) {
-        log.info("Find group by nullable id [{}]", id);
-        if (id == null) {
-            return null;
-        }
-        return groupRepository.findById(id)
-                .orElse(null);
-    }
-
-    public void deleteById(@NonNull UUID groupId) {
-        log.info("Delete group by id [{}]", groupId);
-        groupRepository.deleteById(groupId);
-        groupEventListener.onGroupDeleted(groupId);
     }
 }

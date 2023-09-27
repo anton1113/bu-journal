@@ -1,0 +1,21 @@
+openapi: 3.0.3
+
+info:
+  title: BU Groups DTOs
+  version: 1.0.0
+paths: {}
+
+components:
+  schemas:
+    GroupDTO:
+      title: GroupDTO
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        curatorId:
+          type: string
+          format: uuid

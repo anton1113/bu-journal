@@ -1,22 +1,15 @@
 openapi: 3.0.3
 
 info:
-  title: Bu Students API
+  title: Bu Groups API
   version: 1.0.0
 
 paths:
-  /rest/students:
+  /rest/groups:
     get:
       tags:
-        - students
-      operationId: getAllStudents
-      parameters:
-        - name: groupId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
+        - groups
+      operationId: getAllGroups
       responses:
         '200':
           description: OK
@@ -25,30 +18,30 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
+                  $ref: 'groups-dtos.yaml#/components/schemas/GroupDTO'
     post:
       tags:
-        - students
-      operationId: postStudent
+        - groups
+      operationId: postGroup
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
+              $ref: 'groups-dtos.yaml#/components/schemas/GroupDTO'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
-  /rest/students/{studentId}:
+                $ref: 'groups-dtos.yaml#/components/schemas/GroupDTO'
+  /rest/groups/{groupId}:
     delete:
       tags:
-        - students
-      operationId: deleteStudent
+        - groups
+      operationId: deleteGroup
       parameters:
-        - name: studentId
+        - name: groupId
           in: path
           required: true
           schema:
@@ -60,4 +53,4 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'students-dtos.yaml#/components/schemas/StudentDTO'
+                $ref: 'groups-dtos.yaml#/components/schemas/GroupDTO'
