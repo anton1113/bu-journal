@@ -20,7 +20,8 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.userDetailsService(buUserService)
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/images/**", "/styles/**", "/rest/login")
+                .antMatchers("/", "/index", "/images/**", "/styles/**",
+                        "/rest/login", "/v2/api-docs", "/api/swagger-ui/**", "/v3/api-docs/swagger-config")
                 .permitAll()
             .and()
                 .authorizeRequests()
