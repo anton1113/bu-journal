@@ -40,7 +40,8 @@ public class SpringSecurityConfig {
                 .logoutSuccessUrl("/login")
             .and()
                 .csrf()
-                .disable();
+                .disable()
+                .cors();
         return http.build();
     }
 }
