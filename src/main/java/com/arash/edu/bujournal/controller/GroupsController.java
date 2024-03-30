@@ -6,13 +6,11 @@ import com.arash.edu.bujournal.domain.Teacher;
 import com.arash.edu.bujournal.service.GroupService;
 import com.arash.edu.bujournal.service.StudentService;
 import com.arash.edu.bujournal.service.TeacherService;
+import com.arash.edu.bujournal.service.imports.StudentImportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -25,6 +23,7 @@ public class GroupsController {
     private final GroupService groupService;
     private final StudentService studentService;
     private final TeacherService teacherService;
+    private final StudentImportService studentImportService;
 
     @GetMapping("/groups")
     public String showGroups(Model model) {
@@ -119,6 +118,16 @@ public class GroupsController {
     public String addStudentToGroup(@PathVariable UUID groupId, @ModelAttribute Student student) {
         student.setGroupId(groupId);
         studentService.addStudent(student);
+        return "redirect:/groups/" + groupId;
+    }
+
+    @PostMapping("/groups/{groupId}/students/import")
+    public String importStudentsToGroup(@PathVariable UUID groupId, @RequestParam("rawCsv") String rawCsv, RedirectAttributes redirectAttributes) {
+        try {
+            studentImportService.importManyFromCsv(rawCsv, groupId);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("importStudentsError", e.getMessage());
+        }
         return "redirect:/groups/" + groupId;
     }
 }
