@@ -51,6 +51,10 @@
             data-bs-toggle="modal" data-bs-target="#addStudentModal">
         Add student
     </button>
+    <button sec:authorize="hasAuthority('ADMIN')" th:text="#{label.button.import}" type="button" class="btn btn-info"
+            data-bs-toggle="modal" data-bs-target="#importStudentsModal">
+        Import students
+    </button>
 </div>
 
 <!-- Add student modal -->
@@ -173,8 +177,46 @@
     </div>
 </div>
 
-<script>
+<!-- Import students modal -->
+<div sec:authorize="hasAuthority('ADMIN')" class="modal fade" id="importStudentsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 th:text="#{modal.title.students.import}" class="modal-title" >Import students</h5>
+                <p th:text="#{modal.subtitle.students.import}" class="modal-body" >Expected format: \nWick,John,Johnovych\nBiden,Joe,Presydentovych</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="importStudentsForm" th:action="@{/groups/__${group.id}__/students/import}"
+                      method="post">
+
+                    <div class="form-group">
+                        <textarea class="form-control" id="rawCsv" name="rawCsv" rows="5"></textarea>
+                    </div>
+                    <div th:if="${importStudentsError}">
+                        <br>
+                        <p class="error-message" th:text="#{modal.error.students.import} + ' (' + ${importStudentsError} + ')'">Invalid input format</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="importStudentsForm" th:text="#{label.button.import}">
+                    Import students
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{label.button.cancel}">Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
     window.onload = function() {
+        if ([[${importStudentsError}]]) {
+            toggleModal('importStudentsModal')
+        }
         toggleModal('editStudentModal')
         toggleModal('deleteStudentModal')
     };

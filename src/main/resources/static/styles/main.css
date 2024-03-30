@@ -111,7 +111,7 @@ input.journal-cell {
 }
 
 .error-message {
-    color: white;
+    color: #ba0606;
     font-weight: bold;
     font-size: 18px;
 }

@@ -27,6 +27,12 @@ public class Student implements Serializable {
 
     private String patronymic;
 
+    public Student(String lastName, String firstName, String patronymic) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
+    }
+
     public String getFullName() {
         return String.join(" ",
                 lastName == null ? StringUtils.EMPTY : lastName,
