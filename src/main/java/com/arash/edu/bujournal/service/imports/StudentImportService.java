@@ -44,6 +44,6 @@ public class StudentImportService {
         String lastName = elems[0];
         String firstName = elems[1];
         String patronymic = elems[2];
-        return new Student(firstName, lastName, patronymic);
+        return new Student(lastName, firstName, patronymic);
     }
 }
