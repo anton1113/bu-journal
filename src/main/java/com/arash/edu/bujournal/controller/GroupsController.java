@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ public class GroupsController {
     public String showGroups(Model model) {
         List<Group> groups = groupService.findAll();
         List<Teacher> teachers = teacherService.findAll();
+        groups.sort(Comparator.comparing(Group::getName));
         model.addAttribute("groups", groups);
         model.addAttribute("teachers", teachers);
         model.addAttribute("addGroupDraft", new Group());
