@@ -36,7 +36,7 @@
         <tr>
             <th>#</th>
             <th th:text="#{student.name}">Student full name</th>
-            <th th:each="lesson: ${lessons}" th:text="${lesson.getFormattedDate()}">Lesson date</th>
+            <th th:each="lesson: ${lessons}" th:text="${T(com.arash.edu.bujournal.util.DateFormatUtil).ddMM(lesson.date)}">Lesson date</th>
         </tr>
         </thead>
         <tbody>

@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <tr th:each="lesson : ${lessons}">
-            <td th:text="${lesson.date}">Lesson date</td>
+            <td th:text="${T(com.arash.edu.bujournal.util.DateFormatUtil).ddMMyyyy(lesson.date)}">Lesson date</td>
             <td th:text="${lesson.name}">Lesson name</td>
             <td th:text="${lesson.type} == null ? #{text.lesson.type.empty} : ${lesson.type.getUaValue()}">Lesson type</td>
             <td>
