@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Controller
@@ -34,6 +36,14 @@ public class SubjectsController {
         List<Subject> subjects = subjectService.findAll();
         List<Teacher> teachers = teacherService.findAll();
         List<Group> groups = groupService.findAll();
+
+        Function<Subject, String> groupNameExtractor = subject -> groups.stream()
+                .filter(group -> group.getId().equals(subject.getGroupId()))
+                .map(Group::getName)
+                .findAny()
+                .orElse("");
+        subjects.sort(Comparator.comparing(groupNameExtractor).thenComparing(Subject::getName));
+
         model.addAttribute("subjects", subjects);
         model.addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);

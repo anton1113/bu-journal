@@ -105,7 +105,8 @@ public class InitMongoDbData {
 
         log.info("Initializing test group data");
         Group group1 = new Group(randomUUID(), "KM-501", teacher8.getId());
-        groupRepository.save(group1);
+        Group group2 = new Group(randomUUID(), "K-301", teacher2.getId());
+        groupRepository.saveAll(List.of(group1, group2));
 
         log.info("Initializing test student data");
         Student student1 = new Student(randomUUID(), group1.getId(), "Ботнар" ,"Денис", "Русланович");
@@ -180,7 +181,9 @@ public class InitMongoDbData {
         Subject subject8 = new Subject(randomUUID(), "Іноземна мова", teacher6.getId(), group1.getId());
         Subject subject9 = new Subject(randomUUID(), "Фізична культура", teacher7.getId(), group1.getId());
         Subject subject10 = new Subject(randomUUID(), "Захист України", teacher3.getId(), group1.getId());
-        subjectRepository.saveAll(List.of(subject1, subject2, subject3, subject4, subject5, subject6, subject7, subject8, subject9, subject10));
+        Subject subject11 = new Subject(randomUUID(), "Алгоритми і структури даних", teacher3.getId(), group2.getId());
+        Subject subject12 = new Subject(randomUUID(), "Основи DevOps", teacher4.getId(), group2.getId());
+        subjectRepository.saveAll(List.of(subject1, subject2, subject3, subject4, subject5, subject6, subject7, subject8, subject9, subject10, subject11, subject12));
 
         log.info("Initializing test lesson data");
         Lesson lesson1 = new Lesson(randomUUID(), "Вступ. Функціональна стилістика і культура мовлення. Функції мови і мовлення", LessonType.LECTURE, LocalDate.of(2023, 9, 5), subject1.getId());
