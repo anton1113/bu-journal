@@ -4,7 +4,7 @@
      stages {
          stage('Mvn clean install') {
              steps {
-                 sh '/opt/apache-maven-3.6.3/bin/mvn clean install'
+                 sh 'mvn clean install'
              }
          }
          stage('Stop running container') {
