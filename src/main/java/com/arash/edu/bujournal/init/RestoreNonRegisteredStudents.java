@@ -26,7 +26,11 @@ public class RestoreNonRegisteredStudents {
         allStudents.forEach(student -> {
             BuUser buUser = buUserRepository.findByExternalId(student.getId());
             if (buUser == null) {
-                studentEventListener.onStudentCreated(student);
+                try {
+                    studentEventListener.onStudentCreated(student);
+                } catch (Exception e) {
+                    // ignore
+                }
             }
         });
     }
