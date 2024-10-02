@@ -25,10 +25,11 @@ public class StudentImportService {
         students.forEach(s -> {
             s.setId(UUID.randomUUID());
             s.setGroupId(groupId);
-            studentEventListener.onStudentCreated(s);
         });
 
-        return studentRepository.saveAll(students);
+        List<Student> savedStudents = studentRepository.saveAll(students);
+        savedStudents.forEach(studentEventListener::onStudentCreated);
+        return savedStudents;
     }
 
     private List<Student> parseRawCsv(String rawCsv) {
