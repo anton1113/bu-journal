@@ -2,6 +2,7 @@ package com.arash.edu.bujournal.service.imports;
 
 import com.arash.edu.bujournal.domain.Student;
 import com.arash.edu.bujournal.repository.StudentRepository;
+import com.arash.edu.bujournal.service.listener.StudentEventListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,14 @@ import java.util.stream.Stream;
 public class StudentImportService {
 
     private final StudentRepository studentRepository;
+    private final StudentEventListener studentEventListener;
 
     public List<Student> importManyFromCsv(String rawCsv, UUID groupId) {
         List<Student> students = parseRawCsv(rawCsv);
         students.forEach(s -> {
             s.setId(UUID.randomUUID());
             s.setGroupId(groupId);
+            studentEventListener.onStudentCreated(s);
         });
 
         return studentRepository.saveAll(students);
