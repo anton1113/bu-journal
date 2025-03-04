@@ -4,16 +4,26 @@ function onChangeHandler(id, val) {
         return;
     }
 
-    console.log(id, val);
+    console.log("attendanceId = " + id, "mark = " + val);
     console.log(window.location.origin)
 
-    const requestOptions = {
-        method: 'PUT',
-        headers: {'Content-Type': 'text/plain'},
-        body: val
-    };
-    fetch(window.location.origin + '/attendances/' + id, requestOptions)
-        .then(response => console.log(response.json()));
+    if (val == null || val === "") {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {'Content-Type': 'text/plain'},
+        };
+
+        fetch(window.location.origin + '/attendances/' + id, requestOptions)
+            .then(response => console.log(response.json()));
+    } else {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {'Content-Type': 'text/plain'},
+            body: val
+        };
+        fetch(window.location.origin + '/attendances/' + id, requestOptions)
+            .then(response => console.log(response.json()));
+    }
 }
 
 function onForbiddenChangeHandler() {
