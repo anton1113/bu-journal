@@ -32,7 +32,7 @@ public class AttendanceService {
         log.info("Put mark [{}] for attendance [{}]", mark, attendanceId);
         Attendance attendance = attendanceRepository.findById(attendanceId)
                         .orElseThrow(() -> new NotFoundException("Attendance not found by id " + attendanceId));
-        if (StringUtils.isEmpty(mark)) {
+        if (StringUtils.isBlank(mark)) {
             return clear(attendance);
         }
         if (isCreatable(mark)) {
@@ -42,6 +42,12 @@ public class AttendanceService {
         } else {
             throw new IllegalArgumentException("Unable to parse mark " + mark + " for attendance " + attendanceId);
         }
+    }
+
+    public Attendance deleteMark(@NonNull UUID attendanceId) {
+        Attendance attendance = attendanceRepository.findById(attendanceId)
+                .orElseThrow(() -> new NotFoundException("Attendance not found by id " + attendanceId));
+        return clear(attendance);
     }
 
     @SuppressWarnings("SameParameterValue")

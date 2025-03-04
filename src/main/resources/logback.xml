@@ -9,7 +9,7 @@
     <logger name="org" level="ERROR"/>
     <logger name="com.arash.edu.bujournal" level="INFO"/>
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 
