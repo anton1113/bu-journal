@@ -26,7 +26,7 @@ public class LessonService {
 
     public List<Lesson> findAllBySubjectId(@NonNull UUID subjectId) {
         log.info("Find all lessons by subjectId [{}]", subjectId);
-        return lessonRepository.findAllBySubjectId(subjectId);
+        return lessonRepository.findAllBySubjectIdOrderByDate(subjectId);
     }
 
     public Lesson add(@NonNull Lesson lesson) {

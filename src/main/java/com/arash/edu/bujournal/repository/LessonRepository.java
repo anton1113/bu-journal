@@ -12,6 +12,6 @@ import java.util.UUID;
 public interface LessonRepository extends MongoRepository<Lesson, UUID> {
 
     List<Lesson> findAllBySubjectId(UUID subjectId);
+    List<Lesson> findAllBySubjectIdOrderByDate(UUID subjectId);
     Optional<Lesson> findByIdAndSubjectId(UUID id, UUID subjectId);
-    void deleteAllBySubjectId(UUID subjectId);
 }
