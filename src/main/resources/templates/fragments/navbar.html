@@ -33,37 +33,37 @@
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                     <a th:text="#{nav.teachers}"
-                       th:classappend="${#httpServletRequest.requestURI} == '/teachers' ? 'active': ''" class="nav-link"
+                       th:classappend="${currentRequestUri} == '/teachers' ? 'active': ''" class="nav-link"
                        href="/teachers">Teachers</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                     <a th:text="#{nav.groups}"
-                       th:classappend="${#httpServletRequest.requestURI} == '/groups' ? 'active': ''" class="nav-link"
+                       th:classappend="${currentRequestUri} == '/groups' ? 'active': ''" class="nav-link"
                        href="/groups">Groups</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                     <a th:text="#{nav.subjects}"
-                       th:classappend="${#httpServletRequest.requestURI} == '/subjects' ? 'active': ''" class="nav-link"
+                       th:classappend="${currentRequestUri} == '/subjects' ? 'active': ''" class="nav-link"
                        href="/subjects">Subjects</a>
                 </li>
                 <li class="nav-item">
                     <a th:text="#{nav.feedback}" sec:authorize="hasAnyAuthority('STUDENT', 'TEACHER')"
-                       th:classappend="${#httpServletRequest.requestURI} == '/feedback' ? 'active': ''" class="nav-link"
+                       th:classappend="${currentRequestUri} == '/feedback' ? 'active': ''" class="nav-link"
                        href="/feedback">Feedback</a>
                 </li>
                 <li class="nav-item">
                     <a th:text="#{nav.feedbacks}" sec:authorize="hasAuthority('ADMIN')"
-                       th:classappend="${#httpServletRequest.requestURI} == '/feedbacks' ? 'active': ''" class="nav-link"
+                       th:classappend="${currentRequestUri} == '/feedbacks' ? 'active': ''" class="nav-link"
                        href="/feedbacks">Feedbacks</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAnonymous()">
                     <a th:text="#{nav.login}"
-                       th:classappend="${#httpServletRequest.requestURI} == '/login' ? 'active': ''" class="nav-link"
+                       th:classappend="${currentRequestUri} == '/login' ? 'active': ''" class="nav-link"
                        href="/login">Login</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a th:text="#{nav.logout}"
-                       th:classappend="${#httpServletRequest.requestURI} == '/logout' ? 'active': ''" class="nav-link"
+                       th:classappend="${currentRequestUri} == '/logout' ? 'active': ''" class="nav-link"
                        href="/logout">Logout</a>
                 </li>
             </ul>

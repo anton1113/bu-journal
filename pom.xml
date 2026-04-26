@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.4</version>
+        <version>4.0.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.arash.edu</groupId>
@@ -15,7 +15,7 @@
     <description>bu-journal</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>24</java.version>
     </properties>
 
     <dependencies>
@@ -31,11 +31,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-mongodb</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,7 +43,7 @@
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
         <!-- test dependencies -->
@@ -54,8 +54,8 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mongodb</artifactId>
-            <version>1.18.3</version>
+            <artifactId>testcontainers-mongodb</artifactId>
+            <version>2.0.3</version>
             <scope>test</scope>
         </dependency>
 
@@ -74,8 +74,8 @@
         <!-- openapi -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.7.0</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>3.0.3</version>
         </dependency>
 
         <dependency>
@@ -90,23 +90,12 @@
             <version>0.2.6</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
         <!-- others -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.46</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
@@ -124,6 +113,22 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
+                <configuration>
+                    <release>${java.version}</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.38</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
@@ -149,6 +154,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -170,6 +177,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -191,6 +200,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -212,6 +223,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -233,6 +246,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -254,6 +269,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -275,6 +292,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -296,6 +315,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -317,6 +338,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -338,6 +361,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>
@@ -359,6 +384,8 @@
                                 <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>

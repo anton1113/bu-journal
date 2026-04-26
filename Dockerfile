@@ -1,6 +1,6 @@
-FROM openjdk:11
+FROM eclipse-temurin:25-jre
 
-ENV TZ 'Europe/Kiev'
+ENV TZ 'Europe/Kyiv'
 ENV JAR_NAME="bu-journal.jar"
 ENV APP_HOME="/app"
 
